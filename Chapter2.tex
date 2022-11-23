@@ -8,45 +8,45 @@
 
 Test the text. Now with \texttt{cobra.flux\textunderscore analysis}!
 
-\begin{spacing}{1.5}
-\begin{lstlisting}[caption={Pseudocode snippet for \texttt{1-data\textunderscore preprocess.py}}, breaklines=true,basewidth=6pt,frame=single,language=Python, numbers=left, prebreak=**, postbreak=**, label={lst:code}]
-def run_meteor(model_path, constraints_path, **options):
-  # Load in the model
-	model = cobra.io.read_sbml_model(model_path)
-  # Load and apply the options
-	options = options.get('options', None)
-	model = options_setup.apply_options (model, constraints_path, options)
-  # FBA: Parsimonious FBA
-	model_solution = meteor_functions.perform_fba(model)
-  # Load in categories for CBA from options
-	categories = options["categories"]
-	atpbiomass_reactions = categories['ATP']['biomass']
-	atpburned_reactions = categories['ATP']['burned']
-	atpwaste_reactions = categories['ATP']['waste'] 
-	nadpbiomass_reactions = categories['NADP']['biomass']
-	nadpwaste_reactions = categories['NADP']['waste'] 
-  # Perform CBA and populate categories
-	ATP_produced,..., NADP_waste = meteor_functions.cofactor_assessment(
-                                    model_solution, model, atpbiomass_reactions,
-                                    atpburned_reactions, atpwaste_reactions, 
-                                    nadpbiomass_reactions, nadpwaste_reactions)
-  # Populate respective dictionaries for the frontend tables
-	metabolites = metabolite_config.metabolite_dict(model)
-	reactions = reaction_config.reaction_dict(model, model_solution)
-	objective = options_setup.get_objective(model)
-  # Get minimum/maximum fluxes for building the metabolic network
-	flux = max(list(map(abs, (model_solution.fluxes))))
-  # Properly format the outputs
-	assessment = meteor_functions.assessment_output(ATP_produced, ATP_metabolism,
-                ATP_burned, ATP_biomass, ATP_waste, NADP_produced,
-                NADP_metabolism, NADP_biomass, NADP_waste)
-	result_categories = meteor_functions.category_dict(model, model_solution,
-                        atpwaste_reactions, ATP_waste, nadpwaste_reactions,
-                        NADP_waste, atpbiomass_reactions, atpburned_reactions,
-                        nadpbiomass_reactions)
-	return metabolites, reactions, assessment, flux, model, result_categories, objective
-\end{lstlisting} 
-\end{spacing}
+% \begin{spacing}{1.5}
+% \begin{lstlisting}[caption={Pseudocode snippet for \texttt{1-data\textunderscore preprocess.py}}, breaklines=true,basewidth=6pt,frame=single,language=Python, numbers=left, prebreak=**, postbreak=**, label={lst:code}]
+% def run_meteor(model_path, constraints_path, **options):
+%   # Load in the model
+% 	model = cobra.io.read_sbml_model(model_path)
+%   # Load and apply the options
+% 	options = options.get('options', None)
+% 	model = options_setup.apply_options (model, constraints_path, options)
+%   # FBA: Parsimonious FBA
+% 	model_solution = meteor_functions.perform_fba(model)
+%   # Load in categories for CBA from options
+% 	categories = options["categories"]
+% 	atpbiomass_reactions = categories['ATP']['biomass']
+% 	atpburned_reactions = categories['ATP']['burned']
+% 	atpwaste_reactions = categories['ATP']['waste'] 
+% 	nadpbiomass_reactions = categories['NADP']['biomass']
+% 	nadpwaste_reactions = categories['NADP']['waste'] 
+%   # Perform CBA and populate categories
+% 	ATP_produced,..., NADP_waste = meteor_functions.cofactor_assessment(
+%                                     model_solution, model, atpbiomass_reactions,
+%                                     atpburned_reactions, atpwaste_reactions, 
+%                                     nadpbiomass_reactions, nadpwaste_reactions)
+%   # Populate respective dictionaries for the frontend tables
+% 	metabolites = metabolite_config.metabolite_dict(model)
+% 	reactions = reaction_config.reaction_dict(model, model_solution)
+% 	objective = options_setup.get_objective(model)
+%   # Get minimum/maximum fluxes for building the metabolic network
+% 	flux = max(list(map(abs, (model_solution.fluxes))))
+%   # Properly format the outputs
+% 	assessment = meteor_functions.assessment_output(ATP_produced, ATP_metabolism,
+%                 ATP_burned, ATP_biomass, ATP_waste, NADP_produced,
+%                 NADP_metabolism, NADP_biomass, NADP_waste)
+% 	result_categories = meteor_functions.category_dict(model, model_solution,
+%                         atpwaste_reactions, ATP_waste, nadpwaste_reactions,
+%                         NADP_waste, atpbiomass_reactions, atpburned_reactions,
+%                         nadpbiomass_reactions)
+% 	return metabolites, reactions, assessment, flux, model, result_categories, objective
+% \end{lstlisting} 
+% \end{spacing}
 
 
 Test the text. Now with \texttt{cobra.flux\textunderscore analysis}!
