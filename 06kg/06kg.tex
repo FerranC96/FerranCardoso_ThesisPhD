@@ -1,0 +1,55 @@
+\chapter{Knowledge Graphs for Cell Communications}
+\label{06kg}
+
+
+% % This is currently 211 words. As the methods/result section still needs some fleshing out, this means that there is some fluff to trim out! [soft limit of 200 words, HARD LIMIT OF 250]
+% Biological signals within and between cells are transmitted in a hierarchical and directed manner, dictating a cell’s response to both internal and external cues. Although these signaling networks are represented as directed graphs of molecules, they are not consistently analyzed using methods that leverage the network’s directed and hierarchical nature. Here we present a Directed Scattering transform for Gene Embeddings (DSGE), which captures a directed and multiscale representation of the gene signaling network. We perform systematic comparison against existing undirected, directed, Euclidean, and hyperbolic approaches using the OmniPath signaling graph. DSGE outperforms existing methods on directed link prediction and performs among the best on random link prediction. Our preliminary results suggest DSGE reveals key multiresolution and directed features necessary for predicting and characterizing gene signaling relationships.
+
+% %, one in hyperbolic space, that embed nodes of signal networks for gene-gene signaling characterization and prediction. We perform a systematic comparison against current shallow and GNN methods on link prediction accuracy using the OmniPath signaling dataset. Achieving an AUROC score of 0.718 for DS-AE and 0.716 for DS-PM on directed link prediction, our methods surpass the current state-of-the-art (MagNet, 0.714) and prove much better than the undirected scattering counterpart (0.581), all while performing comparably to the state-of-the-art on random link prediction. Our preliminary results suggest directed methods are necessary to for molecular signaling representation. while using a hyperbolic space does not seem as important despite the hierarchical nature of signalling networks. Both DS-AE and DS-PM match or surpass current state-of-the-art methods at learning molecular signalling representations, with DS-AE slighlty besting DS-PM in all of our comparisons. 
+
+\section{Introduction}
+
+
+% Cellular signaling involves overlapping directed \cite{HANCOCK200364} and hierarchical signal transduction cascades between molecules to coordinate targeted behavior \cite{zhang_mapk_2002}.
+% %The physical interactions of molecules are often represented as a network.
+% The resulting network of molecular interactions determines a cell's response under different conditions, drawing interest towards unifying and characterizing varying sources of molecule signaling from distinct scientific experiments. However, methods to represent biological networks and infer gene-gene relationships rarely take into the account the \textit{directionality} and \textit{hierarchical structure} of these gene graphs, often either treating the graph as undirected or analyzing pairwise relationships \cite{pratapa_benchmarking_2020, Armingol2021-gn}.
+
+% \textcolor{red}{Is this a cell-cell graph or a gene-gene graph}
+
+% For directed graphs, one possible approach for constructing  low-dimensional embeddings while preserving directed structure \cite{Lieb1992-ab, Singer2011-di, Singer2011-vm} is two use the spectrum of a complex Hermitian matrix known as the magnetic Laplacian. Originally, arising in the physics literature \textcolor{red}{MIKE-TODO ADD citation}, this matrix represents the undirected geometry of the graph in the magnitude of its entries and incorporates directional information in the phases. It has been used for a variety of data science tasks \textcolor{red}{MIKE TO DO CITE} and several recent works have used it to constuct graph neural networks \cite{Zhang2021-wq} and related versions of the scattering transform \cite{Chew2022-or}.
+
+% %It has been studied by the graph signal processing community \cite{Furutani2020-lq} and also applied to numerous data science applications such as clustering and community detection \cite{Fanuel2017-av}.
+
+% At the same time, developments in hyperbolic geometry show potential for preserving latent hierarchies. Recent research has proposed embedding hierarchical graphs into hyperbolic spaces instead of conventional Euclidean space \cite{Nickel2017-av, De_Sa2018-eg, Ganea2018-eb}, with recent incorporation into graph neural network frameworks \cite{Chami2019-xb,Liu2019-sd} and knowledge graph frameworks \cite{Chami2020-fh, Bai2021-zd}. However, beyond some preliminary work \cite{McDonald2022-av, Wu2019-ip}, little has been done to explicitly incorporate hyperbolic geometry into directed graph learning, with, to our knowledge, no methods that learn directed and hyperbolic geometry using the magnetic Laplacian. Furthermore, there has been no work evaluating the ability of directed approaches and hyperbolic approaches on biological networks.
+
+% Here, we describe an approach termed DSGE (Directed Scattering transform for Gene Embeddings), which learns a multiscale representation of directed biological networks via the magnetic Laplacian. We evaluate performance of DSGE-Euc (Euclidean representation) and DSGE-Hyp (hyperbolic representation) against baseline methods for the recently published OmniPath directed gene signaling network\cite{Turei2021-qr} (4\% reciprocal edges, Krachkardt hierarchy score (Khs) = 0.757) \cite{Balazevic2019-av, Chami2020-fh, Krackhardt1994-av}. We additionally evaluate the top-performing methods on two smaller subgraphs, demonstrating the importance of directed scattering for capturing directedness and multiscale topology for biological graphs of all sizes (Fig. 1). 
+
+\section{Structure}
+
+Graph assembled from sources, hierarchical structure
+
+\subsubsection{Figure on KG assembly and characteristics}
+
+\section{KG Embedding}
+
+\subsubsection{Figure on comparing different KGE methods}
+
+\subsubsection{Figure exploring node and edge embeddings on KGE}
+
+\section{Cells as Signals on a Gene Graph}
+
+\subsubsection{Figure detailing cell projected on graph procedure}
+
+\subsection{Wavelet Transform}
+
+\subsection{Data Projection}
+
+\subsubsection{Figure on results of scrnaseq, cytof and combined projections}
+
+\section{KG ablation focuses on signalling}
+
+\subsubsection{Figure comparing projection on full VS ablated KG}
+
+\section{WIP}
+
+\section{Conclusions}

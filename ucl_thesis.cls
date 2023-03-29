@@ -576,6 +576,17 @@
 }
 %    \end{macrocode}
 %  \end{environment}
+%  \begin{environment}{abbreviations}
+%  Also need an environment for doing the abbreviations.
+%    \begin{macrocode}
+\newcommand \@abbreviations{Abbreviations}
+\newenvironment{abbreviations}{%
+    \chapter*{\@abbreviations}%
+    \@mkboth{\@abbreviations}{\@abbreviations}%
+}{%
+}
+%    \end{macrocode}
+%  \end{environment}
 %  \begin{environment}{impact statement}
 %  An environment for the Impact Statement
 %    \begin{macrocode}

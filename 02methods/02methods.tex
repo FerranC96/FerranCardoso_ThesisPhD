@@ -1,0 +1,132 @@
+\chapter{Materials and Methods}
+\label{02methods}
+
+\section{CyGNAL}
+
+Previous to analysing the data in CyGNAL, mass cytometry datasets are debarcoded as needed (using the tool in https://github.com/zunderlab/single-cell-debarcoder) and initial data pre-processing and quality control is carried in Cytobank (https://www.cytobank.org/) (see the leftmost section of Figure 1). In that platform, the single cells are gated for Gaussian parameters, their DNA content, and uptake of cisplatin using manual gates. Gating on cell state and cell type specific markers can also be done in order to both eliminate doublets but also to identify cells belonging to each state or type; information which can then be used to train the cell state classifier among others.
+
+Written mainly in Python and R, CyGNAL (CyTOF SiGNalling AnaLysis) is a pipeline constituted as 5 main steps. These are divided into pre-processing (initial step, always run independently of the analysis to be performed), scoring as two steps using  Earth Mover’s Distance (EMD, also known as the Wasserstein metric)22 and Density Resampled Estimate of Mutual Information (DREMI)23,24, visualising the scores as either heatmaps or Principal Component Analysis (PCA) plots, and embedding the cells themselves in a two-dimensional UMAP (Uniform Manifold Approximation and Projection) space25. It is important to note that for calculating the EMD and DREMI scores and computing the UMAP space, the data is first normalised within their respective steps using a hyperbolic arcsine transformation with a cofactor of 5, as is standard in the mass cytometry field.
+
+During the pre-processing step CyGNAL loads in mass cytometry files either in plain text format or in the Flow Cytometry Standard format (FCS)26. Intercompatibility between both formats is ensured using the Python packages fcsparser27 and fcswrite28, and the R package flowCore29. In addition to ensuring format consistency and allowing for datasets to be saved in either format, during the pre-processing step channel names are parsed to a) eliminate empty channels, b) clean up double spaces and underscores, and c) ensure each cell has a unique ID encoded in a new column called “Cell\_Index”. Finally, it is also here where a panel\_markers.csv file is generated containing all columns present in the dataset that were identified as markers. This file can then be used downstream to select which markers are to be used in the scoring and UMAP steps.
+
+CyGNAL’s UMAP calculation uses the umap-learn package for Python (https://github.com/lmcinnes/umap)25 to assign each of the cells in the dataset a pair of coordinates on a UMAP space. This space is computed using the set of markers defined by the user in the panel\_markers.csv file and can be calculated on either just one processed dataset or a series of datasets as long as they have shared markers in their panel. The resulting coordinates are appended as a new pair of columns to the original datasets, facilitating visualisation of this space elsewhere by the user.
+
+
+Both the EMD and DREMI scores are computed using the Python package scprep30 and have their respective steps in CyGNAL that take in multiple processed datasets (with each representing e.g. conditions or populations). In the EMD calculation, a series of scores is given to the markers (chosen with the panel\_markers.csv) based on how a particular marker is distributed in a variable dataset when compared against a reference (either the sum of all datasets imputed or a particular control selected by the user). On the other hand, the DREMI calculation is performed independently in a per dataset basis, as each of the datasets will get its own set of scores representing each of the possible combinations of markers in the panel. In DREMI the scores reflect how linked marker A is to marker B using a derivate of the mutual information between the two. In the context of PTM network signalling analysis, EMD is used to quantify PTM node intensity and DREMI to score PTM-PTM edge connectivity; both measures can then be used to build signalling networks as those shown in Qin et al. 2020. The outputs of both scoring systems are saved as plain text files that can be plotted using CyGNAL’s visualisation steps below.
+
+Finally, once the user has computed either score, the last step in the pipeline allows for an interactive visualisation leveraging R’s Shiny apps31 using two Python scripts that call in the R scripts in the background needed to host the ShinyApp. The first of those scripts generates a series of heatmaps using the ggplot32 and ComplexHeatmap33 packages. These heatmaps show the relevant scores; with the names of the datasets used in the calculation step as columns in the horizontal axis and the names of the markers in the vertical axis as rows. Colour ranges, columns, and rows shown can all be tweaked by the user through the graphical interface. The second of the scripts computes a PCA on the scores using the FactoMineR package34, treating each of the datasets used in the calculation as observations and the scores for the markers (or marker combinations in the case of DREMI) as variables. In all cases all plots generated can be saved as images for later use, and within the PCA ShinyApp the computed PCA coordinates can also be downloaded to facilitate custom generation of plots elsewhere.
+
+
+\section{scRNA-seq Data Analysis}
+
+Instead of self plagiarising, go to the now deleted earlier drafts where the methods were explained in greater detail. Then rewrite the text instead of copy/pasting
+
+\subsection*{Wet Lab Data Generation}
+
+This work wasn't carried out by me and this should be made very clear. Instead of detailing it here, perhaps it would be best to reference the preprint/article once up?
+
+\subsection*{Sequencing}
+
+While this is technically wet lab and I didn't carry it out, it is important to detail the characteristics of the library and sequencing used.
+
+% scRNA-seq libraries were generated with the 10X Genomics Chromium Next GEM Single Cell 3' Reagent Kits v3.1 (Dual Index) and sequenced with the Illumina NovaSeq 6000 System (2$\times$ 150 bp paired-end reads), aiming at 60,000 read pairs per cell and 2,000 cells per cell-type per sample.
+
+\subsection*{Data Processing}
+Raw->fastq->align->count matrix
+% Raw scRNA-seq data was converted to FASTQ files and processed with the 10X Genomics Cell Ranger pipeline version 5.0.1. Sequencing reads were aligned to a custom GRCm38 reference genome containing the sequences of \hl{\textit{DsRed} and \textit{eGFP}} transgenes present in fibroblasts and organoids respectively.
+
+QC
+% The resulting gene count matrices were analysed with the R package \textit{Seurat} version 4.0.4[\hl{ADD REF}]. The analysis pipeline encompasses quality control, data normalisation, data integration, dimensionality reduction, cell clustering, and analysis of differential gene expression. Genes found in less than 4 cells were removed during QC and only cells with at least 600 unique genes identified were kept for downstream analysis. The total number of detected sequences typically ranged from 1,200 to 80,000 per cell, and the actual values were manually determined based on dataset sequencing depth and cell-type composition. For the integrated epithelial object in Figure 2, an additional filtering step was performed to remove cells with undetectable expression for any one of the bona fide pan-epithelial genes \textit{Epcam}, \textit{Krt8}, \textit{Krt18}, \textit{Krt19}, \textit{Cldn7}. Cell-cycle regression was performed using the \textit{sctransform} function. 
+% % Log-normalised gene expression values were used for the downstream analyses.
+
+\subsection*{Integration}
+Integration
+% Dataset integration was performed using Seurat's reciprocal PCA (RPCA) implementation \cite{hao_integrated_2021} (k.anchor=12) as it has been optimised to handle large datasets. The integrated object presented Figure \ref{fig:fig1}B was computed using all cells from the 20 conditions shown in Figure \ref{fig:fig1}A, resulting in a total of 58,726 cells with the integrated assay limited to 2,000 genes. The integrated object presented in Figure \ref{fig:fig2}A was computed using just the epithelial cells from all conditions, resulting in an object with 29,452 cells limited to 4,000 genes.
+
+\subsection*{Dimensionality Reduction}
+seq->emd->pca and normal DR
+% To generate the EMD PCA plots shown in Figure \ref{fig:fig1}C,  log-normalised gene expression data (the RNA assay) of all cells of a particular cell-type (epithelial cells, fibroblasts, or macrophages) were exported from the integrated object. EMD scores for the top 6,000 variable genes of each condition were calculated with CyGNAL \cite{cardoso_tape-labcygnal_2021} using the WT monoculture control as a reference. The unique distributions of EMD scores for each condition were used to compute a PCA space, where each dot represents a single condition.
+
+\subsection*{Unsupervised Clustering and Differential Expression}
+DR
+% For dimensionality reduction (DR), we computed a set of 50 principal components (PC) from the integrated assays and used them to generate 2-dimensional PHATE embeddings with default parameters \cite{moon_visualizing_2019} (see \hl{Table S}\ref{suptable:tab2}). PHATE was chosen as the standard DR method for the study due to its capacity to capture the global structure in biological settings with important developmental trajectories.
+
+\subsection*{Differential Abundance}
+
+\subsection*{Signature score correlations}
+
+\subsection*{Signalling Entropy}
+
+\subsection*{RNA Velocity}
+
+\section{VR score and data-driven Waddington-like landscapes}
+
+\section{Knowledge Graphs for Cell Communications}
+
+\subsection*{Sources}
+
+\subsection*{Assembly}
+
+\subsection*{KG Embedding}
+
+\subsection*{Wavelet Transform and Data Projection}
+
+\subsection*{WIP}
+
+\section{FAIR spirit}
+
+Data and code are FAIR:
+
+* Findable
+* Accessible
+* Interoperable
+* Reusable
+
+The code for CyGNAL can be found in the group’s GitHub repository at  https://github.com/TAPE-Lab/CyGNAL and remains under continued development. In addition to the main steps already presented, there are also a set of utility scripts that can be used for performing common dataset manipulations; such as downsampling, concatenation, and format conversion. In Sup. Figure 1 a detailed diagram depicting CyGNAL’s steps is shown.
+
+% \lstset{frameround=fttt,language=Python,numbers=left,breaklines=true}
+
+Test the text. Now with \texttt{cobra.flux\textunderscore analysis}!
+
+% \begin{spacing}{1.5}
+% \begin{lstlisting}[caption={Pseudocode snippet for \texttt{1-data\textunderscore preprocess.py}}, breaklines=true,basewidth=6pt,frame=single,language=Python, numbers=left, prebreak=**, postbreak=**, label={lst:code}]
+% def run_meteor(model_path, constraints_path, **options):
+%   # Load in the model
+% 	model = cobra.io.read_sbml_model(model_path)
+%   # Load and apply the options
+% 	options = options.get('options', None)
+% 	model = options_setup.apply_options (model, constraints_path, options)
+%   # FBA: Parsimonious FBA
+% 	model_solution = meteor_functions.perform_fba(model)
+%   # Load in categories for CBA from options
+% 	categories = options["categories"]
+% 	atpbiomass_reactions = categories['ATP']['biomass']
+% 	atpburned_reactions = categories['ATP']['burned']
+% 	atpwaste_reactions = categories['ATP']['waste'] 
+% 	nadpbiomass_reactions = categories['NADP']['biomass']
+% 	nadpwaste_reactions = categories['NADP']['waste'] 
+%   # Perform CBA and populate categories
+% 	ATP_produced,..., NADP_waste = meteor_functions.cofactor_assessment(
+%                                     model_solution, model, atpbiomass_reactions,
+%                                     atpburned_reactions, atpwaste_reactions, 
+%                                     nadpbiomass_reactions, nadpwaste_reactions)
+%   # Populate respective dictionaries for the frontend tables
+% 	metabolites = metabolite_config.metabolite_dict(model)
+% 	reactions = reaction_config.reaction_dict(model, model_solution)
+% 	objective = options_setup.get_objective(model)
+%   # Get minimum/maximum fluxes for building the metabolic network
+% 	flux = max(list(map(abs, (model_solution.fluxes))))
+%   # Properly format the outputs
+% 	assessment = meteor_functions.assessment_output(ATP_produced, ATP_metabolism,
+%                 ATP_burned, ATP_biomass, ATP_waste, NADP_produced,
+%                 NADP_metabolism, NADP_biomass, NADP_waste)
+% 	result_categories = meteor_functions.category_dict(model, model_solution,
+%                         atpwaste_reactions, ATP_waste, nadpwaste_reactions,
+%                         NADP_waste, atpbiomass_reactions, atpburned_reactions,
+%                         nadpbiomass_reactions)
+% 	return metabolites, reactions, assessment, flux, model, result_categories, objective
+% \end{lstlisting} 
+% \end{spacing}
+
+
+

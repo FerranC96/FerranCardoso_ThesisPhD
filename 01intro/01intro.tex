@@ -1,0 +1,172 @@
+\chapter{Introduction and Background}
+\label{01intro}
+
+% Some stuff about things.\cite{example-citation} Some more things. 
+
+Adding in-line citations to my published work using the bibentry package
+
+CyGNAL:
+
+- \bibentry{sufi_multiplexed_2021}
+
+scRNA-seq:
+
+- \bibentry{cardoso_rodriguez_single-cell_2023}
+
+KG:
+
+- To Be Continued
+
+
+Current text in here comes from the Upgrade report (one of the few cases were self-plagiarism doesn't apply) and is mostly a placeholder.
+\colorbox{yellow}{CHECK REFERENCES FOR THOSE AND ADD TO .bib}
+
+\section{Colorectal Cancer (CRC)}
+
+\subsection{Relevance of disease and characteristics}
+
+Colorectal Cancer (CRC) is a type of cancer that originates from the epitehlial lining of the colon or rectum. Despite lowered incidence and mortality rates in recent years \colorbox{yellow}{https://pubmed.ncbi.nlm.nih.gov/36301149/}, it is still the third most common malignancy worldwide, claiming over 900,000 lives every year. \colorbox{yellow}{[https://www.wcrf.org/cancer-trends/colorectal-cancer-statistics/]}
+The cannonical model of CRC pathogenesis is the polyp to adenocarcinoma progression, where benign hyperproliferative polyps often harbouring mutations in the Wnt signalling pathway (most commonly in the APC gene) eventually acquire and accumulate oncogenic mutations that, coupled with local inflammatory and TME alterations, result in malignant CRC. Some of the most common oncogenic mutations target p53 (which normally acts as a gatekeeper on the hyperproliferative polyps) and Kras (promoting even futher proliferation on the altered epithelia). \colorbox{yellow}{ADD REFS TO BOTH THESE STATEMTENTS}.
+
+\subsubsection{Figure on CRC hallmarks/development}
+something like \colorbox{yellow}{Armaghany et al 2012}
+
+\subsection{CRC as a heterocellular disease and role of the Tumour Microenvironment (TME)}
+
+Tumours exist not just as homogenous clusters of malignant cells, but as a collection of malignant and non-transformed immune and stromal cells1. Such non-transformed cells constitute the tumour microenvironment (TME), a key factor in most cancers affecting prognosis2 and thus the subject of intense study to understand the biology of cancer and to develop new therapies.
+In their late-stage, CRC tumours consist of a complex heterocellular setting in which a stromal and immune compartments have been shown to mainly drive cancer cell progression4,5 and response to therapies6,7.   \colorbox{yellow}{GROUP/TRIM REFS}
+
+\subsection{CSC}
+
+\colorbox{yellow}{THIS NEEDS SOME KIND OF FORESHADOWING RE LANDSCAPES and CANCER AS PLASTICITY DISEASE}
+
+In a homeostatic setting the intestinal epithelia is supported via Growth Factors secreted both by the epithelium iself and by the surrounding stromal compartment. These Growth Factors are secreted in such a way that they form two opposing gradients between the basal and apical folds of the tissue, with Wnt signalling higher around the stem-cell harbouring crypts, and BMP signalling higher towards the apical areas where the absorptive cells are. 
+While this arrangement is mantained relatively consistent along the lower grastrointestinal tract, the stem niches in the colon seem to be, unlike those in the small intestine, entirely reliant on exogenous WNt provided by the stroma.
+\colorbox{yellow}{ADD refs. Beumer and Clevers 2021 for an idea about the figs and further refs}
+
+Populations of the epithelia. arrangement and signalling in each area. \colorbox{yellow}{DEVELOP FURTHER}
+
+Altered in CRC
+Proliferative region no longer contained to crypt. Self support and less dependant on stroma. Still leverage stroma for support on invasion. 
+However not all proliferative, MEx3a papers and other suggest quiet revival/repair/fetal -like stem cells that can drive CRC recurence after chemotherapy wipes the hyper proliferative cells.
+
+\subsubsection{Figure on the colonic epithelia stem niche and its support and changes in CRC}
+This figure will be like that one on the SI vs colon from the Beumer and Clevers 2021 review, but with the right most panel being crc state. Also need to introduce the signalling driving the pro and rev csc (acc to litertature) \colorbox{yellow}{Sphyris et al 2021}
+
+\section{Organoids as a model; able to mimic the heterocellular setting and be analysed in a high throughput manner}
+
+\subsection{Organoid: heterocellular}
+
+MAIN MESSAGES
+Heterocellular
+    - epithelia states -> CSC pops
+    - tme -> interactions between cell types
+
+The complexity of CRC can be modelled and studied in vitro by using organoids, 3D cellular structures comprising of both stem and differentiated cells that can satisfactorily mimic elements of the in vivo tissue8–10. Heterocellular organoids, consisting of epithelial crypts surrounded by mesenchymal fibroblasts and myeloid macrophages, more closely resemble the tissue architecture of the colon and can be used to study the CRC’s TME in an in vitro setting11. Mimicking the biology of the in vivo setting, gut organoids present with a basal stem niche from which more differentiated cell types (with either absorptive or secretory functions) derive from; often with a lumen within the organoid that accumulates dead cells.
+
+\subsection{organoid: high throughput and high dimensional view}
+
+MAIN MESSAGES:
+platform facilitates high througput
+    - multilpex conditions of mutations and tme settings
+Easier to capture information at the single-cell level
+    - naturally fits with scrnaseq and mass cytometry data
+
+ORgasnoids at the sweet spot between eperimental felxibility and physiological relevance, complex enough to mimick the complex hetero setting while still amenable to high-throughput applications. \textcolor{yellow}{Xiao's review on Biotech trends}
+
+Flexibility allows for setup like taht in NAture MEthods paper and preprint, where using different cocucltre setups, orgnaoids with oncogonenuc mutations and GFs and inhibitors it is possible to characterise the epithelia and tis cahnges across multiple axes within a single experiment.
+
+Organoids have traditionally been studied with relatively mature technologies that allow for bulk analysis of the 3D structures12,13, but this has resulted in an apparent lack of single-cell level resolution studies until recent times. The emergence of mature single-cell techniques in the last decade has allowed for the study of these organoids at greater resolutions and depths than ever before, albeit with the added difficulties of resolving individual cells from the complex 3D organoid structures, and dealing with the high dimensionality of the resulting data14. 
+
+\section{Single-cell technologies and analyses}
+
+\subsection{Mass cytometry}
+
+MAIN MESSAGES:
+- What it is
+- What it is good at: intra-cell signalling
+
+Previous to my joining, our lab15 developed a custom multivariate mass cytometry platform to analyse post-translational modification (PTM) signalling networks of both small intestinal murine organoids (referenced as SI LGR5 hereafter), and murine colonic CRC organoids at the single cell level.
+
+MASS CYTOMETRY IS WHAT?
+
+Their work in Qin et al. 202011 shows how both genetic perturbations mimicking the triad of hallmark markers in CRC (APC-loss and mutations in p53 and KRAS)16,17 and varying degrees of TME complexity (epithelial organoid monocultures and cocultures; with fibroblasts and/or macrophages) affect the biology of colonic organoids. It was found that the distribution of both cellular subtypes and states within the epithelial population changed in a similar and synergic way, with greater genetic alterations and a complex TME resulting in enrichment of the crypt and stem niches and a reduction of cells in G0 and apoptotic states. Furthermore, their results suggest that the effects of the TME on intracellular signalling pathways in the colonic organoids might mechanistically differ from those driven by canonical cancer mutations in the epithelial cells, even if they both result in a general increase of signalling through the pathways studied. Such high-throughput single-cell technologies are a novel source of cell-specific data ready to be analysed in the study of cell communication; both at the organoid level within epithelial cells but also on the stromal and immune populations. 
+
+\subsection{scRNA-seq}
+
+This is more abotu the tech iteself, and the droppolet based approaches in particular.
+
+Used to describe the colon epithelia too, but no systematic analysis done across CRCTME axis 
+
+\subsubsection{Figure on droplet-based scRNA-seq tech}
+
+
+\subsection{Data modalities and dimensionality}
+
+\subsubsection{FIG on data characteristics and general workflow. Also types of analyses for scrnaseq in specific}
+Big one, review style.
+Convey the info presented in both FIgures 2 and 5 of Xiao's review. Most important from here is the broad pipeline of analysis
+
+\subsection{Emerging field of Signalling and communication analyses}
+
+This needs to introduce Signalling entropy rate, cell-cell commns as cellchat
+
+\subsection{Limitations and new avenues}
+
+Multimodal data. Modality agnostic analyses. Knowledge graphs for bio data.
+
+
+mass cytometry Limitations
+
+MAIN MESSAGES:
+- Tech limit: extra-cell limit
+- Analysis limit: obscure cross condition comparions (and lots of conditions enbled by the high trhoughput nature of model+tech)
+
+However, while powerful in the study of intracellular signalling, the mass cytometry platform discussed above struggles to resolve intercellular cell-cell communication through the complex extracellular interactome of ligands and their receptors. In contrast single-cell RNA sequencing (scRNA-seq) technologies could prove extremely useful to this purpose, especially when paired with intercellular cell communication databases such as CellChat18 and CellPhoneDB19.
+
+
+scRNA-seq limitations
+
+cell-cell comns limitations 
+
+New avenues:
+Multimodal data (both omics at once, spatial info for cell comns, knowledge graph embeddings and cells as signals on graphs[mod agnostic in theory])
+
+
+
+
+
+\section{Hypothesis and Aims}
+
+\subsection{I hypothesise that colon-epithelia polarisation by endogenous and exogenous cues can be described using single-cell analyses}
+
+In light of the findings presented above, I hypothesise that colon-epithelia polarisation by endogenous and exogenous cues can be described using single-cell analyses.
+
+% In light of the findings presented above, I hypothesise that single-cell data can be used to understand cell-cell communication in the CRC TME. To this end, an unbiased single-cell multiomics approach will be taken to analyse the data generated in both mass cytometry and scRNA-Seq experiments on heterocellular CRC organoid models.
+% The multifaceted nature of this project thus requires that the different lines of study presented below be treated somewhat independently, while still being able to gather and integrate the individual findings in later stages. 
+
+% As outlined in the background section, the mass cytometry platform used to analyse the CRC organoids is already a mature approach. With a previously characterised model, the effects of both TME and genotypical perturbations have also been described, but the data analysis was done using custom and discrete scripts; encumbering consistency and reproducibility for future analyses.
+% To improve upon this I have designed and developed CyGNAL (CyTOF SiGNalling AnaLysis)20, a pipeline for mass cytometry data analysis with a focus on studying PTM changes across multiple conditions. Under continued development and in revision at Nature Protocols, CyGNAL aims to streamline and bring to non-computational scientists analyses similar to those shown in Qin et al. 202011, with the addition of dimensionality reduction embeddings and interactive visualisations. 
+% The maturity of the platform is also reflected on the properties of the markers used in the mass cytometry panels, with the most robust markers achieving highly binary and specific staining. Given the importance of cell state changes to perturbations in the epithelial organoids, either in the form of intrinsic effects such as genotype or extrinsic in the form of the TME or drug treatments, an automated approach of labelling and assigning a cell state to each cell in an experiment would facilitate routine analysis of mass cytometry datasets. 
+% I thus hypothesise that we can use a machine learning approach to, using a series of canonical cell state markers, automatically predict and label the hundreds of thousands of cells captured in a mass cytometry experiment. To this end I aim to develop a random-forest classifier. This classifier will be able to ingest mass cytometry datasets and, using manually gated datasets with cell state labels as training data, label each of the cells with one of six possible cell states: Apoptosis, G0, G1, S-phase, G2, and M-phase. 
+
+
+% Both the SI LGR5 and the colonic organoid systems have been thoroughly characterised before at the mass cytometry level and, to better understand these systems, we aim to perform a comparative characterisation of the organoids using scRNA-seq. 
+% Given the well-known biology of the murine small intestine at the transcriptome level21, we can analyse the SI LGR5s to characterise the different subpopulations within the epithelial organoids and cross-validate the results with in vivo scRNA-seq studies and the mass cytometry results discussed above11. In a similar fashion, we also aim to characterise the colonic organoids and the stromal and immune compartments that form the TME in the heterocellular cultures. Unlike mass cytometry, which requires tailored panels of antibodies reaching only into a few dozens, with scRNA-seq we will be able to characterise thousands of genes at once in the organoids, fibroblasts, and macrophages. 
+% Leveraging the publicly available ligand-receptor databases mentioned in the background section, data from the scRNA-seq experiments will be used to identify the ligands and receptors expressed in the colonic heterocellular organoid cocultures. 
+% The cell communication information gathered this way can then be summarised as signalling pathways that define and connect the different populations of cells. Furthermore, the study of this interactome would aid towards understanding the interplay between the CRC organoid model and its TME. This can be achieved by comparing the cell communication results with the intracellular PTM signalling described in Qin et al. 2020 and seeing how cellular communications change in cultures mimicking an oncogenic setting.
+
+\subsection{Aims:}
+
+\subsubsection{Build an automated pipeline to facilitate analysis of mass cytometry datasets}
+
+\subsubsection{Perform integrated scRNA-seq analysis on colonic organoid cultures regulated by CRC oncogenic hallmarks and micro-environmental fibroblasts and macrophages}
+
+\subsubsection{Describe the colon epithelial stem landscape and mechanistically understand its regulation}
+
+\subsubsection{Develop a modality agnostic Knowledge Graph based approach to study cell communication in organoid-fibroblasts co-cultures}
+
+
+
+
+
