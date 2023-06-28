@@ -8,14 +8,162 @@
 \label{appendix:XXX}
 (stuff)
 
-\chapter{Appendix YYY}
-\label{appendix:YYY}
-(things)
+\chapter{Cell-cycle Gene Lists}
+\label{appendix:cycle}
+Table of cell-cycle genes adapted from Tirosh et al. 2016 \cite{tirosh_dissecting_2016} and Macosko et al. 2015 \cite{macosko_highly_2015}, the former using a human melanoma cell line and the later both human and mouse models to link gene expression with cell cycle phases. The original tables provided in the publication were pooled together, duplicated genes were dropped, and human symbols were translated to mouse using BioMart. Finally, genes whose expression could not be deteced in any of the mouse organoid experiments were dropped from the list. The resulting table contains 98 genes associated with S-phase, 248 with both G2 and M-phase, and 202 with G1.
+
+\begin{table}
+  \centering
+  \csvreader[
+    tabular=|c|c|c|,
+    table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
+    late after line=\\ \hline,
+    filter={\value{csvinputline}<44},
+    separator=tab
+  ]{0Xappendices/CellCycle_geneSet.txt}{}%
+  {\csvcoli & \csvcolii & \csvcoliii}
+  % \caption{Your table caption}
+  \label{tab:your-table}
+\end{table}
+\begin{table}
+  \centering
+  \csvreader[
+    tabular=|c|c|c|,
+    table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
+    late after line=\\ \hline,
+    filter expr={
+      test{\ifnumgreater{\thecsvinputline}{43}}
+  and test{\ifnumless{\thecsvinputline}{86}}},
+    separator=tab
+  ]{0Xappendices/CellCycle_geneSet.txt}{}%
+  {\csvcoli & \csvcolii & \csvcoliii}
+  % \caption{Your table caption}
+  \label{tab:your-table}
+\end{table}
+\begin{table}
+  \centering
+  \csvreader[
+    tabular=|c|c|c|,
+    table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
+    late after line=\\ \hline,
+    filter expr={
+      test{\ifnumgreater{\thecsvinputline}{85}}
+  and test{\ifnumless{\thecsvinputline}{128}}},
+    separator=tab
+  ]{0Xappendices/CellCycle_geneSet.txt}{}%
+  {\csvcoli & \csvcolii & \csvcoliii}
+  % \caption{Your table caption}
+  \label{tab:your-table}
+\end{table}
+\begin{table}
+  \centering
+  \csvreader[
+    tabular=|c|c|c|,
+    table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
+    late after line=\\ \hline,
+    filter expr={
+      test{\ifnumgreater{\thecsvinputline}{127}}
+  and test{\ifnumless{\thecsvinputline}{170}}},
+    separator=tab
+  ]{0Xappendices/CellCycle_geneSet.txt}{}%
+  {\csvcoli & \csvcolii & \csvcoliii}
+  % \caption{Your table caption}
+  \label{tab:your-table}
+\end{table}
+\begin{table}
+  \centering
+  \csvreader[
+    tabular=|c|c|c|,
+    table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
+    late after line=\\ \hline,
+    filter expr={
+      test{\ifnumgreater{\thecsvinputline}{169}}
+  and test{\ifnumless{\thecsvinputline}{212}}},
+    separator=tab
+  ]{0Xappendices/CellCycle_geneSet.txt}{}%
+  {\csvcoli & \csvcolii & \csvcoliii}
+  % \caption{Your table caption}
+  \label{tab:your-table}
+\end{table}
+\begin{table}
+  \centering
+  \csvreader[
+    tabular=|c|c|c|,
+    table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
+    late after line=\\ \hline,
+    filter expr={
+      test{\ifnumgreater{\thecsvinputline}{211}}},
+    separator=tab
+  ]{0Xappendices/CellCycle_geneSet.txt}{}%
+  {\csvcoli & \csvcolii & \csvcoliii}
+  % \caption{Your table caption}
+  \label{tab:your-table}
+\end{table}
+
+
+\chapter{pyKrack}
+\label{appendix:pykrack}
+
+CAHpter on pykrack as a package. Concept of hierachy in a graph. Krackhadt heirahrcy. 
+
+Implementaiotn in Python
+
+Compare against already existing R implemtnation.
+using nbdev for coding, vignettes, documentation, packaging and plublishing (to pypi).
+
+Some kind of figure here
+
+\section*{Introduction}
+
+Biological signaling can be modeled as a directed network, where nodes represent genes/proteins and edges represent signaling interactions.
+
+The hierarchy of such a network can be quantified using various metrics, including the Krackhardt hierarchy score. This score measures the degree to which the network exhibits a perfect hierarchy, with higher scores indicating greater hierarchy.
+
+In R the sna package presents methods to compute graph hierarchy including Krackhardt’s score (defined as
+where is the number of unordered pairs of points in Dr that are asymmetrically linked), and there are other hierarchy scores implemented in Python such as Flow Hierarchy Score Luo and Magee 2011. However, despite its utility, there is currently no native implementation of the Krackhardt hierarchy score in Python.
+
+\subsection{}{Krackhardt hierarchy score}
+
+As defined in Krackhardt, David. (1994). Graph Theoretical Dimensions of Informal Organization. Computational Organization Theory. 89.
+
+The graph hierarchy condition states that in a digraph D, for each pair of points where one (Pi) can reach another (Pj), the second (Pj) can't reach the first (Pi). 
+For example, in a formal organization chart a high lvl employee can reach through the chain of command her subordinate's subordinate. If the formal organization is working "properly", this lower lvl employee can't simultaneously reach the high lvl employee.
+To measure the degree of hierarchy of digraph D, a new digraph Dr must be created. Dr is defined as the reachability digraph of D. Each point in D exists in Dr; moreover, the line (Pi,Pj) exists in Dr if and only if Pi can reach Pj in D. If D is graph hierarchic, then Dr will have no symmetric lines in it (i.e. if the line (Pi,Pj) exists in Dr then the line (Pj,Pi) does not).
+
+The degree of hierarchy then is defined as:
+
+Where is the number of unordered pairs of points in Dr that are symmetrically linked , and the number of unordered pairs of points in Dr where Pi is linked to Pj or viceversa.
+
+%%%%%%%%
+
+The Krackhardt hierarchy score is given by the following equation:
+
+\begin{equation}
+H_i = \frac{\sum_{j \in P_i} w_{ij} H_j}{k_i}
+\end{equation}
+
+where $H_i$ is the hierarchy score for node $i$, $P_i$ is the set of direct reports of node $i$, $w_{ij}$ is the weight of the edge between nodes $i$ and $j$, and $k_i$ is the number of direct reports of node $i$.
+
+This equation calculates the hierarchy score for each node in a network based on the hierarchy scores of its direct reports and the weights of the edges between them. The hierarchy score represents the level of influence or power that a node has in the network, with higher scores indicating greater influence.
+
+
+
+
+
+\section{Implementation}
+
+\subsection{compute hierarchy function}
+
+\subsection{nbdev paltform}
+
 
 \chapter{Cell-state Random Forest Classifier}
 \label{appendix:rfclass}
 
 \section*{Rationale and Aims}
+
+The maturity of the platform is also reflected on the properties of the markers used in the mass cytometry panels, with the most robust markers achieving highly binary and specific staining. Given the importance of cell state changes to perturbations in the epithelial organoids, either in the form of intrinsic effects such as genotype or extrinsic in the form of the TME or drug treatments, an automated approach of labelling and assigning a cell state to each cell in an experiment would facilitate routine analysis of mass cytometry datasets. 
+I thus hypothesise that we can use a machine learning approach to, using a series of canonical cell state markers, automatically predict and label the hundreds of thousands of cells captured in a mass cytometry experiment. To this end I aim to develop a random-forest classifier. This classifier will be able to ingest mass cytometry datasets and, using manually gated datasets with cell state labels as training data, label each of the cells with one of six possible cell states: Apoptosis, G0, G1, S-phase, G2, and M-phase. 
 
 \section*{Implementation}
 The cell state classifier built uses the scikit-learn Python package35 to train and run a Random Forest classification algorithm. A Random Forest algorithm (referred to as RF hereafter) is based on a series of decision trees, simple non-parametric models that predict the class of an observation by learning decision rules inferred from the data during training. By using a randomised collection of these trees (i.e., a forest) the RF palliates the tendency of decision trees towards overfitness while at the same time reducing the variance of the results.
@@ -42,6 +190,14 @@ Figure 4: Benchmarking the new 10-marker RF cell state classifier. Building a RF
 \section*{Discussion}
 This classifier shows link PTM->cellSTate, later shown in pubs from our lab
 Usefullness in determining antibodies not working properly?
+
+
+\chapter{Appendix CardosoRodriguez \& Qin et al.}
+\label{appendix:XXX}
+
+\includepdf[pages=-, scale=1, offset=24mm -28mm]{0Xappendices/preprint.pdf}
+
+
 
 \chapter{Colophon}
 \label{appendix3label}
