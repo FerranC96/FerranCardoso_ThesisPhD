@@ -290,68 +290,68 @@ Acknowledge all the things!
 \end{abbreviations}
 
 
-%  Gantt chart goes here (for now, will be removed from thesis)
-\newpage
+% %  Gantt chart goes here (for now, will be removed from thesis)
+% \newpage
 
-\section*{Gantt Chart on Thesis Completion}
+% \section*{Gantt Chart on Thesis Completion}
 
-\begin{rotate}{270}
+% \begin{rotate}{270}
 
-    \ganttset{%
-        calendar week text={%
-            \currentweek
-        }%
-    }
-    \begin{ganttchart}[
-            inline,
-            milestone inline label node/.append style={left=5mm},
-            group/.append style={draw=white, fill=white},
-            title label font=\small,
-            bar label font=\scriptsize,
-            x unit=1.3mm,
-            vrule/.style={green!50!black, dashed},
-            vrule label font=\bfseries,
-            vrule label node/.append style={anchor=north west},
-            vgrid={*{6}{draw=none},dotted},
-            time slot format=isodate
-        ]{2023-03-06}{2023-08-31}
-        \gantttitlecalendar{month=shortname, week=0} \\
+%     \ganttset{%
+%         calendar week text={%
+%             \currentweek
+%         }%
+%     }
+%     \begin{ganttchart}[
+%             inline,
+%             milestone inline label node/.append style={left=5mm},
+%             group/.append style={draw=white, fill=white},
+%             title label font=\small,
+%             bar label font=\scriptsize,
+%             x unit=1.3mm,
+%             vrule/.style={green!50!black, dashed},
+%             vrule label font=\bfseries,
+%             vrule label node/.append style={anchor=north west},
+%             vgrid={*{6}{draw=none},dotted},
+%             time slot format=isodate
+%         ]{2023-03-06}{2023-08-31}
+%         \gantttitlecalendar{month=shortname, week=0} \\
         
-        \ganttgroup{Introduction}{2023-03-17}{2023-04-07}
-        \ganttbar{Text}{2023-03-17}{2023-03-27}
-        \ganttlinkedbar{Figs}{2023-03-29}{2023-04-07} \\
-        \ganttgroup{Methods}{2023-04-10}{2023-05-22}
-        \ganttbar{Pass 1}{2023-04-10}{2023-04-16}
-        \ganttlinkedbar{Pass 2}{2023-05-15}{2023-05-22} \\
-        \ganttgroup{CyGNAL}{2023-04-17}{2023-04-28}
-        \ganttbar{Text}{2023-04-17}{2023-04-21}
-        \ganttlinkedbar{Figs}{2023-04-24}{2023-04-28} \\
-        \ganttgroup{scRNAseq}{2023-04-26}{2023-05-12}
-        \ganttbar{Text}{2023-04-26}{2023-05-05}
-        \ganttlinkedbar{Figs}{2023-05-08}{2023-05-12} \\
-        \ganttgroup{KG}{2023-03-06}{2023-05-29}
-        \ganttbar{Development}{2023-03-06}{2023-03-31}
-        \ganttlinkedbar{Text}{2023-05-12}{2023-05-19} 
-        \ganttlinkedbar{Figs}{2023-05-22}{2023-05-29} \\
-        \ganttgroup{Discussion}{2023-05-22}{2023-06-02}
-        \ganttbar{Text}{2023-05-22}{2023-06-02} \\
-        \ganttmilestone{Draft}{2023-06-02}
-        \ganttlinkedbar{Reviews}{2023-06-05}{2023-06-19} 
-        \ganttlinkedmilestone[
-            milestone inline label node/.append style={right=5mm}
-        ]{Completion}{2023-06-23}
-        \ganttvrule{TCM}{2023-03-10}
-        \ganttvrule{Entry \& Nomination}{2023-04-01}
-        \ganttvrule[
-            vrule/.append style={blue, very thick}
-        ]{Thesis submission}{2023-06-26}
-        \ganttvrule[
-            vrule label node/.append style={anchor= north east},
-            vrule/.append style={red, very thick}
-        ]{Viva}{2023-08-30}
-    \end{ganttchart}
+%         \ganttgroup{Introduction}{2023-03-17}{2023-04-07}
+%         \ganttbar{Text}{2023-03-17}{2023-03-27}
+%         \ganttlinkedbar{Figs}{2023-03-29}{2023-04-07} \\
+%         \ganttgroup{Methods}{2023-04-10}{2023-05-22}
+%         \ganttbar{Pass 1}{2023-04-10}{2023-04-16}
+%         \ganttlinkedbar{Pass 2}{2023-05-15}{2023-05-22} \\
+%         \ganttgroup{CyGNAL}{2023-04-17}{2023-04-28}
+%         \ganttbar{Text}{2023-04-17}{2023-04-21}
+%         \ganttlinkedbar{Figs}{2023-04-24}{2023-04-28} \\
+%         \ganttgroup{scRNAseq}{2023-04-26}{2023-05-12}
+%         \ganttbar{Text}{2023-04-26}{2023-05-05}
+%         \ganttlinkedbar{Figs}{2023-05-08}{2023-05-12} \\
+%         \ganttgroup{KG}{2023-03-06}{2023-05-29}
+%         \ganttbar{Development}{2023-03-06}{2023-03-31}
+%         \ganttlinkedbar{Text}{2023-05-12}{2023-05-19} 
+%         \ganttlinkedbar{Figs}{2023-05-22}{2023-05-29} \\
+%         \ganttgroup{Discussion}{2023-05-22}{2023-06-02}
+%         \ganttbar{Text}{2023-05-22}{2023-06-02} \\
+%         \ganttmilestone{Draft}{2023-06-02}
+%         \ganttlinkedbar{Reviews}{2023-06-05}{2023-06-19} 
+%         \ganttlinkedmilestone[
+%             milestone inline label node/.append style={right=5mm}
+%         ]{Completion}{2023-06-23}
+%         \ganttvrule{TCM}{2023-03-10}
+%         \ganttvrule{Entry \& Nomination}{2023-04-01}
+%         \ganttvrule[
+%             vrule/.append style={blue, very thick}
+%         ]{Thesis submission}{2023-06-26}
+%         \ganttvrule[
+%             vrule label node/.append style={anchor= north east},
+%             vrule/.append style={red, very thick}
+%         ]{Viva}{2023-08-30}
+%     \end{ganttchart}
     
-\end{rotate}
+% \end{rotate}
 
 
 \tableofcontents

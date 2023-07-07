@@ -171,9 +171,7 @@ It is important to note that for calculating the EMD and DREMI scores and comput
 
 \colorbox{yellow}{This reads more like it should be in the main chapter}
 
-In the specific context of PTM network signalling analysis, EMD and DREMI scores can be used to assemble signalling network diagrams. With EMD used to quantify PTM node intensity and DREMI to score PTM-PTM edge connectivity, a signalling network can be curated and manually annotated as shown in Qin et al. 2020\cite{qin_cell-type-specific_2020}. 
-
-However, CyGNAL already automates and allows for the user to visualise both EMD and DREMI scores in an interactive manner via Shinny-Apps\cite{noauthor_rstudioshiny_2021}. 
+CyGNAL  automates and allows for the user to visualise both EMD and DREMI scores in an interactive manner via Shinny-Apps\cite{noauthor_rstudioshiny_2021}. 
 
 The Shiny-Apps are contained within R files loaded from the last main scripts of the CyGNAL workflow. For this, user defined arguments in the python scripts need to be parsed to the R Shiny server when it is called through bash using Rscript.
 
@@ -191,9 +189,24 @@ The cell state classifier built uses the \emph{scikit-learn} Python package \cit
 
 Hosted in \url{https://github.com/FerranC96/C\_StateML}, this Cell-State RF classifier consists of two Python scripts and shared auxiliary functions. 
 The first of the scripts is used to train a model from labelled data and report on its performance against validation and testing datasets. Default parameters are used for the Random Forest (except for an increase in the number of decision trees to 480), and the cell state classes in the training data are balanced by donwsampling to the least common state. Pre-trained models are also included in the repository as will be detailed below.
+Balancing classes is done to ensure that all cell states are trained using the same number of cells and so that performance metrics such as $F_1$ scores, which are vulnerable to imbalanced classes, can be used.
+
 The second script is used to run a saved RF model through new mass cytometry datasets to label and assign a state to each cell. While designed to work with unlabelled data, if the input data is already labelled this script also reports on the model's performance. 
 
-Performance evaluation is reported both as text and in the form of plots, and consists of; 1) confusion matrices, 2) log losses, 3) precision, recall, and F-1 scores calculated as the harmonic mean of the precision and recall for each class). Before both training and evaluation the data is assumed to be in the form of raw intensities and gets transformed using an inverse hyperbolic \(asinh x\) transform with a co-factor of \(5\). 
+Performance evaluation is reported both as text and in the form of plots, and consists of; 1) confusion matrices, 2) log losses, 3) precision, recall, and $F_1$ scores for each class. 
+
+ For class $c$, let:
+\[precision_c = \frac{TP_c}{PredP_c}\]
+where precision is also known as Positive Predictive Value, $TP_c$ is the number of true positives, and $PredP_c$ the number of predicted members in $c$,
+
+and let
+\[recall_c = \frac{TP_c}{P_c}\]
+where recall is also know as True Positive Rate and $P_c$ is the number of cells in $c$,
+
+the $F_1$ scores for each class $c$ are defined as the harmonic mean of the precision and recall of $c$ so that:
+\[F_1 = 2 \frac{precision \cdot recall}{precision + recall}\]
+
+Before both training and evaluation the data is assumed to be in the form of raw intensities and gets transformed using an inverse hyperbolic \(asinh x\) transform with a co-factor of \(5\). 
 
 \begin{figure}
     \centering
@@ -315,7 +328,7 @@ Gene expression values were normalised for total counts, multiplied by a scale f
 
 An alternative normalisation approach was used as described in Hafemeister \& Satija 2019 \cite{hafemeister_normalization_2019}. Named sctransform (SCT) this method models both biological and technical variation using the Pearson residuals from a regularised negative bionamial regression. The nature of this model allows for certain signals to be regressed out, such as the percentage of mitochondrial transcripts over the total reads in a cell, or for differences between cycling cells in different phase of the cell cycle. We computed SCT normalised count matrices with 6,000 features and regressed out mithoncondrial content and differences between cell cycle phases.
 
-Cell Cycle scores were computed using the CellCycleScoring function from Seurat (a wrapper for AddModuleScore) and a curated list of cell cycle genes shown in \ref{appendix:cycle}. By comparing how well a cell matches the G2 and M-phase signature, versus a G1 and S-phase signature, cells could be classed into Dividing cells (Mitosis and G2), Cycling (G1 and Synthesis), and Other (cells with low scores for both signatures, most likely outside of the cell cycle). Differences between the Dividing and Cycling groups were also regressed out when computing the SCT normalised count expression data, as it was deemed that intra-cycle differences were not central to the biological system being studied.
+Cell Cycle scores were computed using the CellCycleScoring function from Seurat (a wrapper for AddModuleScore) and a curated list of cell cycle genes shown in \ref{appendix:cycle}. By comparing how well a cell matches the G2 and M-phase signature, versus a G1 and S-phase signature, cells could be classed into Dividing cells (Mitosis and G2), Cycling (G1 and Synthesis), and Other (cells with low scores for both signatures, most likely outside of the cell cycle). Differences between the Dividing and Cycling groups were also regressed out when computing the SCT normalised count expression data, as it was deemed that intra-cycle differences were not central to the biological system being studied. \colorbox{yellow}{ADD REF TO APPENDIX}
 
 Throughout the study, steps that relied on building a k-NN graph or low-dimensional representation of the data use either the SCT normalised data or the SCT-derived integrated representation (see section below).
 
@@ -332,7 +345,7 @@ Untransformed data was used for the scVI workflow \colorbox{yellow}{(validate th
 
 \subsection*{Dimensionality Reduction}
 
-To generate the EMD PCA plots shown in Figure \colorbox{yellow}{XXXXX} I used the normalised gene expression data of all cells of a particular cell type (organoids, fibroblasts, or macrophages) stored within the RNA assay of the integrated Seurat object from \colorbox{yellow}{XXX}. EMD scores for the top 6,000 variable genes of each condition were computed with CyGNAL \cite{cardoso_tape-labcygnal_2021} using the relevant control condition for each cell type: WT monoculture for epithelial organoids, fibroblast monoculture for fibroblast cells, and macrophage monoculture for macrophage cells. The collection of gene-specific EMD scores for each condition was then used to compute a PCA space where each dot represent a whole condition.
+To generate the EMD PCA plots shown in Figure \colorbox{yellow}{XXXXX} I used the normalised gene expression data of all cells of a particular cell type (organoids, fibroblasts, or macrophages) stored within the RNA assay of the integrated Seurat object from \colorbox{yellow}{XXX}. EMD scores for the top 6,000 variable genes of each condition were computed with CyGNAL \cite{ferran_cardoso_tape-labcygnal_2021} using the relevant control condition for each cell type: WT monoculture for epithelial organoids, fibroblast monoculture for fibroblast cells, and macrophage monoculture for macrophage cells. The collection of gene-specific EMD scores for each condition was then used to compute a PCA space where each dot represent a whole condition.
 
 The standard pipeline for generating single-cell embeddings consisted of computing a set of 50 to 100 principal components (PC) from a normalised count matrix, from which 2-dimensional PHATE embeddings were generated with default parameters \colorbox{yellow}{(see Table S\ref{})}. PHATE was chosen as the default DR method for visualisation due to its capacity to capture the global structure in biological settings with important developmental trajectories \cite{moon_visualizing_2019}. In the context of integrated datasets via scVI, the 30-dimensional latent space was used to generate the PHATE embeddings. 
 This mid-dimensional PCA space was also used to compute most of the \emph{k}-NN cell-cell graphs used throughout the study. 
@@ -348,51 +361,94 @@ Heatmaps of selected marker genes were generated with the R package \textit{Comp
 
 \subsection*{Differential Abundance}
 
-Differentially abundant (DA) cell neighbourhoods were identified using the R package \textit{MiloR} \cite{dann_differential_2022}, which enabled the detection of enrichment and depletion of cell clusters caused by microenvironmental and/or genotypical perturbations. 
-DA test threshold set at 5\% SpatialFDR (Figure \ref{fig:fig1}F).knn graph to match those used for clustering and low dimensional embeddings.
-In the context of fibroblast regualtion of the colonic epithelia, Given that CD34\textsuperscript{hi} and CD34\textsuperscript{lo} fibroblasts do not differentially regulate epithelial cells \colorbox{yellow}{(Figure \ref{suppfig:figs1}B)}, all samples of WT organoid+fibroblast co-cultures were grouped and considered replicates of the query condition regardless of the CD34 status of the fibroblasts. 
- Similarly, AK and AKP organoid monocultures were grouped due to their similar DE and DA behaviour (Figure \ref{fig:fig1}G). 
- 
- The DA overview dot plot in Figure \ref{fig:fig1}H was generated by comparing the 17 conditions against the WT monoculture control (2$\times$ replicates). Size and colour of the dots reprsent X and Y. Absence of replicates means statistics not really relevant.
+Differentially abundant (DA) cell neighbourhoods were identified using the R package \textit{MiloR} \cite{dann_differential_2022}. Milo works by constructing cellular neighbourhoods on a \emph{k}-NN graph. These neighbourhoods can overlap with one another, for cells may belong to multiple neighbourhoods at once, and act as the basis of Milo's compositional analysis. By comparing the composition of these neighbourhoods in terms of a categorical variable of interest (condition), Milo assigns them an enrichment score (log Fold Change) according to the relative abundace of cells from the query or control condition. Significance and regression out of technical and unwanted biological variables is achieved though a Generalised Linear Model via the mature edgeR package \cite{robinson_edger_2010}, and using the SpatialFDR metric (first described in Lun et al. 2017 \cite{lun_testing_2017}).
+DA analysis thus allows for the detection of enrichment and depletion of epithelial cell states caused by microenvironmental and/or genotypical perturbations in the organoid system. 
+
+For the analysis shown in \colorbox{yellow}{FIGURE NUMBER} I set the DA test threshold at 5\% SpatialFDR (Figure \ref{fig:fig1}F). In the context of fibroblast regulation of the colonic epithelia, given that CD34\textsuperscript{hi} and CD34\textsuperscript{lo} fibroblasts do not differentially regulate epithelial cells \colorbox{yellow}{(Figure \ref{suppfig:figs1}B)}, all samples of WT organoid+fibroblast co-cultures were grouped and considered replicates of the query condition regardless of the CD34 status of the fibroblasts. AK and AKP organoid monocultures were also grouped due to their similar DE and DA behaviour (Figure \ref{fig:fig1}G).
+The DA overview dot plot in Figure \ref{fig:fig1}H was generated by comparing the 17 conditions against the WT monoculture control (2$\times$ replicates). Size of the dots represents the number of neighbourhoods associated with a particular combination of cluster and conditions, while dot colour shows the median log Fold Change value for those neighbourhoods. Absence of replicates in this approach results in a lack of relevance for the SpatialFDR statistic, and the control condition (1st row) was populated with empty values for visualisation purposes. 
+
+The \emph{k}-NN graphs used by Milo where constructed as detailed in the section above.
 
 \subsection*{Signature score correlations}
 
-% The \textit{UCell} \cite{andreatta_ucell_2021} method was used to generate the correlation matrix between gene signatures in existing literature and cell clusters identified within this study (Figure \ref{suppfig:figs2}A). Gene lists for different intestinal stem cell-states were compiled from public datasets, together with transcriptional targets of key signalling pathways encoding the different stem cell-states (Table S3). These gene lists were compared with the curated gene signatures for proliferation, CSC, revCSC, and proCSC cell-states in Figure \ref{fig:fig1}I, as well as the top DE genes for each stem cluster (adjusted p-value < 0.01, log2FC > 0.25, top 24 genes with the greatest positive log2FC values) (Table S3). \textit{UCell} scores for each gene set were calculated using Log-normalised gene expression values and z-scored to allow cross-signature comparison. Pearson correlations were computed between the scores on all cells of stem and TA clusters and then visualised as a correlation heatmap, grouped via complete linkage hierarchical clustering, only showing significant correlations (conf.level = 0.95).
+The \textit{UCell} \cite{andreatta_ucell_2021} method was used to generate the correlation matrix between gene signatures in existing literature and cell clusters identified within this study \colorbox{yellow}{(Figure \ref{suppfig:figs2}A)}. UCell uses the Wilcoxon rank-sum test, also known as Mann-Whitney U, and a matrix of ranked genes (by expression) for each cell in the dataset. Given a list of genes, UCell can then score how well each cell matches their expression. Unlike Seurat's AddModuleScore function (and it's re-implementaion in scanpy), the resulting scores are not normalised against a control gene set, making UCell scores impervious to dataset composition. 
+
+Gene lists for different intestinal stem cell-states were compiled from public datasets, together with transcriptional targets of key signalling pathways encoding the different stem cell-states \colorbox{yellow}{NEED TO MAKE THIS TABLE}. Gene identifiers where transformed to murine Gene Symbols (to be compared with the features in the sequencing dataset) by querying BioMart \cite{smedley_biomart_2009}. These gene lists were compared with the curated gene signatures for proliferation, CSC, revCSC, and proCSC cell-states in \colorbox{yellow}{Figure \ref{fig:fig1}I}, as well as the top DE genes for each stem cluster (adjusted p-value < 0.01, log2FC > 0.25, top 24 genes with the greatest positive log2FC values) \colorbox{yellow}{(Table S3)}. \textit{UCell} scores for each gene set were calculated using Log-normalised gene expression values and z-scored to allow cross-signature comparison.
+
+\colorbox{yellow}{EMBED TABLE HERE}
+\ref{tab:SignMD}
+By gathering more than 50 gene lists from the literature \colorbox{yellow}{POINT TO GITHUB OR TO SUP TABLE} that describe key signalling pathways and stem-related gut epithelia states, I could put the results of this study in context with a broader corpus of works in varied settings, such as human data, cancer, or tissue repair.
+
+Pearson correlations were computed between the relevant scores (i.e. those whose context refers to the stem compartment or key signalling pathways) on all cells of stem and TA clusters and then visualised as a heatmap-like correlation matrix with the corrplot package \cite{wei_r_2021}. Signatures that did not have a SD deviation of scores greater than 0.2 across the cells where excluded from the analysis (as they would equally mark all states present in the dataset), and matrix entries where populated for significant correlations (confidence level of 0.95, )heatmap entries were only showing significant correlations (conf.level = 0.95, based on Pearson's product moment correlation coefficient). Finally, the matrix was ordered and grouped via complete linkage hierarchical clustering (k=3). 
+
+
 
 \subsection*{Signalling Entropy}
 
-% Leveraging the concept that cells with a higher potency should have a higher signalling entropy \cite{teschendorff_signalling_2014}, the pluripotency values for epithelial cells across the different clusters were estimated using the R package \textit{SCENT} \cite{teschendorff_singlecell_2017}. Signalling entropy scores for all epithelial cells were computed with the CCAT (correlation of connectome and transcriptome) approximation method using a murinised version of the built-in \textit{net17Jan16} Protein-Protein interaction network.
+Leveraging the concept that cells with a higher potency should have a higher signalling entropy \cite{teschendorff_signalling_2014}, the pluripotency values for epithelial cells across the different clusters were estimated using the R package \textit{SCENT} \cite{teschendorff_singlecell_2017}. 
+Signalling entropy scores for all epithelial cells in \colorbox{yellow}{INT EPI OBJECT FIGURE} were determined via the CCAT approximation method, which computes a Pearson correlation between a cell's transcriptome and the interactome as defined by the built-in \textit{net17Jan16} Protein-Protein interaction network (derived from the Pathway Commons database). As the interaction network is annotated with NCBI gene IDs, BioMart was used to translate them to MGI gene symbols.
+
+Being a method that is completely independent of any cell metadata, like clusters or conditions, the resulting vector of CCAT scores was added as a new metadata column to the sequencing dataset object and used to compare pluripotency in \colorbox{yellow}{VIOLIN PLOTS} and as one of the components of the Valley-Ridge score \colorbox{yellow}{REFE TO VR SECTION!(\ref{})}
+
 
 \subsection*{RNA Velocity}
 
-% For RNA velocity analysis, loom files were generated from Cell Ranger's output using the Python package \textit{velocyto} \cite{lamanno_rna_2018} (reference genome: GRCm38, repeat mask assembly: GRCm38/mm10, track: RepeatMasker). RNA velocity was analysed with the Python package \textit{scVelo} \cite{bergen_generalizing_2020} using default parameters unless otherwise specified (Table S2). Metadata and PHATE embedding coordinates were exported from the relevant Seurat objects to filter and annotate anndata objects generated from the loom files made by velocyto. Moments for the velocity estimation were calculated using the first 50 PCs and 30 neighbours from the anndata objects. RNA velocities were computed with the \textit{recover\_dynamics} function using the dynamical model of transcriptional dynamics with default parameters. The velocity stream embedding (Figure \ref{fig:fig1}E) was computed using the integrated object containing epithelial cells from all conditions. The RNA velocity vector lengths, an estimate of a cell's differentiation rate, were computed using cells solely from the 4 conditions shown in Figure \ref{suppfig:figs2}B-D. The quantitative comparison in Figure \ref{suppfig:figs2}D was performed using the Games-Howell pairwise test wrapper from the R package \textit{statsExpressions} \cite{patil_statsexpressions_2021}. All conditions were compared against the WT monoculture control and all \textit{p}-values have been corrected for multiplicity with the Holm method.
+For RNA velocity analysis, loom files were generated from Cell Ranger's output using the command line interface tool \textit{velocyto} \cite{lamanno_rna_2018}. The murine GRCm38 reference was used, with the GRCm38/mm10 repeat mask assembly and the RepeatMasker track. RNA velocity was analysed with the Python package \textit{scVelo} \cite{bergen_generalizing_2020} using default parameters unless otherwise specified \colorbox{yellow}{(Table S2)}. Metadata and PHATE embedding coordinates were exported from the relevant Seurat objects to filter and annotate AnnData objects generated from the loom files made by velocyto. Moments for the velocity estimation were calculated using the first 50 PCs and 30 neighbours from the AnnData objects. RNA velocities were computed with the \textit{recover\_dynamics} function using the dynamical model of transcriptional dynamics with default parameters. The velocity stream embedding (Figure \ref{fig:fig1}E) was computed using the integrated object containing epithelial cells from all conditions. The RNA velocity vector lengths, an estimate of a cell's rate of transcriptional change, were computed using cells solely from the 4 conditions shown in Figure \ref{suppfig:figs2}B-D. The quantitative comparison in Figure \ref{suppfig:figs2}D was performed using the Games-Howell pairwise test wrapper from the R package \textit{statsExpressions} \cite{patil_statsexpressions_2021}. All conditions were compared against the WT monoculture control and all \textit{p}-values have been corrected for multiplicity with the Holm method.
+
+Initial and terminal macrostates where determined using CellRank \cite{lange_cellrank_2022}, which leverages RNA velocity information to describe cellular dynamics. The matrix of cell-cell transition probabilities was constructed as a weighted combination of the transition matrix based on velocity directions (through the VelocityKernel class, weight of 0.8) and a symmetric transcriptional similarity matrix (through the ConnectivityKernel class, weight of 0.2). Macrostates, and their transition probabilities, were computed using the built-in Generalised Perron Cluster-Cluster Analysis (GPCA) estimator. To find initial macrostates, inverse velocity vectors are used to assemble the transition matrix by setting the backward argument to \texttt{True} when computing the VelocityKernel component. 
 
 \subsection{Cell-to-cell communication analysis}
 
-% Ligand-receptor expression analysis was performed using the R package CellChat \cite{jin_inference_2021}, where stromal-epithelial signalling was analysed across 4 different organoid genotypes (WT, A, AK, and AKP). Epithelial cells were annotated with the clusters previously identified (Figure \ref{fig:fig1}D), while the fibroblasts were grouped as a single cluster. A merged CellChat object was generated to compare relative communication probability of fibroblast-to-epithelia signalling across the genotypes. Significant ligand-receptor pairs were identified based on CellChat's murine cell communication database. Plots displaying aggregate outgoing and incoming communication probability (Figure \ref{fig:fig4}A) were generated with the \textit{netAnalysis\_signalingRole\_scatter} function. Detected communication at the pathway and interaction level was accessed with the \textit{subsetCommunication} function and probabilities were z-score normalised to allow for cross-pathway or cross-interaction comparison. The results were visualised with ComplexHeatmap in Figure \ref{fig:fig4}B-C, the rows of which were manually ordered based on hierarchical clustering and grouped based on the nature of the interaction. Gene expression of the ligand-receptor pairs identified above was visualised using Seurat's \textit{Dotplot} function in Figure \ref{suppfig:figs5}A. \textit{UCell} scores for ligand and receptor genes were calculated for fibroblasts and epithelial cells respectively. Games-Howell pairwise test was performed using the R package \textit{statsExpressions} and all \textit{p}-values have been corrected for multiplicity with the Holm method.
+Cell-cell communication inference was performed using the R package CellChat \cite{jin_inference_2021}, where stromal-epithelial signalling was analysed across 4 different organoid genotypes (WT, A, AK, and AKP).
+CellChat uses a database of interactions between ligands, receptors, and cofactors \cite{noauthor_cellchatdb_nodate}. Using cluster annotations and the gene expression matrix, interaction probabilities can be inferred between the different populations using a permutation-based approach. The inferred interactions can the be grouped at the pathway level, and functional analysis of the clusters can be infered via network analysis methods. 
+
+Epithelial cells were annotated with the clusters previously identified \colorbox{yellow}{(Figure \ref{fig:fig1}D)}, while the fibroblasts were grouped as a single cluster. A merged CellChat object was generated to compare relative communication probability of fibroblast-to-epithelia signalling across the genotypes. Significant ligand-receptor pairs were identified based on CellChat's murine cell communication database. Plots displaying aggregate outgoing and incoming communication probability \colorbox{yellow}{(Figure \ref{fig:fig4}A)} were generated with the \textit{netAnalysis\_signalingRole\_scatter} function. Detected communication at the pathway and interaction level was accessed with the \textit{subsetCommunication} function and probabilities were z-score normalised to allow for cross-pathway or cross-interaction comparison. The results were visualised with ComplexHeatmap in \colorbox{yellow}{Figure \ref{fig:fig4}B-C}, the rows of which were manually ordered based on hierarchical clustering and grouped based on the nature of the interaction. Gene expression of the ligand-receptor pairs identified above was visualised using Seurat's \textit{Dotplot} function in Figure \ref{suppfig:figs5}A. \textit{UCell} scores for ligand and receptor genes were calculated for fibroblasts and epithelial cells respectively. Games-Howell pairwise test was performed using the R package \textit{statsExpressions} and all \textit{p}-values have been corrected for multiplicity with the Holm method.
+
+
 
 \section{VR score and data-driven Waddington-like landscapes}
 
+Work presented in this section has already been made public in Qin \& Cardoso Rodriguez et al. 2023 \cite{cardoso_rodriguez_single-cell_2023}. While I am the author behind the Valley-Ridge (VR) score design and implementation, including the python-based renders of the data-driven Waddington-like landscapes. 
+
+Dr. Jeroen Claus rendered the landscapes shown in Figure 6 of Qin \& Cardoso Rodriguez et al. 2023. The exact attribution for specific tasks is detailed in the manuscript \cite{cardoso_rodriguez_single-cell_2023}.
+
 \subsection{Computation of the VR score}
 
-% The VR score was defined as the weighted sum of the Valley (weight = 0.9) and the Ridge (weight = 0.1) components, and was computed on a per sample and per cluster basis (Figure \ref{suppfig:figs7}A). The Valley component equals the median CCAT value of each sample-cluster combination. To calculate the Ridge component, the inverse of the velocities was first computed and scaled to a range between 0 and 1. A cell centrality distance was then calculated for cells in each cluster by first building a \textit{k}NN graph of a cluster's cells from the PHATE embeddings (Table S2), followed by the calculation of a distance matrix using graphtool's \textit{shortest\_path} function \cite{peixoto_graphtool_2017}. The median distance for each cell to all other cells was then calculated, whereby cells with the lowest distance would be at a cluster's centre whilst those with the highest distance would be at the cluster periphery. To allow inter-cluster comparisons, outliers with a distance over $Q_{99}$ were set to the median distance value before scaling to (0,1). Finally, the Ridge component was computed per sample-cluster as the product of the median scaled inverse velocities and the cell's scaled centrality distance (Figure \ref{suppfig:figs7}A).
+The VR score is cell-based metric defined as the weighted sum of the Valley and the Ridge components \colorbox{yellow}{(Figure \ref{suppfig:figs7}A)}:
+\[VR = 0.9V+0.1R\]
+where V is the Valley component and R the Ridge component.
 
-THis second part might fit better in the main chapter body
-% This definition of the VR score allows the CCAT-driven Valley component to be the driving force for sculpting the landscape and the velocity-driven Ridge component to predominately define the barriers around clusters -- producing a tarn-like effect symbolising a state of trapped cells. In principle, any other dimensionality reduction technique can be used in place of PHATE \cite{chen_singlecell_2019}, and the Valley/Ridge component can be computed using other metrics underpinning pluripotency and cell-fate transition. The Ridge component can also be calculated with a distance-free approach such as \textalpha-shapes \cite{bellock_bellockk_2021}. Finally, the VR scores can be computed on a per cell or neighbourhood basis, which will increase landscape resolution and liberate the method from constraints of cluster definitions (at the expense of increased noise).
+The Valley component is computed as \(V = med(CCAT)_{s,c}\) for each combination of sample (\(s\)) and cluster (\(c\)). 
+
+Let $u$ be scaled representation of the velocity vector length for each cell ($\frac{1}{|v|}$), and $d$ be the scaled median $L^1$ distance of each cell to all other cells from the same cluster. $d$ acts a cell centrality metric computed on a \emph{k}-NN graph of a cluster PHATE embedding, followed by the calculation of a shortest distance matrix (using the graphtool software \cite{peixoto_graph-tool_2014}) whereby cells with the lowest median distance would be at a cluster's centre whilst those with the highest distance would be at the cluster periphery. Outliers with a distance over $Q_{99}$ were set to the median distance. 
+To allow for inter-cluster comparisons, $d$ was scaled for each cluster to the (0,1) range with sklearn's MinMaxScaler() \cite{pedregosa_scikit-learn_2011}, whereas $u$ was scaled at a dataset level using the same function.
+The Ridge component is then computed per each cell as $R = med(u)_{s,c} \cdot d$. 
+
+% The Valley component equals the median CCAT value of each sample-cluster combination
+% To calculate the Ridge component, the inverse of the velocities was first computed and scaled to a range between 0 and 1. A cell centrality distance was then calculated for cells in each cluster by first building a \emph{k}-NN graph of a cluster's cells from the PHATE embeddings (Table S2), followed by the calculation of a distance matrix . The median distance for each cell to all other cells was then calculated, whereby cells with the lowest distance would be at a cluster's centre whilst those with the highest distance would be at the cluster periphery. To allow inter-cluster comparisons, outliers with a distance over $Q_{99}$ were set to the median distance value before scaling to (0,1). Finally, the Ridge component was computed per sample-cluster as the product of the median scaled inverse velocities and the cell's scaled centrality distance (Figure \ref{suppfig:figs7}A).
+
+This definition of the VR score allows the CCAT-based Valley component to be the driving force for sculpting the landscape and the velocity-driven Ridge component to predominately define local features at the boundaries between clusters, producing a tarn-like effect symbolising a state of trapped cells in cluster whose cells present low velocity vector lengths. In principle, any other dimensionality reduction technique can be used in place of PHATE \cite{chen_single-cell_2019}, and the Valley/Ridge component can be computed using other metrics underpinning pluripotency and cell-fate transition. The Ridge component can also be calculated with a distance-free approach such as \textalpha-shapes \cite{bellock_bellockkalphashape_2021}. Finally, the VR scores could be computed on a per cell or neighbourhood basis, which would increase landscape resolution and liberate the method from constraints of cluster definitions (at the expense of increased noise).
 
 \subsection{VR Landscape projection}
 
-% To generate the Waddington-like landscapes in Figure \ref{fig:fig6}A, we combine the ability of PHATE to capture the global structure of single-cell data with the VR score (described above) (Figure \ref{suppfig:figs7}A-B). 
+To generate the Waddington-like landscapes in Figure \ref{fig:fig6}A, I combine the ability of PHATE to capture the global structure of single-cell data with the VR score (described above) \colorbox{yellow}{(Figure \ref{suppfig:figs7}A-B)}. 
 
-% Waddington-like landscapes can be visualised directly in Python (Figure \ref{suppfig:figs7}B, C). Briefly, a low dimensional 34x30 mesh grid was generated from the PHATE embeddings, and a 3D surface was rendered by projecting VR scores onto the grid using the radial basis function interpolation from scipy \cite{virtanen_scipy_2020} (Table S2). The surface of the landscape was coloured by VR scores and a scatter plot was overlaid where the elevation of each cell was defined as the weighted sum of its VR score (weight = 0.9), CCAT value (weight = 0.1), and a constant factor of 0.012 (weight = 1). This added a level of controlled noise to the scatter plot while ensuring most cells remain above the interpolated surface (Figure \ref{suppfig:figs7}C).
+Waddington-like landscapes can be visualised directly in Python (Figure \ref{suppfig:figs7}B, C). Briefly, a low dimensional 34x30 mesh grid was generated from the PHATE embeddings, and a 3D surface was rendered by projecting VR scores onto the grid using the radial basis function interpolation from scipy \cite{virtanen_scipy_2020} (Table S2). The surface of the landscape was coloured by VR scores and a scatter plot was overlaid where the elevation of each cell was defined as the weighted sum of its VR score (weight = 0.9), CCAT value (weight = 0.1), and a constant factor of 0.012 (weight = 1). This added a level of controlled noise to the scatter plot while ensuring most cells remain above the interpolated surface (Figure \ref{suppfig:figs7}C).
 
-Also, external renders can be done, as shwon in \cite{cardoso_rodriguez_single-cell_2023} withh sidefx houdini and maxon redshift
+\begin{figure}
+    \centering
+    \includegraphics{02methods/figs/2VR_Landscape.png}
+    \caption{}
+    \label{}
+\end{figure}
+
+Finally, external software can also be used to render the data-driven landscapes, as shown in Qin \& Cardoso Rodriguez et al. 2023 where we used the 3D rendering programmes SideFX Houdini and Maxon Redshift.
 
 
-\subsection{Tool packaging/deployment with jupyter notebooks and nbdev}
+% \subsection{Tool packaging/deployment with jupyter notebooks and nbdev}
 
 
-\colorbox{yellow}{Current notebook explanation}
+% \colorbox{yellow}{Current notebook explanation}
 
 % 1. Import necessary libraries: matplotlib, plotly, pandas, numpy, graphtools, scipy, sklearn
 % 2. Define a function `compute_distdeg` that takes several arguments including an input dataframe, a column to split by, a list of columns to use for computation, and several optional arguments such as knn, distance metric, scale and plot options.
@@ -419,9 +475,7 @@ Also, external renders can be done, as shwon in \cite{cardoso_rodriguez_single-c
 
 \section{Knowledge Graphs for Cell Communications}
 
-\subsection*{Sources}
-
-\subsection*{Assembly}
+\subsection{Sources and Assembly}
 
 Assembling custom LRT:
 Grab ligands and receptors from cellchat and nichenet LR interaction databses. ALso grab targets from nichenet database.
@@ -431,17 +485,18 @@ This pathway information gets encoded int he relation field.
 
 Strtcutere: Nodes are genes and edges are "pathways".
 
+\colorbox{yellow}{TABLE COMPARING BOTH KGs USED}
 
-Assembling omnipath JG:
-Omnipath has a curated fucntional interactions interaction database comprising genes involved in cellular communications. type of interactions (PTM, ...) consensus, directionality and even logical sense of interaction (activation or repression). HTis datasbase is cureated from public resources.
-Grab the directed interactions and then add them to the head and tail of rthe KG. Relation field is computed ina  similar manner as the custom LRT using REactome pathway database.
+Assembling omnipath JG: \cite{turei_integrated_2021}
+Omnipath has a curated functional interactions interaction database comprising genes involved in cellular communications. type of interactions (PTM, ...) consensus, directionality and even logical sense of interaction (activation or repression). HTis datasbase is cureated from public resources.
+Grab the directed interactions and then add them to the head and tail of rthe KG. Relation field is computed ina  similar manner as the custom LRT using REactome pathway database.e
 
 
-\subsection*{KG Embedding}
+\subsection{KG Embedding}
 
-Now with the triples assembled we can embedd our KG using pykeen
+Now with the triples assembled we can embedd our KG using pykeen \cite{ali_pykeen_2021}
 
-Severela KGE modells available in pykeen. USed TranR as it is an improved verion of the classical transE thatbetter encodes relations information. 
+Severela KGE modells available in pykeen. USed TranR \cite{lin_learning_2015} as it is an improved verion of the classical transE \cite{bordes_translating_2013} thatbetter encodes relations information. 
 
 Embedding space is 50 dimensional and should caputre directional information and and relational info too (type of interactions between two ndoes).
 Both nodes and edges can be embeeded using transR. 
@@ -451,7 +506,7 @@ This can be benchamarked
 
 
 
-\subsection*{Wavelet Transform and Data Projection}
+\subsection{Wavelet Transform and Data Projection}
 
 NOw, t difuees signals on the KGE graphs we used a wavelet transofrm approach.
 
@@ -463,10 +518,10 @@ If we also compute distnaces on the kmnn grpaph derived from gene expression and
 Becnhamark by computing distances on genex scpae and on projected spaces. Cells that are comunicating should, even if they transcriptoomic profiles aren't very similar, fall closer in the projected space than in the genex space.
 
 
-\subsection*{Emebdding LR pairs to recovr info on fucntional communication}
+% \subsection*{Emebdding LR pairs to recovr info on fucntional communication}
 
 
-ALternative approach goes here. Run current notebook version and get results with out data so I can at least set on a draft method approach
+% ALternative approach goes here. Run current notebook version and get results with out data so I can at least set on a draft method approach
 
 
 
