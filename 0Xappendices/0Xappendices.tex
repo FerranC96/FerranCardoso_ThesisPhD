@@ -8,6 +8,42 @@
 \label{appendix:XXX}
 (stuff)
 
+
+\chapter{Epithelia gene markers}
+
+MArkers of epithelia populatin and orgnaoid genotypes. Derived from literature and DE analysis of our data.
+
+\begin{table}
+  \centering
+  \caption{Gene Data}
+  \label{tab:epimarkers}
+  \csvreader[
+    tabular=|c|c|,
+    head=true,
+    table head=\hline \textbf{Gene} & \textbf{Annotation}\\ \hline,
+    late after line=\\ \hline,
+    filter={\value{csvinputline}<30},
+    separator=comma,
+    respect all
+  ]{0Xappendices/CuratedEpithelia_geneSet.csv}{}
+  {\csvcoli & \csvcolii}
+\end{table}
+\begin{table}
+  \centering
+  \caption{Gene Data}
+  \label{tab:epimarkers}
+  \csvreader[
+    tabular=|c|c|,
+    head=true,
+    table head=\hline \textbf{Gene} & \textbf{Annotation}\\ \hline,
+    late after line=\\ \hline,
+    filter={\value{csvinputline}>29},
+    separator=comma,
+    respect all
+  ]{0Xappendices/CuratedEpithelia_geneSet.csv}{}
+  {\csvcoli & \csvcolii}
+\end{table}
+
 \chapter{Cell-cycle Gene Lists}
 \label{appendix:cycle}
 Table of cell-cycle genes adapted from Tirosh et al. 2016 \cite{tirosh_dissecting_2016} and Macosko et al. 2015 \cite{macosko_highly_2015}, the former using a human melanoma cell line and the later both human and mouse models to link gene expression with cell cycle phases. The original tables provided in the publication were pooled together, duplicated genes were dropped, and human symbols were translated to mouse using BioMart. Finally, genes whose expression could not be deteced in any of the mouse organoid experiments were dropped from the list. The resulting table contains 98 genes associated with S-phase, 248 with both G2 and M-phase, and 202 with G1.
