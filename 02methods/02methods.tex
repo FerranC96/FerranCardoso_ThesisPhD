@@ -501,9 +501,9 @@ Hierarchy of the assembled graphs was computed using my python package \emph{pyk
 
 \subsection{Embedding the Knowledge Graph}
 
-The table of relational triplets was then used to generate a MultiDiGraph() with the NetworkX package~\cite{hagberg_exploring_2008}, wherein multiple types of edges (\emph{relations}) connect nodes in a directed manner. 
+The table of relational triplets was then used to generate a\acrshort{kg} using the MultiDiGraph() function from the NetworkX package~\cite{hagberg_exploring_2008}, wherein multiple types of edges (\emph{relations}) connect nodes in a directed manner. 
 
-The resulting directed \acrshort{kg} was then embedded into a lower 50-dimensional space using the TransR \acrshort{kg} embedding algorithm as implemented in the PyKEEN package~\cite{ali_pykeen_2021}. TransR is a knowledge graph embedding approach derived from the mature TransE algorithm~\cite{bordes_translating_2013} that better encodes complex relational information. 
+The resulting directed \acrshort{kg} was then embedded into a lower 50-dimensional space using the TransR \acrshort{kg} embedding algorithm~\cite{zhang_transr_2021} as implemented in the PyKEEN package~\cite{ali_pykeen_2021}. TransR is a knowledge graph embedding approach derived from the mature TransE algorithm~\cite{bordes_translating_2013} that better encodes complex relational information. 
 
 The embedding space was learnt on GPU compute using an 80:10:10 train, test, and validation split and otherwise default parameters.
 To visualise the embedding the 50-dimensional space was embedded using PHATE (Figure \ref{fig:6embed}), or projected as a graph whose layout was determined via the Fruchterman-Reingold force-directed algorithm as implemented in NetworkX~\cite{fruchterman_graph_1991}.
