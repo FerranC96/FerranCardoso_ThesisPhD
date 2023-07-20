@@ -159,6 +159,66 @@
 %PDF embedding
 \usepackage{pdfpages}
 %Test csvsimple for the cell cycle gene table
-\usepackage[13]{csvsimple}
+\usepackage{csvsimple}
+% \usepackage[13]{csvsimple}
 %Multicol for splitting tables into a single page
 \usepackage{multicol}
+%For the abbreviations page
+\usepackage[utf8]{inputenc}
+\usepackage[acronym]{glossaries}
+
+%Add color to tables from pandas
+\usepackage{colortbl}
+
+%Listing for adding python code
+\usepackage{listings}
+\usepackage{xcolor}
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour},   commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\scriptsize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+\lstset{style=mystyle}
+
+
+
+
+
+
+    % % formatting taken from http://tex.stackexchange.com/questions/149708/simple-list-of-abbreviations-manually
+    % % sorting taken from http://www.latex-community.org/forum/viewtopic.php?f=44&t=16419
+    
+    % \usepackage{datatool}
+    
+    % % Define a convenient command to add a line
+    % % to the database
+    % \newcommand*{\addacronym}[2]{%
+    %   \DTLnewrow{acronyms}%
+    %   \DTLnewdbentry{acronyms}{Acronym}{#1}%
+    %   \DTLnewdbentry{acronyms}{Description}{#2}%
+    % }
+    % % formatting
+    % \newcommand{\tocfill}{\cleaders\hbox{$\m@th \mkern\@dotsep mu . \mkern\@dotsep mu$}\hfill}
+    % \newcommand{\abbrlabel}[1]{\makebox[3cm][l]{\textbf{#1}\ \tocfill}}
+    % % \newenvironment{abbreviations}{\begin{list}{}{\renewcommand{\makelabel}{\abbrlabel}%
+    % % \setlength{\labelwidth}{3cm}\setlength{\leftmargin}{\labelwidth+\labelsep}%
+    % % \setlength{\itemsep}{0pt}}}{\end{list}}

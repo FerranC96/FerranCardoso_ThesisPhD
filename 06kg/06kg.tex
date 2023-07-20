@@ -1,77 +1,118 @@
 \chapter{Knowledge Graphs for Cell Communications}
 \label{06kg}
 
-Propose new approach of capturing gene-gene graphs and then projecting cells into the graph, treating the cells as signals on a gene graph that can then be compared. 
-Possible thanks to development of KG embedding methods and signal processing approaches able to deal with heterogenous directed hierarchical graphs. 
-Coupled with emerging multimodal approaches that can capture at once intra and intercellular communication features, like phospho-seq \cite{blair_phospho-seq_2023} or Jamie's signal-seq. -> perfect tool to solve inter- and intra-cell communications at the single cell level without relying on clusters and in a modality agnostic way. 
-
-
 \section{Introduction}
 
-Biological commsn and current knowledge
+\begin{figure}
+    \centering
+    \includegraphics{06kg/figs/6KG_com.png}
+    \caption{}
+    \label{fig:6intro}
+\end{figure}
 
-Biological signals within and between cells are transmitted in a hierarchical and directed manner, dictating a cell’s response to both internal and external cues. Although these signaling networks are represented as directed graphs of molecules, they are not consistently analysed using methods that leverage the network’s directed and hierarchical nature. 
+Cellular signalling involves a complex series of directed and hierarchical~\cite{kumar_3_2003} signal transduction cascades between molecules that dictate a cell's response to extrinsic and intrinsic cues.
 
+In the context of inter-cellular paracrine communication for example, a secreting cell produces a series of ligands that are captured by receptors on a receiving cell. The receiving cell then might engage in an intra-cellular signal transduction cascade orchestrated by \acrshort{ptm}s, such as the MAPK cascade~\cite{zhang_mapk_2002}. These cascades regulate gene expression downstream of active transcription factors. With overlapping pathways, feedback loops, and complex settings with multiple cells engaging in symmetrical or non-symmetrical communications, there is nonetheless a directional causality-driven signalling information flow (Figure \ref{fig:6intro}).
+
+The physical interactions between molecules are often represented as a network of genes, proteins or even \acrshort{ptm}s, described in the manner of a \acrfull{kg}. These network representations have been extensively explored to model both intra- and inter-cellular communications, but to date they are not consistently analysed using methods that leverage the underlying directed and hierarchical nature of signalling processes, often either treating the graph as undirected or analyzing pairwise relationships between feature detection metrics (such as gene expression)~\cite{pratapa_benchmarking_2020, armingol_deciphering_2020}. 
     % Cellular signaling involves overlapping directed \cite{HANCOCK200364} and hierarchical signal transduction cascades between molecules to coordinate targeted behavior \cite{zhang_mapk_2002}.
     % %The physical interactions of molecules are often represented as a network.
-    % The resulting network of molecular interactions determines a cell's response under different conditions, drawing interest towards unifying and characterizing varying sources of molecule signaling from distinct scientific experiments. However, methods to represent biological networks and infer gene-gene relationships rarely take into the account the \textit{directionality} and \textit{hierarchical structure} of these gene graphs, often either treating the graph as undirected or analyzing pairwise relationships \cite{pratapa_benchmarking_2020, Armingol2021-gn}.
+    % The resulting network of molecular interactions determines a cell's response under different conditions, drawing interest towards unifying and characterizing varying sources of molecule signaling from distinct scientific experiments. However, methods to represent biological networks and infer gene-gene relationships rarely take into the account the \textit{directionality} and \textit{hierarchical structure} of these gene graphs.
 
-Biological models already there, modelling communications between and within cells in a directed manner like pybravo\cite{lefebvre_large-scale_2021}. Gene-gene graphs can thus be used for cell-cell communicatoin analysese like scTenifoldXct \cite{yang_sctenifoldxct_2023} or leveraging sptial info too like in Fischer \& Schaar et al. \cite{fischer_modeling_2022} and even to de novo generate signal transduction networks from scRNAseq data like in Cytotalk \cite{hu_cytotalk_2021}.
+The field of directed cellular interaction databases already presents with some established curated resources like OmniPath~\cite{turei_integrated_2021}, with a growing number of methods attempting to model the communications in a directed manner~\cite{lefebvre_large-scale_2021}, describing cell-cell interactions~\cite{fischer_modeling_2022,yang_sctenifoldxct_2023}, and even data-driven \emph{de novo} generation of signal transduction networks~\cite{hu_cytotalk_2021}.
 
-% Possible thanks to development of KG embedding methods and signal processing approaches able to deal with heterogenous directed hierarchical graphs. 
-% Empowered by emerging multimodla approaches that can capture at once intra and intercellular communication features, like phospho-seq \cite{blair_phospho-seq_2023} or Jamie's signal-seq. 
+Knowledge graph embedding tools aim to learn the complex relational information in heterogeneous directed networks and represent it in a lower dimensional space that can be analysed using more common graph signalling processing and general data analysis approaches. Methods like the classical TransE~\cite{bordes_translating_2013} and its derivatives, graph convolutional networks, and hyperbolic embeddings~\cite{chami_hyperbolic_2019}, represent some of different approaches to learn the strcuture of \acrshort{kg}s.
 
-Embedding the KG
+In this chapter I propose a novel approach for assembling gene-gene graphs that capture cellular communications by leveraging \acrshort{kg} embedding approaches. I aim to project single-cell \emph{omic} profiles into the assembled \acrshort{kg}s, thus treating the cells as signals on a gene graph. The resulting signals can then be treated as another single-cell \emph{omic} view of the cells, and used to generate new embeddings or be compared against their gene expression profiles.
 
-Gene embedding methods are growing , so are graph signal processing approaches. 
-Discuss the embedding methods of these graphs:
-Complexity in terms of structure, directionality and type of interaction. All of this is very important, unlike in undirected knn grpahs ubiquitous to omic analyses.
-This means that we need some methods able to compute all of this complex relations in multi relation directed graphs  (MultiDiGraph). methods have been developed, transE \cite{bordes_translating_2013}family, graph convolutional networks, and the stuff from he stanford dawn group on  hyperbolic embeddings  \cite{chami_hyperbolic_2019} and general ML approaches applied to non euclidean spaces.
-Non-euclidean space like hyperbolic spaces argued to be key because graphs with important hierarchical structure [as is biological signalling] is much better capture in a hyperbole than in a plane \cite{bronstein_geometric_2017,nickel_poincare_2017,chamberlain_neural_2017}.[the first one is general Euclidean =bad, the later ones refer to the cocnept of hierarchical graph better on hyperboles than planes].
-on the other hand, prelim results in collab porject suggest perhaps not as important for bio KG despite the hierarchical nature of signalling networks.
+        % Gene embedding methods are growing , so are graph signal processing approaches. 
+        % Discuss the embedding methods of these graphs:
+        % Complexity in terms of structure, directionality and type of interaction. All of this is very important, unlike in undirected knn grpahs ubiquitous to omic analyses.
+        % This means that we need some methods able to compute all of this complex relations in multi relation directed graphs  (MultiDiGraph). methods have been developed, transE \cite{bordes_translating_2013}family, graph convolutional networks, and the stuff from he stanford dawn group on  hyperbolic embeddings  \cite{chami_hyperbolic_2019} and general ML approaches applied to non euclidean spaces.
+        % Non-euclidean space like hyperbolic spaces argued to be key because graphs with important hierarchical structure [as is biological signalling] is much better capture in a hyperbole than in a plane \cite{bronstein_geometric_2017,nickel_poincare_2017,chamberlain_neural_2017}.[the first one is general Euclidean =bad, the later ones refer to the cocnept of hierarchical graph better on hyperboles than planes].
+        % on the other hand, prelim results in collab porject suggest perhaps not as important for bio KG despite the hierarchical nature of signalling networks.
 
 
-% % This is currently 211 words. As the methods/result section still needs some fleshing out, this means that there is some fluff to trim out! [soft limit of 200 words, HARD LIMIT OF 250]
-% 
 
-    % Here we present a Directed Scattering transform for Gene Embeddings (DSGE), which captures a directed and multiscale representation of the gene signaling network. We perform systematic comparison against existing undirected, directed, Euclidean, and hyperbolic approaches using the OmniPath signaling graph. DSGE outperforms existing methods on directed link prediction and performs among the best on random link prediction. Our preliminary results suggest DSGE reveals key multiresolution and directed features necessary for predicting and characterizing gene signaling relationships.
-    %, one in hyperbolic space, that embed nodes of signal networks for gene-gene signaling characterization and prediction. We perform a systematic comparison against current shallow and GNN methods on link prediction accuracy using the OmniPath signaling dataset. Achieving an AUROC score of 0.718 for DS-AE and 0.716 for DS-PM on directed link prediction, our methods surpass the current state-of-the-art (MagNet, 0.714) and prove much better than the undirected scattering counterpart (0.581), all while performing comparably to the state-of-the-art on random link prediction. Our preliminary results suggest directed methods are necessary to for molecular signaling representation. while using a hyperbolic space does not seem as important despite the hierarchical nature of signalling networks. Both DS-AE and DS-PM match or surpass current state-of-the-art methods at learning molecular signalling representations, with DS-AE slighlty besting DS-PM in all of our comparisons. 
-% % INtro
+\section{KG Structure}
 
-    % For directed graphs, one possible approach for constructing  low-dimensional embeddings while preserving directed structure \cite{Lieb1992-ab, Singer2011-di, Singer2011-vm} is two use the spectrum of a complex Hermitian matrix known as the magnetic Laplacian. Originally, arising in the physics literature \textcolor{red}{MIKE-TODO ADD citation}, this matrix represents the undirected geometry of the graph in the magnitude of its entries and incorporates directional information in the phases. It has been used for a variety of data science tasks \textcolor{red}{MIKE TO DO CITE} and several recent works have used it to constuct graph neural networks \cite{Zhang2021-wq} and related versions of the scattering transform \cite{Chew2022-or}.
-    
-    % %It has been studied by the graph signal processing community \cite{Furutani2020-lq} and also applied to numerous data science applications such as clustering and community detection \cite{Fanuel2017-av}.
-    
-    % At the same time, developments in hyperbolic geometry show potential for preserving latent hierarchies. Recent research has proposed embedding hierarchical graphs into hyperbolic spaces instead of conventional Euclidean space \cite{Nickel2017-av, De_Sa2018-eg, Ganea2018-eb}, with recent incorporation into graph neural network frameworks \cite{Chami2019-xb,Liu2019-sd} and knowledge graph frameworks \cite{Chami2020-fh, Bai2021-zd}. However, beyond some preliminary work \cite{McDonald2022-av, Wu2019-ip}, little has been done to explicitly incorporate hyperbolic geometry into directed graph learning, with, to our knowledge, no methods that learn directed and hyperbolic geometry using the magnetic Laplacian. Furthermore, there has been no work evaluating the ability of directed approaches and hyperbolic approaches on biological networks.
-    
-    % Here, we describe an approach termed DSGE (Directed Scattering transform for Gene Embeddings), which learns a multiscale representation of directed biological networks via the magnetic Laplacian. We evaluate performance of DSGE-Euc (Euclidean representation) and DSGE-Hyp (hyperbolic representation) against baseline methods for the recently published OmniPath directed gene signaling network\cite{Turei2021-qr} (4\% reciprocal edges, Krachkardt hierarchy score (Khs) = 0.757) \cite{Balazevic2019-av, Chami2020-fh, Krackhardt1994-av}. We additionally evaluate the top-performing methods on two smaller subgraphs, demonstrating the importance of directed scattering for capturing directedness and multiscale topology for biological graphs of all sizes (Fig. 1). 
+\begin{figure}
+    \centering
+    \includegraphics{06kg/figs/6KG_kg.png}
+    \caption{}
+    \label{fig:6kg}
+\end{figure}
 
-\section{Structure}
+Graph assembled from sources, hierarchical directed structure. Nodes are ligands, receptor and gene targets of cellular signalling. Edges established from pathway connecting two nodes. Sources are cellchat and nichenet for nodes and reactome for pathways.
 
-Graph assembled from sources, hierarchical structure
+Formatted as head,relation,tail format. Total of XX relations with YY and ZZ nodes.
 
-\subsubsection{Figure on KG assembly and characteristics}
+Compare against common KG such as OmniPath.
+Omnipath has a curated functional interactions interaction database comprising genes involved in cellular communications. type of interactions (PTM, ...) consensus, directionality and even logical sense of interaction (activation or repression). HTis datasbase is cureated from public resources.
+Process interaction database as before by using OmniPath nodes and edges from reactome pathways. 
+Comparable graph in terms of node, but a bit more dense than the LRT KG and with a lower hierarchy score (see Chapter \ref{02methods} for Table \ref{tab:2kg}).
+
+
 
 \section{KG Embedding}
 
-\subsubsection{Figure on comparing different KGE methods}
+\begin{figure}
+    \centering
+    \includegraphics{06kg/figs/6KG_embed.png}
+    \caption{}
+    \label{fig:6embed}
+\end{figure}
 
-\subsubsection{Figure exploring node and edge embeddings on KGE}
+To capture the complex relational information in a simpler format amenable to downstream analyses, .....
+
+Leverage directed nature of graph by embedding on lower space. Methods used (Chapter \ref{02methods}). Exploration of nodes on a DimRed space suggest I can capture topological differences between Ligands , receptors and targets. It also appears that gene targets are the most promiscuous nodes with higher degrees, followed by receptors and finally ligands. However, care must be taken here for three classes are imbalanced.
+
+Biological information is also capture in the KGE, with nodes showing a certain degree of separation by key signalling pathways from REACTOME.
+    Looking at nodes thsi means thatwe can see which kind of genes (lignas, receptors, targets,...) are present and how they dsitribute. 
+
+
+% Finally, embedding representation of relations (edges) can be generated, which should capture relations between pathways. Recover high level groupins of pathways with similar biological function, due to their shared nodes on KG.
+%     WE can also check out the different pathawys they belong to and see if there is come kind of biologically driver distribution here re pathways. Edges can also be embedded and hopefully lowere level pthawys belonging to a shared bigger levl pathways might lie in closer together? Also deppening on the ratio of shared interactions members between disticnt pathways. 
 
 \section{Cells as Signals on a Gene Graph}
 
-\subsubsection{Figure detailing cell projected on graph procedure}
+\begin{figure}
+    \centering
+    \includegraphics{06kg/figs/6KG_projection.png}
+    \caption{}
+    \label{fig:6project}
+\end{figure}
 
-\subsection{Wavelet Transform}
+Organoid dataset. Wt stromal coculture where fibs talk to WT epi cells (Figure \ref{fig:4cc}A). Embed count matrix reveals 2 cells types and epithelial heterogeneity.
 
-\subsection{Data Projection}
+Given the KGE, generate a \emph{k}-NN graph onto which I apply a wavelet bank on nodes at series of scales. This difussion process generates a wavelet matrix onto which the gene expression matrix can be projected.
 
-\subsubsection{Figure on results of scrnaseq, cytof and combined projections}
+Leveraging the properties of the dot product (\(\cdot\)) operation between matrices, I compute the product between the \(node X wavelets\) matrix and the \(cell X feature\) count matrix, where the features are formatted as gene symbols like in the \acrshort{kg}. This results in a new projected matrix of \(cell X wavelets\) dimensions (Figure \ref{}).
 
-\section{KG ablation focuses on signalling}
+Resulting projection topologically resembles GEx data on PHATE embedding, albeit it appears there is some signal loss as epithelial heterogeneity is not as noticeable.
 
-\subsubsection{Figure comparing projection on full VS ablated KG}
+\begin{figure}
+    \centering
+    \includegraphics{06kg/figs/6KG_bench.png}
+    \caption{}
+    \label{fig:6bench}
+\end{figure}
 
-\section{WIP}
+Porjection results can be assed quantitaively by comparing cell-cell distance between the GEx graph and projected graph. given what we know on fibs interacting with revCSC and TA 2, wee would expectd thos differences to be decreased on projected space.
 
+We thus construcut 2 knn, from gex and from LRT projection, and then compute the median/average distance between clusters. To compare two distance datasets, relative values established.
+
+Mixed results tbh.
+
+\newpage
 \section{Conclusions}
+
+\colorbox{yellow}{OUTLINE (WIP)}
+* Built LRT KG that is comparable to other directed graphs in literature.
+    * IF omnpath capture ground bio truth, cell commns are indeed mostly hierarhcical. WE have a simplified hyper hierarhcical version.
+* KG embedding methods seem to conserve biological properties associted with nodes.
+* Wavelets used to difusse signal on graph so that single-cell \emph{omic} data can be projected on it.
+* Results match/conserve broader GEx information, but information gain is limited regarding cell communications.
+* Need to improve signal difussion step. Alternative gene embedding step can also be explored (GSP paper), so can the benchmarking be improved.
+
+Fine balance between signal loss determined by lmited number of gene nodes on graph, but also on graph structure itself being important enough to produce results signficantly different from GEx matrix.

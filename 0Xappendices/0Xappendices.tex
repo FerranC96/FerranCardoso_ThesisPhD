@@ -4,171 +4,6 @@
 % The \appendix command resets the chapter counter, and changes the chapter numbering scheme to capital letters.
 %\chapter{Appendices}
 \appendix
-\chapter{Appendix XXX}
-\label{appendix:XXX}
-(stuff)
-
-
-\chapter{Epithelia gene markers}
-
-MArkers of epithelia populatin and orgnaoid genotypes. Derived from literature and DE analysis of our data.
-
-\begin{table}
-  \centering
-  \caption{Gene Data}
-  \label{tab:epimarkers}
-  \csvreader[
-    tabular=|c|c|,
-    head=true,
-    table head=\hline \textbf{Gene} & \textbf{Annotation}\\ \hline,
-    late after line=\\ \hline,
-    filter={\value{csvinputline}<30},
-    separator=comma,
-    respect all
-  ]{0Xappendices/CuratedEpithelia_geneSet.csv}{}
-  {\csvcoli & \csvcolii}
-\end{table}
-\begin{table}
-  \centering
-  \caption{Gene Data}
-  \label{tab:epimarkers}
-  \csvreader[
-    tabular=|c|c|,
-    head=true,
-    table head=\hline \textbf{Gene} & \textbf{Annotation}\\ \hline,
-    late after line=\\ \hline,
-    filter={\value{csvinputline}>29},
-    separator=comma,
-    respect all
-  ]{0Xappendices/CuratedEpithelia_geneSet.csv}{}
-  {\csvcoli & \csvcolii}
-\end{table}
-
-\chapter{Cell-cycle Gene Lists}
-\label{appendix:cycle}
-Table of cell-cycle genes adapted from Tirosh et al. 2016 \cite{tirosh_dissecting_2016} and Macosko et al. 2015 \cite{macosko_highly_2015}, the former using a human melanoma cell line and the later both human and mouse models to link gene expression with cell cycle phases. The original tables provided in the publication were pooled together, duplicated genes were dropped, and human symbols were translated to mouse using BioMart. Finally, genes whose expression could not be deteced in any of the mouse organoid experiments were dropped from the list. The resulting table contains 98 genes associated with S-phase, 248 with both G2 and M-phase, and 202 with G1.
-
-\begin{table}
-  \centering
-  \csvreader[
-    tabular=|c|c|c|,
-    table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
-    late after line=\\ \hline,
-    filter={\value{csvinputline}<44},
-    separator=tab
-  ]{0Xappendices/CellCycle_geneSet.txt}{}%
-  {\csvcoli & \csvcolii & \csvcoliii}
-  % \caption{Your table caption}
-  \label{tab:your-table}
-\end{table}
-\begin{table}
-  \centering
-  \csvreader[
-    tabular=|c|c|c|,
-    table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
-    late after line=\\ \hline,
-    filter expr={
-      test{\ifnumgreater{\thecsvinputline}{43}}
-  and test{\ifnumless{\thecsvinputline}{86}}},
-    separator=tab
-  ]{0Xappendices/CellCycle_geneSet.txt}{}%
-  {\csvcoli & \csvcolii & \csvcoliii}
-  % \caption{Your table caption}
-  \label{tab:your-table}
-\end{table}
-\begin{table}
-  \centering
-  \csvreader[
-    tabular=|c|c|c|,
-    table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
-    late after line=\\ \hline,
-    filter expr={
-      test{\ifnumgreater{\thecsvinputline}{85}}
-  and test{\ifnumless{\thecsvinputline}{128}}},
-    separator=tab
-  ]{0Xappendices/CellCycle_geneSet.txt}{}%
-  {\csvcoli & \csvcolii & \csvcoliii}
-  % \caption{Your table caption}
-  \label{tab:your-table}
-\end{table}
-\begin{table}
-  \centering
-  \csvreader[
-    tabular=|c|c|c|,
-    table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
-    late after line=\\ \hline,
-    filter expr={
-      test{\ifnumgreater{\thecsvinputline}{127}}
-  and test{\ifnumless{\thecsvinputline}{170}}},
-    separator=tab
-  ]{0Xappendices/CellCycle_geneSet.txt}{}%
-  {\csvcoli & \csvcolii & \csvcoliii}
-  % \caption{Your table caption}
-  \label{tab:your-table}
-\end{table}
-\begin{table}
-  \centering
-  \csvreader[
-    tabular=|c|c|c|,
-    table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
-    late after line=\\ \hline,
-    filter expr={
-      test{\ifnumgreater{\thecsvinputline}{169}}
-  and test{\ifnumless{\thecsvinputline}{212}}},
-    separator=tab
-  ]{0Xappendices/CellCycle_geneSet.txt}{}%
-  {\csvcoli & \csvcolii & \csvcoliii}
-  % \caption{Your table caption}
-  \label{tab:your-table}
-\end{table}
-\begin{table}
-  \centering
-  \csvreader[
-    tabular=|c|c|c|,
-    table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
-    late after line=\\ \hline,
-    filter expr={
-      test{\ifnumgreater{\thecsvinputline}{211}}},
-    separator=tab
-  ]{0Xappendices/CellCycle_geneSet.txt}{}%
-  {\csvcoli & \csvcolii & \csvcoliii}
-  % \caption{Your table caption}
-  \label{tab:your-table}
-\end{table}
-
-\chapter{Literature Gene Signatures}
-
-In the context of Stem states of the intestinal and colon epithelia.
-
-\begin{table}
-  \centering
-  \caption{Gene Data}
-  \label{tab:SignMD}
-  \csvreader[
-    tabular=|c|c|c|c|c|,
-    head=true,
-    table head=\hline \textbf{Name} & \textbf{Genes} & \textbf{Context} & \textbf{Species} & \textbf{Reference} \\ \hline,
-    late after line=\\ \hline,
-    filter={\value{csvinputline}<37},
-    separator=comma,
-    respect all
-  ]{0Xappendices/SignMD.csv}{}
-  {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv}
-\end{table}
-\begin{table}
-  \centering
-  \csvreader[
-    tabular=|c|c|c|c|c|,
-    head=true,
-    table head=\hline \textbf{Name} & \textbf{Genes} & \textbf{Context} & \textbf{Species} & \textbf{Reference} \\ \hline,
-    late after line=\\ \hline,
-    filter={\value{csvinputline}>36},
-    separator=comma,
-    respect all
-  ]{0Xappendices/SignMD.csv}{}
-  {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv}
-\end{table}
-
 
 \chapter{pyKrack}
 \label{appendix:pykrack}
@@ -182,7 +17,7 @@ using nbdev for coding, vignettes, documentation, packaging and plublishing (to 
 
 Some kind of figure here
 
-\section*{Introduction}
+\section{Introduction}
 
 Biological signaling can be modeled as a directed network, where nodes represent genes/proteins and edges represent signaling interactions.
 
@@ -191,7 +26,7 @@ The hierarchy of such a network can be quantified using various metrics, includi
 In R the sna package presents methods to compute graph hierarchy including Krackhardt’s score (defined as
 where is the number of unordered pairs of points in Dr that are asymmetrically linked), and there are other hierarchy scores implemented in Python such as Flow Hierarchy Score Luo and Magee 2011. However, despite its utility, there is currently no native implementation of the Krackhardt hierarchy score in Python.
 
-\subsection{}{Krackhardt hierarchy score}
+\subsection{Krackhardt hierarchy score}
 
 As defined in Krackhardt, David. (1994). Graph Theoretical Dimensions of Informal Organization. Computational Organization Theory. 89.
 
@@ -216,15 +51,247 @@ where $H_i$ is the hierarchy score for node $i$, $P_i$ is the set of direct repo
 This equation calculates the hierarchy score for each node in a network based on the hierarchy scores of its direct reports and the weights of the edges between them. The hierarchy score represents the level of influence or power that a node has in the network, with higher scores indicating greater influence.
 
 
-
-
-
 \section{Implementation}
 
 \subsection{compute hierarchy function}
 
 \subsection{nbdev paltform}
 
+
+
+
+\chapter{Supplementary Figures}
+\label{appendix:SupFig}
+
+\section{Figures related to Chapter \ref{04seq}}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics{0Xappendices/0XSup_DEfib.png}
+    \caption{}
+    \label{sfig:defib}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics{0Xappendices/0XSup_DEepibyfib.png}
+    \caption{}
+    \label{sfig:deepibyfib}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics{0Xappendices/0XSup_DEmac.png}
+    \caption{}
+    \label{sfig:demac}
+\end{figure}
+
+\chapter{Supplementary Tables}
+\label{appendix:SupTab}
+
+\section{Gene Data}
+
+\newpage
+\begin{table}[H]
+  \centering
+  \caption{\textbf{Colonic epithelia gene markers (1/2)}. MArkers of epithelia populatin and orgnaoid genotypes. Derived from literature and DE analysis of our data.}
+  \label{tab:epimarkers}
+  \csvreader[
+    tabular=|c|c|,
+    head=true,
+    table head=\hline \textbf{Gene} & \textbf{Annotation}\\ \hline,
+    late after line=\\ \hline,
+    filter={\value{csvinputline}<30},
+    separator=comma,
+    respect all
+  ]{0Xappendices/CuratedEpithelia_geneSet.csv}{}
+  {\csvcoli & \csvcolii}
+\end{table}
+\newpage
+\begin{table}[H]
+  \centering
+  \caption{\textbf{Colonic epithelia gene markers (2/2)}.}
+  \csvreader[
+    tabular=|c|c|,
+    head=true,
+    table head=\hline \textbf{Gene} & \textbf{Annotation}\\ \hline,
+    late after line=\\ \hline,
+    filter={\value{csvinputline}>29},
+    separator=comma,
+    respect all
+  ]{0Xappendices/CuratedEpithelia_geneSet.csv}{}
+  {\csvcoli & \csvcolii}
+\end{table}
+
+\newpage
+\begin{table}[H]
+  \centering
+  \caption{\textbf{Cell-cycle gene lists (1/6)}. Table of cell-cycle genes adapted from Tirosh et al. 2016 \cite{tirosh_dissecting_2016} and Macosko et al. 2015 \cite{macosko_highly_2015}, the former using a human melanoma cell line and the later both human and mouse models to link gene expression with cell cycle phases. The original tables provided in the publication were pooled together, duplicated genes were dropped, and human symbols were translated to mouse using BioMart. Finally, genes whose expression could not be detected in any of the mouse organoid experiments were dropped from the list. The resulting table contains 98 genes associated with S-phase, 248 with both G2 and M-phase, and 202 with G1.}
+  \csvreader[
+    tabular=|c|c|c|,
+    table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
+    late after line=\\ \hline,
+    filter={\value{csvinputline}<39},
+    separator=tab
+  ]{0Xappendices/CellCycle_geneSet.txt}{}%
+  {\csvcoli & \csvcolii & \csvcoliii}
+  % \caption{Your table caption}
+  \label{tab:cycle}
+\end{table}
+\newpage
+\begin{table}[H]
+  \centering
+  \caption{\textbf{Cell-cycle gene lists (2/6)}.}
+  \csvreader[
+    tabular=|c|c|c|,
+    table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
+    late after line=\\ \hline,
+    filter expr={
+      test{\ifnumgreater{\thecsvinputline}{38}}
+  and test{\ifnumless{\thecsvinputline}{82}}},
+    separator=tab
+  ]{0Xappendices/CellCycle_geneSet.txt}{}%
+  {\csvcoli & \csvcolii & \csvcoliii}
+\end{table}
+\newpage
+\begin{table}[H]
+  \centering
+  \caption{\textbf{Cell-cycle gene lists (3/6)}.}
+  \csvreader[
+    tabular=|c|c|c|,
+    table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
+    late after line=\\ \hline,
+    filter expr={
+      test{\ifnumgreater{\thecsvinputline}{81}}
+  and test{\ifnumless{\thecsvinputline}{125}}},
+    separator=tab
+  ]{0Xappendices/CellCycle_geneSet.txt}{}%
+  {\csvcoli & \csvcolii & \csvcoliii}
+\end{table}
+\newpage
+\begin{table}[H]
+  \centering
+  \caption{\textbf{Cell-cycle gene lists (4/6)}.}
+  \csvreader[
+    tabular=|c|c|c|,
+    table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
+    late after line=\\ \hline,
+    filter expr={
+      test{\ifnumgreater{\thecsvinputline}{124}}
+  and test{\ifnumless{\thecsvinputline}{168}}},
+    separator=tab
+  ]{0Xappendices/CellCycle_geneSet.txt}{}%
+  {\csvcoli & \csvcolii & \csvcoliii}
+\end{table}
+\newpage
+\begin{table}[H]
+  \centering
+  \caption{\textbf{Cell-cycle gene lists (5/6)}.}
+  \csvreader[
+    tabular=|c|c|c|,
+    table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
+    late after line=\\ \hline,
+    filter expr={
+      test{\ifnumgreater{\thecsvinputline}{167}}
+  and test{\ifnumless{\thecsvinputline}{211}}},
+    separator=tab
+  ]{0Xappendices/CellCycle_geneSet.txt}{}%
+  {\csvcoli & \csvcolii & \csvcoliii}
+\end{table}
+\newpage
+\begin{table}[H]
+  \centering
+  \caption{\textbf{Cell-cycle gene lists (6/6)}.}
+  \csvreader[
+    tabular=|c|c|c|,
+    table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
+    late after line=\\ \hline,
+    filter expr={
+      test{\ifnumgreater{\thecsvinputline}{210}}},
+    separator=tab
+  ]{0Xappendices/CellCycle_geneSet.txt}{}%
+  {\csvcoli & \csvcolii & \csvcoliii}
+  % \caption{Your table caption}
+\end{table}
+
+\newpage
+\begin{table}[H]
+  \centering
+  \caption{\textbf{Literature gene signatures (1/2)}. In the context of Stem states of the intestinal and colon epithelia.}
+  \label{tab:SignMD}
+  \csvreader[
+    tabular=|c|c|c|c|c|,
+    head=true,
+    table head=\hline \textbf{Name} & \textbf{Genes} & \textbf{Context} & \textbf{Species} & \textbf{Reference} \\ \hline,
+    late after line=\\ \hline,
+    filter={\value{csvinputline}<37},
+    separator=comma,
+    respect all
+  ]{0Xappendices/SignMD.csv}{}
+  {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv}
+\end{table}
+\newpage
+\begin{table}[H]
+  \centering
+  \caption{\textbf{Literature gene signature (2/2)}.}
+  \csvreader[
+    tabular=|c|c|c|c|c|,
+    head=true,
+    table head=\hline \textbf{Name} & \textbf{Genes} & \textbf{Context} & \textbf{Species} & \textbf{Reference} \\ \hline,
+    late after line=\\ \hline,
+    filter={\value{csvinputline}>36},
+    separator=comma,
+    respect all
+  ]{0Xappendices/SignMD.csv}{}
+  {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv}
+\end{table}
+
+\newpage
+\newpage
+\newpage
+\section{Knowledge Graph Data}
+
+\label{tab:wavpy}
+\lstinputlisting[language=Python, caption=\textbf{Wavelet module}. Script kindly provided by Aarthi Venkat from Prof. Smita Krishnaswamy's lab at Yale University., firstline=35, lastline=65]{0Xappendices/localization.py}
+
+\begin{sidewaystable}
+    \centering
+    \caption{GEx dist}
+    \label{tab:kgdistge}
+    \begin{tabular}{lrrrrrrrrrr}
+        {} & {ER Stress} & {E. Entero.} & {L. Entero.} & {Secret.} & {proCSC} & {CSC} & {TA2} & {revCSC} & {TA1} & {Fibroblast} \\
+        ER Stress & {\cellcolor[HTML]{000004}} \color[HTML]{F1F1F1} 0.000000 & {\cellcolor[HTML]{240C4F}} \color[HTML]{F1F1F1} 0.134136 & {\cellcolor[HTML]{120A32}} \color[HTML]{F1F1F1} 0.087232 & {\cellcolor[HTML]{280B53}} \color[HTML]{F1F1F1} 0.144213 & {\cellcolor[HTML]{310A5C}} \color[HTML]{F1F1F1} 0.161209 & {\cellcolor[HTML]{2D0B59}} \color[HTML]{F1F1F1} 0.154001 & {\cellcolor[HTML]{CE4347}} \color[HTML]{F1F1F1} 0.553933 & {\cellcolor[HTML]{230C4C}} \color[HTML]{F1F1F1} 0.129671 & {\cellcolor[HTML]{3D0965}} \color[HTML]{F1F1F1} 0.187844 & {\cellcolor[HTML]{FA9207}} \color[HTML]{000000} 0.759904 \\
+        E. Entero. & {\cellcolor[HTML]{240C4F}} \color[HTML]{F1F1F1} 0.134136 & {\cellcolor[HTML]{000004}} \color[HTML]{F1F1F1} 0.000000 & {\cellcolor[HTML]{1B0C41}} \color[HTML]{F1F1F1} 0.110047 & {\cellcolor[HTML]{320A5E}} \color[HTML]{F1F1F1} 0.166665 & {\cellcolor[HTML]{3B0964}} \color[HTML]{F1F1F1} 0.185258 & {\cellcolor[HTML]{380962}} \color[HTML]{F1F1F1} 0.177877 & {\cellcolor[HTML]{D74B3F}} \color[HTML]{F1F1F1} 0.580909 & {\cellcolor[HTML]{2D0B59}} \color[HTML]{F1F1F1} 0.153192 & {\cellcolor[HTML]{470B6A}} \color[HTML]{F1F1F1} 0.211384 & {\cellcolor[HTML]{FCA50A}} \color[HTML]{000000} 0.797288 \\
+        L. Entero. & {\cellcolor[HTML]{120A32}} \color[HTML]{F1F1F1} 0.087232 & {\cellcolor[HTML]{1B0C41}} \color[HTML]{F1F1F1} 0.110047 & {\cellcolor[HTML]{000004}} \color[HTML]{F1F1F1} 0.000000 & {\cellcolor[HTML]{1C0C43}} \color[HTML]{F1F1F1} 0.116684 & {\cellcolor[HTML]{260C51}} \color[HTML]{F1F1F1} 0.139993 & {\cellcolor[HTML]{230C4C}} \color[HTML]{F1F1F1} 0.132073 & {\cellcolor[HTML]{CB4149}} \color[HTML]{F1F1F1} 0.543032 & {\cellcolor[HTML]{190C3E}} \color[HTML]{F1F1F1} 0.106004 & {\cellcolor[HTML]{320A5E}} \color[HTML]{F1F1F1} 0.164687 & {\cellcolor[HTML]{FCA108}} \color[HTML]{000000} 0.790359 \\
+        Secret. & {\cellcolor[HTML]{280B53}} \color[HTML]{F1F1F1} 0.144213 & {\cellcolor[HTML]{320A5E}} \color[HTML]{F1F1F1} 0.166665 & {\cellcolor[HTML]{1C0C43}} \color[HTML]{F1F1F1} 0.116684 & {\cellcolor[HTML]{000004}} \color[HTML]{F1F1F1} 0.000000 & {\cellcolor[HTML]{400A67}} \color[HTML]{F1F1F1} 0.197554 & {\cellcolor[HTML]{3D0965}} \color[HTML]{F1F1F1} 0.189356 & {\cellcolor[HTML]{DE5238}} \color[HTML]{F1F1F1} 0.604088 & {\cellcolor[HTML]{310A5C}} \color[HTML]{F1F1F1} 0.162743 & {\cellcolor[HTML]{4A0C6B}} \color[HTML]{F1F1F1} 0.221462 & {\cellcolor[HTML]{FAC62D}} \color[HTML]{000000} 0.864652 \\
+        proCSC & {\cellcolor[HTML]{310A5C}} \color[HTML]{F1F1F1} 0.161209 & {\cellcolor[HTML]{3B0964}} \color[HTML]{F1F1F1} 0.185258 & {\cellcolor[HTML]{260C51}} \color[HTML]{F1F1F1} 0.139993 & {\cellcolor[HTML]{400A67}} \color[HTML]{F1F1F1} 0.197554 & {\cellcolor[HTML]{000004}} \color[HTML]{F1F1F1} 0.000000 & {\cellcolor[HTML]{440A68}} \color[HTML]{F1F1F1} 0.203334 & {\cellcolor[HTML]{DB503B}} \color[HTML]{F1F1F1} 0.596904 & {\cellcolor[HTML]{390963}} \color[HTML]{F1F1F1} 0.180319 & {\cellcolor[HTML]{510E6C}} \color[HTML]{F1F1F1} 0.237957 & {\cellcolor[HTML]{FB9906}} \color[HTML]{000000} 0.776085 \\
+        CSC & {\cellcolor[HTML]{2D0B59}} \color[HTML]{F1F1F1} 0.154001 & {\cellcolor[HTML]{380962}} \color[HTML]{F1F1F1} 0.177877 & {\cellcolor[HTML]{230C4C}} \color[HTML]{F1F1F1} 0.132073 & {\cellcolor[HTML]{3D0965}} \color[HTML]{F1F1F1} 0.189356 & {\cellcolor[HTML]{440A68}} \color[HTML]{F1F1F1} 0.203334 & {\cellcolor[HTML]{000004}} \color[HTML]{F1F1F1} 0.000000 & {\cellcolor[HTML]{DA4E3C}} \color[HTML]{F1F1F1} 0.592524 & {\cellcolor[HTML]{360961}} \color[HTML]{F1F1F1} 0.173165 & {\cellcolor[HTML]{4F0D6C}} \color[HTML]{F1F1F1} 0.230962 & {\cellcolor[HTML]{FB9B06}} \color[HTML]{000000} 0.781164 \\
+        TA2 & {\cellcolor[HTML]{CE4347}} \color[HTML]{F1F1F1} 0.553933 & {\cellcolor[HTML]{D74B3F}} \color[HTML]{F1F1F1} 0.580909 & {\cellcolor[HTML]{CB4149}} \color[HTML]{F1F1F1} 0.543032 & {\cellcolor[HTML]{DE5238}} \color[HTML]{F1F1F1} 0.604088 & {\cellcolor[HTML]{DB503B}} \color[HTML]{F1F1F1} 0.596904 & {\cellcolor[HTML]{DA4E3C}} \color[HTML]{F1F1F1} 0.592524 & {\cellcolor[HTML]{000004}} \color[HTML]{F1F1F1} 0.000000 & {\cellcolor[HTML]{D44842}} \color[HTML]{F1F1F1} 0.573983 & {\cellcolor[HTML]{E55C30}} \color[HTML]{F1F1F1} 0.630285 & {\cellcolor[HTML]{FCFFA4}} \color[HTML]{000000} 1.000000 \\
+        revCSC & {\cellcolor[HTML]{230C4C}} \color[HTML]{F1F1F1} 0.129671 & {\cellcolor[HTML]{2D0B59}} \color[HTML]{F1F1F1} 0.153192 & {\cellcolor[HTML]{190C3E}} \color[HTML]{F1F1F1} 0.106004 & {\cellcolor[HTML]{310A5C}} \color[HTML]{F1F1F1} 0.162743 & {\cellcolor[HTML]{390963}} \color[HTML]{F1F1F1} 0.180319 & {\cellcolor[HTML]{360961}} \color[HTML]{F1F1F1} 0.173165 & {\cellcolor[HTML]{D44842}} \color[HTML]{F1F1F1} 0.573983 & {\cellcolor[HTML]{000004}} \color[HTML]{F1F1F1} 0.000000 & {\cellcolor[HTML]{440A68}} \color[HTML]{F1F1F1} 0.206725 & {\cellcolor[HTML]{FC9F07}} \color[HTML]{000000} 0.787210 \\
+        TA1 & {\cellcolor[HTML]{3D0965}} \color[HTML]{F1F1F1} 0.187844 & {\cellcolor[HTML]{470B6A}} \color[HTML]{F1F1F1} 0.211384 & {\cellcolor[HTML]{320A5E}} \color[HTML]{F1F1F1} 0.164687 & {\cellcolor[HTML]{4A0C6B}} \color[HTML]{F1F1F1} 0.221462 & {\cellcolor[HTML]{510E6C}} \color[HTML]{F1F1F1} 0.237957 & {\cellcolor[HTML]{4F0D6C}} \color[HTML]{F1F1F1} 0.230962 & {\cellcolor[HTML]{E55C30}} \color[HTML]{F1F1F1} 0.630285 & {\cellcolor[HTML]{440A68}} \color[HTML]{F1F1F1} 0.206725 & {\cellcolor[HTML]{000004}} \color[HTML]{F1F1F1} 0.000000 & {\cellcolor[HTML]{FBB61A}} \color[HTML]{000000} 0.835137 \\
+        Fibroblast & {\cellcolor[HTML]{FA9207}} \color[HTML]{000000} 0.759904 & {\cellcolor[HTML]{FCA50A}} \color[HTML]{000000} 0.797288 & {\cellcolor[HTML]{FCA108}} \color[HTML]{000000} 0.790359 & {\cellcolor[HTML]{FAC62D}} \color[HTML]{000000} 0.864652 & {\cellcolor[HTML]{FB9906}} \color[HTML]{000000} 0.776085 & {\cellcolor[HTML]{FB9B06}} \color[HTML]{000000} 0.781164 & {\cellcolor[HTML]{FCFFA4}} \color[HTML]{000000} 1.000000 & {\cellcolor[HTML]{FC9F07}} \color[HTML]{000000} 0.787210 & {\cellcolor[HTML]{FBB61A}} \color[HTML]{000000} 0.835137 & {\cellcolor[HTML]{000004}} \color[HTML]{F1F1F1} 0.000000 \\
+    \end{tabular}
+\end{sidewaystable}
+
+\begin{sidewaystable}
+    \centering
+    \caption{LRT dist}
+    \label{tab:kgdistlrt}
+    \begin{tabular}{lrrrrrrrrrr}
+        {} & {ER Stress} & {E. Entero.} & {L. Entero.} & {Secret.} & {proCSC} & {CSC} & {TA2} & {revCSC} & {TA1} & {Fibroblast} \\
+        ER Stress & {\cellcolor[HTML]{000004}} \color[HTML]{F1F1F1} 0.000000 & {\cellcolor[HTML]{490B6A}} \color[HTML]{F1F1F1} 0.215563 & {\cellcolor[HTML]{290B55}} \color[HTML]{F1F1F1} 0.145190 & {\cellcolor[HTML]{260C51}} \color[HTML]{F1F1F1} 0.139818 & {\cellcolor[HTML]{420A68}} \color[HTML]{F1F1F1} 0.201897 & {\cellcolor[HTML]{490B6A}} \color[HTML]{F1F1F1} 0.218083 & {\cellcolor[HTML]{E55C30}} \color[HTML]{F1F1F1} 0.632105 & {\cellcolor[HTML]{400A67}} \color[HTML]{F1F1F1} 0.198838 & {\cellcolor[HTML]{62146E}} \color[HTML]{F1F1F1} 0.277580 & {\cellcolor[HTML]{FCA60C}} \color[HTML]{000000} 0.803968 \\
+        E. Entero. & {\cellcolor[HTML]{490B6A}} \color[HTML]{F1F1F1} 0.215563 & {\cellcolor[HTML]{000004}} \color[HTML]{F1F1F1} 0.000000 & {\cellcolor[HTML]{2D0B59}} \color[HTML]{F1F1F1} 0.153977 & {\cellcolor[HTML]{290B55}} \color[HTML]{F1F1F1} 0.147012 & {\cellcolor[HTML]{470B6A}} \color[HTML]{F1F1F1} 0.211975 & {\cellcolor[HTML]{4D0D6C}} \color[HTML]{F1F1F1} 0.227420 & {\cellcolor[HTML]{E9612B}} \color[HTML]{F1F1F1} 0.647468 & {\cellcolor[HTML]{450A69}} \color[HTML]{F1F1F1} 0.209010 & {\cellcolor[HTML]{65156E}} \color[HTML]{F1F1F1} 0.287032 & {\cellcolor[HTML]{FCB418}} \color[HTML]{000000} 0.828309 \\
+        L. Entero. & {\cellcolor[HTML]{290B55}} \color[HTML]{F1F1F1} 0.145190 & {\cellcolor[HTML]{2D0B59}} \color[HTML]{F1F1F1} 0.153977 & {\cellcolor[HTML]{000004}} \color[HTML]{F1F1F1} 0.000000 & {\cellcolor[HTML]{0D0829}} \color[HTML]{F1F1F1} 0.074063 & {\cellcolor[HTML]{280B53}} \color[HTML]{F1F1F1} 0.143724 & {\cellcolor[HTML]{2F0A5B}} \color[HTML]{F1F1F1} 0.159109 & {\cellcolor[HTML]{D94D3D}} \color[HTML]{F1F1F1} 0.587539 & {\cellcolor[HTML]{260C51}} \color[HTML]{F1F1F1} 0.138559 & {\cellcolor[HTML]{490B6A}} \color[HTML]{F1F1F1} 0.217404 & {\cellcolor[HTML]{FCA60C}} \color[HTML]{000000} 0.802999 \\
+        Secret. & {\cellcolor[HTML]{260C51}} \color[HTML]{F1F1F1} 0.139818 & {\cellcolor[HTML]{290B55}} \color[HTML]{F1F1F1} 0.147012 & {\cellcolor[HTML]{0D0829}} \color[HTML]{F1F1F1} 0.074063 & {\cellcolor[HTML]{000004}} \color[HTML]{F1F1F1} 0.000000 & {\cellcolor[HTML]{260C51}} \color[HTML]{F1F1F1} 0.138364 & {\cellcolor[HTML]{2D0B59}} \color[HTML]{F1F1F1} 0.153222 & {\cellcolor[HTML]{D84C3E}} \color[HTML]{F1F1F1} 0.583433 & {\cellcolor[HTML]{240C4F}} \color[HTML]{F1F1F1} 0.132827 & {\cellcolor[HTML]{470B6A}} \color[HTML]{F1F1F1} 0.211676 & {\cellcolor[HTML]{FCA60C}} \color[HTML]{000000} 0.803792 \\
+        proCSC & {\cellcolor[HTML]{420A68}} \color[HTML]{F1F1F1} 0.201897 & {\cellcolor[HTML]{470B6A}} \color[HTML]{F1F1F1} 0.211975 & {\cellcolor[HTML]{280B53}} \color[HTML]{F1F1F1} 0.143724 & {\cellcolor[HTML]{260C51}} \color[HTML]{F1F1F1} 0.138364 & {\cellcolor[HTML]{000004}} \color[HTML]{F1F1F1} 0.000000 & {\cellcolor[HTML]{450A69}} \color[HTML]{F1F1F1} 0.210823 & {\cellcolor[HTML]{E35933}} \color[HTML]{F1F1F1} 0.621495 & {\cellcolor[HTML]{3E0966}} \color[HTML]{F1F1F1} 0.194830 & {\cellcolor[HTML]{5F136E}} \color[HTML]{F1F1F1} 0.271929 & {\cellcolor[HTML]{FA9207}} \color[HTML]{000000} 0.761176 \\
+        CSC & {\cellcolor[HTML]{490B6A}} \color[HTML]{F1F1F1} 0.218083 & {\cellcolor[HTML]{4D0D6C}} \color[HTML]{F1F1F1} 0.227420 & {\cellcolor[HTML]{2F0A5B}} \color[HTML]{F1F1F1} 0.159109 & {\cellcolor[HTML]{2D0B59}} \color[HTML]{F1F1F1} 0.153222 & {\cellcolor[HTML]{450A69}} \color[HTML]{F1F1F1} 0.210823 & {\cellcolor[HTML]{000004}} \color[HTML]{F1F1F1} 0.000000 & {\cellcolor[HTML]{E8602D}} \color[HTML]{F1F1F1} 0.640803 & {\cellcolor[HTML]{470B6A}} \color[HTML]{F1F1F1} 0.211221 & {\cellcolor[HTML]{65156E}} \color[HTML]{F1F1F1} 0.288502 & {\cellcolor[HTML]{FCA108}} \color[HTML]{000000} 0.790591 \\
+        TA2 & {\cellcolor[HTML]{E55C30}} \color[HTML]{F1F1F1} 0.632105 & {\cellcolor[HTML]{E9612B}} \color[HTML]{F1F1F1} 0.647468 & {\cellcolor[HTML]{D94D3D}} \color[HTML]{F1F1F1} 0.587539 & {\cellcolor[HTML]{D84C3E}} \color[HTML]{F1F1F1} 0.583433 & {\cellcolor[HTML]{E35933}} \color[HTML]{F1F1F1} 0.621495 & {\cellcolor[HTML]{E8602D}} \color[HTML]{F1F1F1} 0.640803 & {\cellcolor[HTML]{000004}} \color[HTML]{F1F1F1} 0.000000 & {\cellcolor[HTML]{E45A31}} \color[HTML]{F1F1F1} 0.627242 & {\cellcolor[HTML]{F37819}} \color[HTML]{F1F1F1} 0.703030 & {\cellcolor[HTML]{FCFFA4}} \color[HTML]{000000} 1.000000 \\
+        revCSC & {\cellcolor[HTML]{400A67}} \color[HTML]{F1F1F1} 0.198838 & {\cellcolor[HTML]{450A69}} \color[HTML]{F1F1F1} 0.209010 & {\cellcolor[HTML]{260C51}} \color[HTML]{F1F1F1} 0.138559 & {\cellcolor[HTML]{240C4F}} \color[HTML]{F1F1F1} 0.132827 & {\cellcolor[HTML]{3E0966}} \color[HTML]{F1F1F1} 0.194830 & {\cellcolor[HTML]{470B6A}} \color[HTML]{F1F1F1} 0.211221 & {\cellcolor[HTML]{E45A31}} \color[HTML]{F1F1F1} 0.627242 & {\cellcolor[HTML]{000004}} \color[HTML]{F1F1F1} 0.000000 & {\cellcolor[HTML]{5F136E}} \color[HTML]{F1F1F1} 0.270369 & {\cellcolor[HTML]{FCA80D}} \color[HTML]{000000} 0.807421 \\
+        TA1 & {\cellcolor[HTML]{62146E}} \color[HTML]{F1F1F1} 0.277580 & {\cellcolor[HTML]{65156E}} \color[HTML]{F1F1F1} 0.287032 & {\cellcolor[HTML]{490B6A}} \color[HTML]{F1F1F1} 0.217404 & {\cellcolor[HTML]{470B6A}} \color[HTML]{F1F1F1} 0.211676 & {\cellcolor[HTML]{5F136E}} \color[HTML]{F1F1F1} 0.271929 & {\cellcolor[HTML]{65156E}} \color[HTML]{F1F1F1} 0.288502 & {\cellcolor[HTML]{F37819}} \color[HTML]{F1F1F1} 0.703030 & {\cellcolor[HTML]{5F136E}} \color[HTML]{F1F1F1} 0.270369 & {\cellcolor[HTML]{000004}} \color[HTML]{F1F1F1} 0.000000 & {\cellcolor[HTML]{F9C932}} \color[HTML]{000000} 0.873586 \\
+        Fibroblast & {\cellcolor[HTML]{FCA60C}} \color[HTML]{000000} 0.803968 & {\cellcolor[HTML]{FCB418}} \color[HTML]{000000} 0.828309 & {\cellcolor[HTML]{FCA60C}} \color[HTML]{000000} 0.802999 & {\cellcolor[HTML]{FCA60C}} \color[HTML]{000000} 0.803792 & {\cellcolor[HTML]{FA9207}} \color[HTML]{000000} 0.761176 & {\cellcolor[HTML]{FCA108}} \color[HTML]{000000} 0.790591 & {\cellcolor[HTML]{FCFFA4}} \color[HTML]{000000} 1.000000 & {\cellcolor[HTML]{FCA80D}} \color[HTML]{000000} 0.807421 & {\cellcolor[HTML]{F9C932}} \color[HTML]{000000} 0.873586 & {\cellcolor[HTML]{000004}} \color[HTML]{F1F1F1} 0.000000 \\
+    \end{tabular}
+
+\end{sidewaystable}
 
 % \chapter{Cell-state Random Forest Classifier}
 % \label{appendix:rfclass}
@@ -261,7 +328,7 @@ This equation calculates the hierarchy score for each node in a network based on
 % Usefullness in determining antibodies not working properly?
 
 
-\chapter{Appendix CardosoRodriguez \& Qin et al.}
+\chapter{CardosoRodriguez \& Qin et al. 2023}
 \label{appendix:XXX}
 
 \includepdf[pages=-, scale=1, offset=24mm -28mm]{0Xappendices/preprint.pdf}
@@ -271,6 +338,10 @@ This equation calculates the hierarchy score for each node in a network based on
 \chapter{Colophon}
 \label{appendix3label}
 \textit{This is a description of the tools you used to make your thesis. It helps people make future documents, reminds you, and looks good.}
+
+Thesis made in latex. Figures assembled in the open source vecotr editing software Inkscape. Resources using for making figures include plots generated from code, de-novo graphics, and graphics altered from the open source Bioicons resource. 
+
+This Thesis is currently hosted in GitHub as a private repository, but as soon as the sections of work currently under revision at Cell are part of the public domain I will make the repository public. Code availability covers all Chapters and is distributed along multiple GitHub repositories.
 
 \textit{(example)} This document was set in the Times Roman typeface using \LaTeX\ and Bib\TeX , composed with a text editor. 
  % description of document, e.g. type faces, TeX used, TeXmaker, packages and things used for figures. Like a computational details section.

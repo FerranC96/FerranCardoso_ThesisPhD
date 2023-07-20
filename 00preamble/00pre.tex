@@ -6,7 +6,7 @@
 % \renewcommand {\@degree@string} {Master of Things}
 % \makeatother
 
-\title{Charting the Single-cell Landscape of Colorectal Cancer Stem Cell Polarisation}
+\title{Charting the Single-Cell Landscape of Colorectal Cancer Stem Cell Polarisation}
 \author{Ferran Cardoso Rodriguez}
 \department{Department of Oncology}
 
@@ -278,16 +278,45 @@ academia please see \url{https://www.ucl.ac.uk/impact/}. For thousands more exam
 
         
 \begin{acknowledgements}
+
 Acknowledge all the things!
+
 \end{acknowledgements}
 
+% % Abbreviations page should go here, immediatly before the Table of Contents
 
+\printglossary[type=\acronymtype,title=Abbreviations, toctitle=Abbreviations]
 
-
-% Abbreviations page should go here, immediatly before the Table of Contents
-\begin{abbreviations}
-Acknowledge all the things!
-\end{abbreviations}
+    % \DTLnewdb{acronyms}
+    % \addacronym{EMD}{EMD: Earth Mover's Distance}
+    % \addacronym{IMU}{Inertial Measurement Unit}
+    % \addacronym{SoC}{System on Chip}
+    % \addacronym{DMP}{Digital Motion Processor}
+    % \addacronym{DSP}{Digital Signal Processor}
+    % \addacronym{QFN}{Quad Flat No-leads}
+    % \addacronym{LED}{Light-Emitting Diode}
+    % \addacronym{GPIO}{General Purpose Input/Output}
+    % \addacronym{MEMS}{Microelectromechanical system}
+    % \addacronym{DoF}{Degrees of Freedom}
+    % \addacronym{CPU}{Central Processing Unit}
+    % \addacronym{FBX}{Filmbox (file format)}
+    % \addacronym{IoT}{Internet of Things}
+    % \addacronym{SDK}{Software Development Kit}
+    % \addacronym{HAL}{Hardware Abstraction Layer}
+    % \addacronym{UUID}{Universally Unique Identifier}
+    % \addacronym{OS}{Operating System}
+    % \addacronym{IDE}{Integrated Development Environment}
+    % \addacronym{TI}{Texas Instruments}
+    % \addacronym{HID}{Human Interface Device}
+    
+    % % Sort the database
+    % \DTLsort*{Acronym}{acronyms}
+    
+    % \begin{abbreviations}
+    % % Display the contents of the database
+    % \DTLforeach*{acronyms}{\thisAcronym=Acronym,\thisDesc=Description}
+    %     {\item[\thisAcronym] \thisDesc}%
+    % \end{abbreviations}
 
 
 % %  Gantt chart goes here (for now, will be removed from thesis)
