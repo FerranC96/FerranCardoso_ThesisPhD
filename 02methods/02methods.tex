@@ -294,7 +294,7 @@ Details on the markers used in the RF models, and the cell state they are associ
 
 Work presented in this section has already been made public in Qin \& Cardoso Rodriguez et al. 2023 \cite{cardoso_rodriguez_single-cell_2023}. As a joint co-first authored paper, attribution is shared between Dr. Xiao Qin and myself. While I carried out all of the scRNA-seq Data Analysis presented in this Thesis, Dr. Xiao Qin was in charge of the murine colonic organoid culture system and data acquisition via both scRNA-seq and Mass Cytometry. The exact attribution for specific tasks is detailed in Qin \& Cardoso Rodriguez et al. 2023 \cite{cardoso_rodriguez_single-cell_2023}. 
 
-Aiming to provide additional context, the section below on scRNA-seq data acquisition has been included despite Dr. Xiao Qin having carried-out the work.
+Aiming to provide additional context, the section below on scRNA-seq data acquisition has been included despite Dr. Xiao Qin having carried-out the work. For details on the organoid platform used and the general experimental setup see Qin \& Cardoso Rodriguez \emph{et al.}~\cite{cardoso_rodriguez_single-cell_2023}.
 
 % \subsection*{Wet Lab Data Generation}
 
@@ -501,7 +501,7 @@ Hierarchy of the assembled graphs was computed using my python package \emph{pyk
 
 \subsection{Embedding the Knowledge Graph}
 
-The table of relational triplets was then used to generate a\acrshort{kg} using the MultiDiGraph() function from the NetworkX package~\cite{hagberg_exploring_2008}, wherein multiple types of edges (\emph{relations}) connect nodes in a directed manner. 
+The table of relational triplets was then used to generate a \acrshort{kg} using the MultiDiGraph() function from the NetworkX package~\cite{hagberg_exploring_2008}, wherein multiple types of edges (\emph{relations}) connect nodes in a directed manner. 
 
 The resulting directed \acrshort{kg} was then embedded into a lower 50-dimensional space using the TransR \acrshort{kg} embedding algorithm~\cite{zhang_transr_2021} as implemented in the PyKEEN package~\cite{ali_pykeen_2021}. TransR is a knowledge graph embedding approach derived from the mature TransE algorithm~\cite{bordes_translating_2013} that better encodes complex relational information. 
 
@@ -525,9 +525,9 @@ github
     \label{fig:2wav}
 \end{figure}
 
-To generate the projected \(cell X wavelets\) matrix I compute the dot product between the \(node X wavelets\) matrix and the \(cell X feature\) count matrix with the numpy package~\cite{harris_array_2020}(Figure \ref{fig:6project}B).
+To generate the projected \(cell X wavelets\) matrix I compute the dot product between the \(node X wavelets\) matrix and the \(cell X feature\) count matrix with the numpy package~\cite{harris_array_2020}(Figure \ref{fig:6project}B). The shared feature axis between the two matrices is aranged by filtering and reordering the features in the gene count matrix to match the nodes of the \acrshort{kg}.
 
-A relatively high dimensional space, PCA is applied to the projected matrix and then a \emph{k}-NN graph and subsequent PHATE embedding are computed. The PHATE embedding serves as a useful non-quantitative way to compare the projected data with the original count matrix-based embedding (Figure \ref{fig:6project}).
+Resulting in a relatively high dimensional space (with cells on one axis and the product of features and the wavelet scale \(J\) parameter on the other), PCA is applied to the projected matrix and then a \emph{k}-NN graph and subsequent PHATE embedding are computed. The PHATE embedding serves as a useful non-quantitative way to compare the projected data with the original count matrix-based embedding (Figure \ref{fig:6project}).
 The projected \emph{k}-NN graph can be used to quantitatively compare and benchmark the method against a \emph{k}-NN computed directly from the \(cell X feature\) count matrix (Figure \ref{fig:6bench}. Distances on the \emph{k}-NN graphs were computed using the shortest\_path() function from the graphtools package (\url{github.com/KrishnaswamyLab/graphtools}) and then aggregated at the cluster level by computing the mean distances from and to each pair of cell clusters (Figure \ref{fig:6bench}). To compare these inter-cluster distances between the gene expression and LRT-KG projection spaces (Tables \ref{tab:kgdistge} and \ref{tab:kgdistlrt}), the distance matrices were scaled to (0,1) range using the MinMaxScaler() function from sklearn and substracted to generate a matrix of distance differences (Figure \ref{fig:6bench}B). Pearson correlation between the two unscaled distances for each cluster-pair combination was computed with the scipy package (Figure \ref{fig:6bench}C), and so was the correlation between the distances and the aggregate communication probability score for each cluster pair as defined by CellChat (Figure \ref{fig:6bench}D). 
 
 
