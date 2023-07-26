@@ -4,9 +4,9 @@
 \newpage
 \section{Introduction}
 
-More than 60 years ago, Conrad H. Waddington illustrated the process of an epigenetic landscape where pluripotent cells would roll down into valleys of terminally differentiated states \cite{ch_waddington_waddington_1957}. Albeit a powerful image of developmental biology, his effort and subsequent ones since then have mostly been of a rather subjective and artistic nature. However, reconstructing such landscapes from real biological data is not an untenable task anymore, as \emph{omic} profiles from single-cells can be embedded together and mapped onto a 3D space sculpted by cellular pluripotency metrics \cite{chen_single-cell_2019}.
+More than 60 years ago, Conrad H. Waddington illustrated the process of an epigenetic landscape where pluripotent cells would roll down into valleys of terminally differentiated states~\cite{ch_waddington_waddington_1957}. Albeit a powerful image of developmental biology, his effort and subsequent ones since then have mostly been of a rather subjective and artistic nature. However, reconstructing such landscapes from real biological data is not an untenable task anymore, as \emph{omic} profiles from single-cells can be embedded together and mapped onto a 3D space sculpted by cellular pluripotency metrics \cite{chen_single-cell_2019}.
 
-However, none of those methods appear to leverage embeddings able to capture transitional processes and global structure. Furthermore, such as Waddington-like landscape is not only informed by the overall elevation, but also by more local features that determine the presence of troughs and valleys and thus limit the repertoire of likely transitions downhill.
+However, none of those methods appear to leverage embeddings able to capture transitional processes and global structure. Furthermore, such a Waddington-like landscape would need to be informed by features at multiple levels: with a coarse feature informing overall elevation, and local information determining the presence of troughs and valleys, thus shaping the repertoire of likely downhill transitions.
 
 Here I propose a novel method to generate such data-driven Waddington-like landscapes using; 1) embeddings that capture global structure (PHATE \cite{moon_visualizing_2019}), 2) a cellular pluripotency metric to derive coarse landscape elevation (CCAT \cite{teschendorff_single-cell_2017}), and 3) RNA velocity metrics to capture local transciptomic changes (scvelo \cite{bergen_generalizing_2020}) that inform state accessibility (Figure \ref{fig:5land}A).
 
@@ -17,7 +17,7 @@ This work has been published as part of Qin \& Cardoso Rodriguez \emph{et al.}~\
 \begin{figure}
     \centering
     \includegraphics{05vr/figs/5VR_score.png}
-    \caption{\textbf{Workflow for calculating VR scores from scRNA-seq data}. \colorbox{yellow}{\textbf{A)}. \textbf{B)}.}}
+    \caption{\textbf{Workflow for Calculating VR Scores from scRNA-seq Data}. \textbf{A)} \acrshort{vr} scores leverage a low-dimensional embedding and are computed from pluripotency and RNA velocity metrics. \textbf{B)} Computation of \acrshort{vr} scores incorporates  global and local components as a weighted sum. \acrshort{vr}, \acrlong{vr}. Q\textsubscript{99}, 99\textsuperscript{th} quantile.}
     \label{fig:5score}
 \end{figure}
 
@@ -25,14 +25,14 @@ Following with the geographical analogy, PHATE space acts as the \emph{longitude
 
 While these two metrics have already been discussed previously in this work, here is a small summary of what they entail. CCAT has been defined as an estimate for a cell's Signalling Entropy Rate, which has been shown to be a robust metric for cellular pluripotency \cite{teschendorff_single-cell_2017,chen_single-cell_2019,senra_origins_2022}. RNA velocity vector lengths are the modulus of the inferred RNA velocity vectors as determined by a cell's ratio of spliced and unspliced mRNA, thus measuring the overall rate of transcriptomic change undergone by a cell.
 
-Detailed information on the definition and computation of the VR score can be found in Chapter \ref{02methods}. In brief, the VR score is a cellular metric computed on a per sample and cluster labels and is defined as the weighted sum of the two components: CCAT signalling-entropy \cite{teschendorff_single-cell_2017} and RNA velocity vector length \cite{bergen_generalizing_2020} (Figure \ref{fig:5land}B). 
+Detailed information on the definition and computation of the VR score can be found in Chapter \ref{02methods}. In brief, the VR score is a cellular metric computed on a per sample and cluster labels and is defined as the weighted sum of the two components: CCAT signalling-entropy~\cite{teschendorff_single-cell_2017} and RNA velocity vector length~\cite{bergen_generalizing_2020} (Figure \ref{fig:5land}B). 
 At a cluster's centre, the VR score is solely determined by the median CCAT. However, the VR scores at the cluster periphery are augmented by weighting the inverse of RNA velocity component and the scaled distance from the cluster centre to model rates of local transcriptional change. We use the inverse of the velocity vector length so that transitions substantiated by high RNA velocities do not locally increase landscape elevation at a cluster's boundary, with the opposite happening for low velocity cells.
 
-This method thus reconstructs a data-driven estimate of Waddington-like landscapes where the overall altitude captures the differentiation potential of a cell population, with the valley-ridge topology delineating local plasticity and cell state availability. 
+This method thus reconstructs a data-driven estimate of Waddington-like landscapes where the overall altitude captures the differentiation potential of a cell population, with the \acrlong{vr} topology delineating local plasticity and cell-state availability. 
 
-\section{Landscapes of Colonic Epithelia Cell-fate Plasticity}
+\section{Landscapes of Colonic Epithelia Cell-Fate Plasticity}
 
-Having been described in Chapter \ref{04seq} and in Qin \& Cardoso Rodriguez \textit{et al}. 2023, the heterocellular murine colonic organoid system represents a suitable candidate to test the VR landscapes. 
+Having been described in Chapter \ref{04seq} and in Qin \& Cardoso Rodriguez \emph{et al.}, the heterocellular murine colonic organoid system represents a suitable candidate to test the VR landscapes. 
 This system consists of colon epithelia organoids increasingly accumulating canonical CRC oncogenic mutations, and with various combinations of microenvironmental perturbations including a stromal component (Figure \ref{fig:5land}A).
 
 The cellular dynamics of this system suggest stromal cues polarise colonic epithelia towards a slow-cycling \acrshort{revcsc} state, comprising lower pluripotency potential than other stem states. There is also some loss of terminally differentiated states by stromal cues, especially around the absorptive compartment, but this de-differentiation was not as pronounced as in CRC organoids.
@@ -42,7 +42,8 @@ The VR score is a way of visualising all of these processes at once by generatin
 \begin{figure}[h]
     \centering
     \includegraphics{05vr/figs/5VR_landscape.png}
-    \caption{\textbf{Fibroblast- and Oncogene-driven Waddington-like Single-cell Landscapes.} \textbf{A)} Setting/data. \textbf{B)} Integrating PHATE and Valley-Ridge (VR) score enables Waddington-like embeddings of scRNA-seq data. Landscapes illustrate how WT epithelia differentiate from high signalling-entropy stem cells, through TA cells, into secretory and absorptive cells. Fibroblasts enable WT epithelia to access revCSC while retaining secretory and absorptive differentiation. In contrast, \textit{shApc} and \textit{Kras\textsuperscript{G12D/+}} limit differentiation and trap cells in the proCSC state.}
+    \caption{\textbf{Fibroblast- and Oncogene-driven Waddington-like Single-cell Landscapes.} \textbf{A)} Epithelial cells from the heterocellular CRC organoid model system are used to compute \acrshort{vr} scores. \textbf{B)} Integrating PHATE and Valley-Ridge (VR) score enables Waddington-like landscapes of scRNA-seq data, illustrating processes of \acrshort{csc} polarisation. Landscape colour denotes \acrshort{vr} elevation, dot colours represent epithelial clusters.}
+     % Landscapes illustrate how WT epithelia differentiate from high signalling-entropy stem cells, through TA cells, into secretory and absorptive cells. Fibroblasts enable WT epithelia to access revCSC while retaining secretory and absorptive differentiation. In contrast, \textit{shApc} and \textit{Kras\textsuperscript{G12D/+}} limit differentiation and trap cells in the proCSC state.
     \label{fig:5land}
 \end{figure}
 

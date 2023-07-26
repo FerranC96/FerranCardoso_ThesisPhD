@@ -38,6 +38,79 @@
 %	This form should be completed as many times as necessary. For instance, if a student had seven 
 %	thesis chapters, two of which having material which had been published, they would complete this form twice. 
 
+\begin{abstract} % 300 word limit
+\vspace{0.2cm}
+
+Colonic epithelia is regulated by cell-intrinsic and cell-extrinsic cues, both in homeostatic tissues and \acrfull{crc}, where the tumour microenvironment closely interacts with mutated epithelia. Our understanding on how these cues polarise \acrfull{csc} states remains incomplete. Indeed, charting the interaction between intrinsic and stromal cues requires a systematic study yet to be found in the literature. 
+
+In this work I present my efforts towards computationally studying colonic stem cell polarisation at single-cell resolution; where my colleagues and I leverage the scalability of heterocellular \acrshort{crc} organoid models. The organoid system, presented in Qin \& Cardoso Rodriguez \emph{et al.}~\cite{cardoso_rodriguez_single-cell_2023}, was dissected using single-cell \emph{omic} analyses that resolved complex interaction and polarisation processes.
+
+First, I identified bottlenecks in common \acrfull{mc} analysis workflows benefiting from either increased accessibility or automation; designing the CyGNAL pipeline and deveopling a cell-state classifier to tackle these points respectively. I then used \acrfull{scrnaseq} data to reveal a shared landscape of \acrshort{csc} polarisation; wherein stromal cues polarise the epithelia towards slow-cycling \acrfull{revcsc} and oncogenic mutations trap cells in a \acrfull{procsc} state. I then developed a method to visualise single-cell differentation using a novel \acrfull{vr} score, which can generate data-driven Waddington-like landscapes that recapitulate differentiation dynamics of the colonic epithelia. Finally, I explored an approach for holistic inter- and intra-cellular communication analysis by incorporating literature information as a directed \acrfull{kg}, showing that low-dimensional representations of the graph retain biological information and that projected cellular profiles recapitulate their transcriptomes.
+
+These results reveal a polarisation landscape where \acrshort{crc} epithelia is trapped in a \acrshort{procsc} state refractory to stromal cues, and broadly show the importance of joint collaborative wet- and dry-lab work; central towards targeting gaps in the method space and generating a comprehensive analysis of heterocellular signalling in cancer.
+
+
+    % Cancer cells are regulated by oncogenic mutations and microenvironmental signals, yet these processes are often studied separately. To functionally map how cell-intrinsic and cell-extrinsic cues co-regulate cell-fate, we performed a systematic single-cell analysis of 1,107 colonic organoid cultures regulated by 1) colorectal cancer (CRC) oncogenic mutations, 2) microenvironmental fibroblasts and macrophages, 3) stromal ligands, and 4) signalling inhibitors. Multiplexed single-cell analysis revealed a stepwise epithelial differentiation landscape dictated by combinations of oncogenes and stromal ligands, spanning from fibroblast-induced Clusterin (CLU)\textsuperscript{+} revival colonic stem cells (revCSC) to oncogene-driven LRIG1\textsuperscript{+} hyper-proliferative CSC (proCSC). The transition from revCSC to proCSC is regulated by decreasing WNT3A and TGF-\textbeta-driven YAP signalling and increasing KRAS\textsuperscript{G12D} or stromal EGF/Epiregulin-activated MAPK/PI3K flux. We find that APC-loss and KRAS\textsuperscript{G12D} collaboratively limit access to revCSC and disrupt stromal-epithelial communication -- trapping epithelia in the proCSC fate. These results reveal that oncogenic mutations dominate homeostatic differentiation by obstructing cell-extrinsic regulation of cell-fate plasticity. 
+
+
+\end{abstract}
+
+\begin{impactstatement}
+
+	% UCL theses now have to include an impact statement. \textit{(I think for REF reasons?)} The following text is the description of the guide linked from the website of submission and formatting. (Link to the guide: {\scriptsize \url{http://www.grad.ucl.ac.uk/essinfo/docs/Impact-Statement-Guidance-Notes-for-Research-Students-and-Supervisors.pdf}})
+
+By investigating the intricate interplay between intrinsic and extrinsic cues regulating \acrshort{csc} fates, the research and work presented in this thesis sheds new light on the landscape of colonic epithelia polarisation and offers insights into potential therapeutic strategies. 
+
+Furthering the spirit of shared scientific knowledge and collaborative research, data and code used to generate the analyses in Qin \& Cardoso Rodriguez \emph{et al.} have been made public in various repositories. Furthermore, tools and outputs developed during my project and presented in this thesis have also been made publicly available; either as part of peer-reviewed publications such as CyGNAL in Sufi \& Qin \emph{et al.}~\cite{sufi_multiplexed_2021}, as software packages like pykrack (Appendix \ref{appendix:pykrack}, \url{ferranc96.github.io/pyKrack}), or in the form of publicly accessible GitHub repositories. 
+
+Tools like CyGNAL and the \acrshort{vr} landscapes have already impacted research in my lab, facilitating routine \acrshort{mc} analyses and empowering Ramos Zapatero \& Tong \emph{et al.}~\cite{zapatero_trellis_2023} during the ongoing revision process. Furthermore, general knowledge acquired before and during my PhD has been shared with colleagues; either in the form of scientific discussions, empowering others to further their own technical skills, or as natural peer-peer diffusion of soft skills and life experiences.
+
+Finally, the scientific findings shown here and in Qin \& Cardoso Rodriguez \emph{et al.}~\cite{cardoso_rodriguez_single-cell_2023} will inspire and empower others in their work.
+
+% \begin{quote}
+% The statement should describe, in no more than 500 words, how the expertise, knowledge, analysis,
+% discovery or insight presented in your thesis could be put to a beneficial use. Consider benefits both
+% inside and outside academia and the ways in which these benefits could be brought about.
+
+% The benefits inside academia could be to the discipline and future scholarship, research methods or
+% methodology, the curriculum; they might be within your research area and potentially within other
+% research areas.
+
+% The benefits outside academia could occur to commercial activity, social enterprise, professional
+% practice, clinical use, public health, public policy design, public service delivery, laws, public
+% discourse, culture, the quality of the environment or quality of life.
+
+% The impact could occur locally, regionally, nationally or internationally, to individuals, communities or
+% organisations and could be immediate or occur incrementally, in the context of a broader field of
+% research, over many years, decades or longer.
+
+% Impact could be brought about through disseminating outputs (either in scholarly journals or
+% elsewhere such as specialist or mainstream media), education, public engagement, translational
+% research, commercial and social enterprise activity, engaging with public policy makers and public
+% service delivery practitioners, influencing ministers, collaborating with academics and non-academics
+% etc.
+
+% Further information including a searchable list of hundreds of examples of UCL impact outside of
+% academia please see \url{https://www.ucl.ac.uk/impact/}. For thousands more examples, please see
+% \url{http://results.ref.ac.uk/Results/SelectUoa}.
+% \end{quote}
+\end{impactstatement}
+
+        
+\begin{acknowledgements}
+
+I must thank Chris for his exceptional guidance and support. A PhD is a journey of learning, and he has been the mentor whose insightful observations have been instrumental in shaping the direction of this work.
+I am immensely grateful to Xiao for her contributions to my PhD; from tiny details like sharing the template for my first poster, to undertaking all experimental work our analyses are based on. Her dedication and talent prove she is the best colleague one could ever work with and she is not alone. The Tape lab is a nurturing and inspiring environment full of amazing individuals; I will always remember the 5k-f\textsuperscript{2} project and I truly hope one day our work makes a lasting impact on patients' lives. 
+
+I am also grateful to the UCL-Yale exchange programme, for without their bursary I would not have been able to collaborate with Smita and her team of exceptional individuals. Thank you Aarthi for your unwavering support despite the setbacks faced, and thank you too Jay for your help during our discussions of \acrshort{kg}s and hikes around Connecticut. 
+I would also like to thank Jasmin, Nicky and Javier for their guidance as my thesis committee panel; thank you Javier and other BLIC members for your support and insightful discussions too.
+I must thank CRUK and organisations like it that support scientific research; without your help none of this would be possible.
+
+Thank you Mum and Dad, and you too Sara; I would not be where I am nor who I am without you. Moltes gràcies, this thesis goes to you. Last but not least, I must thank you too Ana; my soon-to-be wife and rock throughout this journey. Thank you for sharing of the highs and lows of academia, and for sharing a life with me. Also, I am sure this will not be the last thesis acknowledging you. T'estimo.
+
+\end{acknowledgements}
+
+
 \newpage	
 \section*{UCL Research Paper Declaration Form: Chapter 3}
 
@@ -46,23 +119,23 @@
         \item \textbf{1.	For a research manuscript that has already been published} (if not yet published, please skip to section 2)\textbf{:}
         \begin{enumerate}\itemsep0em
             \item \textbf{What is the title of the manuscript?}
-            % Answer here
+            Multiplexed Single-cell Analysis of Organoid Signaling Networks.
             \item \textbf{Please include a link to or doi for the work:}
-            % Answer here
+            \url{https://doi.org/10.1038/s41596-021-00603-4}
             \item \textbf{Where was the work published?}
-            % Answer here: e.g. journal name
+            Nature Protocols.
             \item \textbf{Who published the work?}
-            % Answer here: e.g. Elsevier/Oxford University Press
+            Springer Nature.
             \item \textbf{When was the work published?}
-            % Answer here
+            08 September 2021.
             \item \textbf{List the manuscript's authors in the order they appear on the publication:}
-            % Answer here   
+            Jahangir Sufi, Xiao Qin, Ferran Cardoso Rodriguez, Yong Jia Bu, Petra Vlckova, María Ramos Zapatero, Mark Nitz, and Christopher J. Tape.   
             \item \textbf{Was the work peer reviewd?}
-            % Answer here
+            Yes.
             \item \textbf{Have you retained the copyright?}
-            % Answer here 
+            Yes.
             \item \textbf{Was an earlier form of the manuscript uploaded to a preprint server (e.g. medRxiv)? If ‘Yes’, please give a link or doi} 
-            % Answer here:
+            No.
     %        \\
     %         If ‘No’, please seek permission from the relevant publisher and check the box next to the below statement:
     % %			
@@ -73,215 +146,169 @@
         \end{enumerate}
     %	
         \item \textbf{For a research manuscript prepared for publication but that has not yet been published} (if already published, please skip to section 3)\textbf{:}
-        \begin{enumerate}\itemsep0em
-            \item \textbf{What is the current title of the manuscript?}
-            % Answer here:
-            \item \textbf{Has the manuscript been uploaded to a preprint server 'e.g. medRxiv'? 
-            \\
-            If 'Yes', please please give a link or doi:}
-            % Answer here:
-            \item \textbf{Where is the work intended to be published?}
-            % Answer here: e.g. journal name
-            \item \textbf{List the manuscript's authors in the intended authorship order:}
-            % Answer here
-            \item \textbf{Stage of publication:}
-            % answer here: e.g. in submission
-        \end{enumerate}
+        % \begin{enumerate}\itemsep0em
+        %     \item \textbf{What is the current title of the manuscript?}
+        %     % Answer here:
+        %     \item \textbf{Has the manuscript been uploaded to a preprint server 'e.g. medRxiv'? 
+        %     \\
+        %     If 'Yes', please please give a link or doi:}
+        %     % Answer here:
+        %     \item \textbf{Where is the work intended to be published?}
+        %     % Answer here: e.g. journal name
+        %     \item \textbf{List the manuscript's authors in the intended authorship order:}
+        %     % Answer here
+        %     \item \textbf{Stage of publication:}
+        %     % answer here: e.g. in submission
+        % \end{enumerate}
         
         \item \textbf{For multi-authored work, please give a statement of contribution covering all authors} (if single-author, please skip to section 4)\textbf{:}
-        % Answer here
+        J.S. developed \acrshort{tobis}, designed rare earth metal-conjugated antibody panels and performed MC analysis. X.Q. designed and performed organoid and MC experiments, analyzed the data and wrote the manuscript. F.C.R. developed CyGNAL and wrote the manuscript. P.V. and M.R.Z. performed organoid and MC experiments. Y.J.B. and M.N. developed TeMal reagents. C.J.T. designed the study, analyzed the data and wrote the manuscript.
+        
         \item \textbf{In which chapter(s) of your thesis can this material be found?}
-        % Answer here
+        Chapter 2 (Methods) and Chapter 3.
         %
     \end{enumerate}
     
-    \textbf{e-Signatures confirming that the information above is accurate}\\
+    \textbf{Signatures confirming that the information above is accurate}\\
     \textbf{}\\ 
-    \textbf{Candidate:}\\
-    \textbf{Date:}\\
+    \textbf{Candidate:} Ferran Cardoso Rodriguez\\
+    \textbf{Date:} 26 July 2023\\
     \textbf{}\\
-    \textbf{Supervisor/Senior Author signature} (where appropriate)\textbf{:}\\
-    \textbf{Date:}	
+    \textbf{Supervisor/Senior Author signature} (where appropriate)\textbf{:} Christopher J. Tape\\
+    \textbf{Date:} 26 July 2023	
 
 \newpage	
-\section*{UCL Research Paper Declaration Form: Chapters 4 and 5}
+\section*{UCL Research Paper Declaration Form: Chapters 4-5}
 
     \begin{enumerate}\itemsep0em
     
         \item \textbf{1.	For a research manuscript that has already been published} (if not yet published, please skip to section 2)\textbf{:}
-        \begin{enumerate}\itemsep0em
-            \item \textbf{What is the title of the manuscript?}
-            % Answer here
-            \item \textbf{Please include a link to or doi for the work:}
-            % Answer here
-            \item \textbf{Where was the work published?}
-            % Answer here: e.g. journal name
-            \item \textbf{Who published the work?}
-            % Answer here: e.g. Elsevier/Oxford University Press
-            \item \textbf{When was the work published?}
-            % Answer here
-            \item \textbf{List the manuscript's authors in the order they appear on the publication:}
-            % Answer here   
-            \item \textbf{Was the work peer reviewd?}
-            % Answer here
-            \item \textbf{Have you retained the copyright?}
-            % Answer here 
-            \item \textbf{Was an earlier form of the manuscript uploaded to a preprint server (e.g. medRxiv)? If ‘Yes’, please give a link or doi} 
-            % Answer here:
-    %        \\
-    %         If ‘No’, please seek permission from the relevant publisher and check the box next to the below statement:
-    % %			
-    %         \begin{itemize}\itemsep0em
-    %             % To check this box, replace \Box with \boxtimes
-    %             \item[$\Box$] {\itshape I acknowledge permission of the publisher named under 1d to include in this thesis portions of the publication named as included in 1c.}
-    %         \end{itemize}
-        \end{enumerate}
+    %     \begin{enumerate}\itemsep0em
+    %         \item \textbf{What is the title of the manuscript?}
+    %         % Answer here
+    %         \item \textbf{Please include a link to or doi for the work:}
+    %         % Answer here
+    %         \item \textbf{Where was the work published?}
+    %         % Answer here: e.g. journal name
+    %         \item \textbf{Who published the work?}
+    %         % Answer here: e.g. Elsevier/Oxford University Press
+    %         \item \textbf{When was the work published?}
+    %         % Answer here
+    %         \item \textbf{List the manuscript's authors in the order they appear on the publication:}
+    %         % Answer here   
+    %         \item \textbf{Was the work peer reviewd?}
+    %         % Answer here
+    %         \item \textbf{Have you retained the copyright?}
+    %         % Answer here 
+    %         \item \textbf{Was an earlier form of the manuscript uploaded to a preprint server (e.g. medRxiv)? If ‘Yes’, please give a link or doi} 
+    %         % Answer here:
+    % %        \\
+    % %         If ‘No’, please seek permission from the relevant publisher and check the box next to the below statement:
+    % % %			
+    % %         \begin{itemize}\itemsep0em
+    % %             % To check this box, replace \Box with \boxtimes
+    % %             \item[$\Box$] {\itshape I acknowledge permission of the publisher named under 1d to include in this thesis portions of the publication named as included in 1c.}
+    % %         \end{itemize}
+    %     \end{enumerate}
     %	
         \item \textbf{For a research manuscript prepared for publication but that has not yet been published} (if already published, please skip to section 3)\textbf{:}
         \begin{enumerate}\itemsep0em
             \item \textbf{What is the current title of the manuscript?}
-            % Answer here:
-            \item \textbf{Has the manuscript been uploaded to a preprint server 'e.g. medRxiv'? 
-            \\
-            If 'Yes', please please give a link or doi:}
-            % Answer here:
+            A Single-cell Perturbation Landscape of Colonic Stem Cell Polarisation.
+            \item \textbf{Has the manuscript been uploaded to a preprint server 'e.g. medRxiv'?} 
+            Yes.\\
+            If 'Yes', please please give a link or doi:
+            \url{https://doi.org/10.1101/2023.02.15.528008}
             \item \textbf{Where is the work intended to be published?}
-            % Answer here: e.g. journal name
+            Cell
             \item \textbf{List the manuscript's authors in the intended authorship order:}
-            % Answer here
+            Xiao Qin*, Ferran Cardoso Rodriguez*, Jahangir Sufi, Petra Vlckova, Jeroen Claus, and Christopher J. Tape.
+            *: These authors contributed equally to this work.
             \item \textbf{Stage of publication:}
-            % answer here: e.g. in submission
+            In revision, resubmitted.
         \end{enumerate}
         
         \item \textbf{For multi-authored work, please give a statement of contribution covering all authors} (if single-author, please skip to section 4)\textbf{:}
-        % Answer here
+        X.Q. designed the study, performed organoid experiments, generated scRNA-seq and \acrshort{tobis} mass cytometry data, analysed mass cytometry data, and wrote the paper. F.C.R. analysed scRNA-seq data, developed the VR score, and wrote the paper. J.S. developed \acrshort{tobis} barcodes and conjugated rare-earth metal antibodies. P.V. provided organoid culture support. J.C rendered Waddington-like landscapes. C.J.T. designed the study, analysed the data, and wrote the paper.
         \item \textbf{In which chapter(s) of your thesis can this material be found?}
-        % Answer here
+        Chapter 2 (Methods) and Chapters 4 and 5.
         %
     \end{enumerate}
     
-    \textbf{e-Signatures confirming that the information above is accurate}\\
+    \textbf{Signatures confirming that the information above is accurate}\\
     \textbf{}\\ 
-    \textbf{Candidate:}\\
-    \textbf{Date:}\\
+    \textbf{Candidate:} Ferran Cardoso Rodriguez\\
+    \textbf{Date:} 26 July 2023\\
     \textbf{}\\
-    \textbf{Supervisor/Senior Author signature} (where appropriate)\textbf{:}\\
-    \textbf{Date:}	
+    \textbf{Supervisor/Senior Author signature} (where appropriate)\textbf{:} Christopher J. Tape\\
+    \textbf{Date:} 26 July 2023	
 
 
-\newpage	
-\section*{UCL Research Paper Declaration Form: Chapter 6}
+% \newpage	
+% \section*{UCL Research Paper Declaration Form: Chapter 6}
 
-    \begin{enumerate}\itemsep0em
+%     \begin{enumerate}\itemsep0em
     
-        \item \textbf{1.	For a research manuscript that has already been published} (if not yet published, please skip to section 2)\textbf{:}
-        \begin{enumerate}\itemsep0em
-            \item \textbf{What is the title of the manuscript?}
-            % Answer here
-            \item \textbf{Please include a link to or doi for the work:}
-            % Answer here
-            \item \textbf{Where was the work published?}
-            % Answer here: e.g. journal name
-            \item \textbf{Who published the work?}
-            % Answer here: e.g. Elsevier/Oxford University Press
-            \item \textbf{When was the work published?}
-            % Answer here
-            \item \textbf{List the manuscript's authors in the order they appear on the publication:}
-            % Answer here   
-            \item \textbf{Was the work peer reviewd?}
-            % Answer here
-            \item \textbf{Have you retained the copyright?}
-            % Answer here 
-            \item \textbf{Was an earlier form of the manuscript uploaded to a preprint server (e.g. medRxiv)? If ‘Yes’, please give a link or doi} 
-            % Answer here:
-    %        \\
-    %         If ‘No’, please seek permission from the relevant publisher and check the box next to the below statement:
-    % %			
-    %         \begin{itemize}\itemsep0em
-    %             % To check this box, replace \Box with \boxtimes
-    %             \item[$\Box$] {\itshape I acknowledge permission of the publisher named under 1d to include in this thesis portions of the publication named as included in 1c.}
-    %         \end{itemize}
-        \end{enumerate}
-    %	
-        \item \textbf{For a research manuscript prepared for publication but that has not yet been published} (if already published, please skip to section 3)\textbf{:}
-        \begin{enumerate}\itemsep0em
-            \item \textbf{What is the current title of the manuscript?}
-            % Answer here:
-            \item \textbf{Has the manuscript been uploaded to a preprint server 'e.g. medRxiv'? 
-            \\
-            If 'Yes', please please give a link or doi:}
-            % Answer here:
-            \item \textbf{Where is the work intended to be published?}
-            % Answer here: e.g. journal name
-            \item \textbf{List the manuscript's authors in the intended authorship order:}
-            % Answer here
-            \item \textbf{Stage of publication:}
-            % answer here: e.g. in submission
-        \end{enumerate}
+%         \item \textbf{1.	For a research manuscript that has already been published} (if not yet published, please skip to section 2)\textbf{:}
+%         \begin{enumerate}\itemsep0em
+%             \item \textbf{What is the title of the manuscript?}
+%             % Answer here
+%             \item \textbf{Please include a link to or doi for the work:}
+%             % Answer here
+%             \item \textbf{Where was the work published?}
+%             % Answer here: e.g. journal name
+%             \item \textbf{Who published the work?}
+%             % Answer here: e.g. Elsevier/Oxford University Press
+%             \item \textbf{When was the work published?}
+%             % Answer here
+%             \item \textbf{List the manuscript's authors in the order they appear on the publication:}
+%             % Answer here   
+%             \item \textbf{Was the work peer reviewd?}
+%             % Answer here
+%             \item \textbf{Have you retained the copyright?}
+%             % Answer here 
+%             \item \textbf{Was an earlier form of the manuscript uploaded to a preprint server (e.g. medRxiv)? If ‘Yes’, please give a link or doi} 
+%             % Answer here:
+%     %        \\
+%     %         If ‘No’, please seek permission from the relevant publisher and check the box next to the below statement:
+%     % %			
+%     %         \begin{itemize}\itemsep0em
+%     %             % To check this box, replace \Box with \boxtimes
+%     %             \item[$\Box$] {\itshape I acknowledge permission of the publisher named under 1d to include in this thesis portions of the publication named as included in 1c.}
+%     %         \end{itemize}
+%         \end{enumerate}
+%     %	
+%         \item \textbf{For a research manuscript prepared for publication but that has not yet been published} (if already published, please skip to section 3)\textbf{:}
+%         \begin{enumerate}\itemsep0em
+%             \item \textbf{What is the current title of the manuscript?}
+%             % Answer here:
+%             \item \textbf{Has the manuscript been uploaded to a preprint server 'e.g. medRxiv'? 
+%             \\
+%             If 'Yes', please please give a link or doi:}
+%             % Answer here:
+%             \item \textbf{Where is the work intended to be published?}
+%             % Answer here: e.g. journal name
+%             \item \textbf{List the manuscript's authors in the intended authorship order:}
+%             % Answer here
+%             \item \textbf{Stage of publication:}
+%             % answer here: e.g. in submission
+%         \end{enumerate}
         
-        \item \textbf{For multi-authored work, please give a statement of contribution covering all authors} (if single-author, please skip to section 4)\textbf{:}
-        % Answer here
-        \item \textbf{In which chapter(s) of your thesis can this material be found?}
-        % Answer here
-        %
-    \end{enumerate}
+%         \item \textbf{For multi-authored work, please give a statement of contribution covering all authors} (if single-author, please skip to section 4)\textbf{:}
+%         % Answer here
+%         \item \textbf{In which chapter(s) of your thesis can this material be found?}
+%         % Answer here
+%         %
+%     \end{enumerate}
     
-    \textbf{e-Signatures confirming that the information above is accurate}\\
-    \textbf{}\\ 
-    \textbf{Candidate:}\\
-    \textbf{Date:}\\
-    \textbf{}\\
-    \textbf{Supervisor/Senior Author signature} (where appropriate)\textbf{:}\\
-    \textbf{Date:}	
+%     \textbf{Signatures confirming that the information above is accurate}\\
+%     \textbf{}\\ 
+%     \textbf{Candidate:}\\
+%     \textbf{Date:}\\
+%     \textbf{}\\
+%     \textbf{Supervisor/Senior Author signature} (where appropriate)\textbf{:}\\
+%     \textbf{Date:}	
 
-
-\begin{abstract} % 300 word limit
-My research is about stuff.
-
-It begins with a study of some stuff, and then some other stuff and things.
-
-There is a 300-word limit on your abstract.
-\end{abstract}
-
-\begin{impactstatement}
-
-	UCL theses now have to include an impact statement. \textit{(I think for REF reasons?)} The following text is the description of the guide linked from the website of submission and formatting. (Link to the guide: {\scriptsize \url{http://www.grad.ucl.ac.uk/essinfo/docs/Impact-Statement-Guidance-Notes-for-Research-Students-and-Supervisors.pdf}})
-
-\begin{quote}
-The statement should describe, in no more than 500 words, how the expertise, knowledge, analysis,
-discovery or insight presented in your thesis could be put to a beneficial use. Consider benefits both
-inside and outside academia and the ways in which these benefits could be brought about.
-
-The benefits inside academia could be to the discipline and future scholarship, research methods or
-methodology, the curriculum; they might be within your research area and potentially within other
-research areas.
-
-The benefits outside academia could occur to commercial activity, social enterprise, professional
-practice, clinical use, public health, public policy design, public service delivery, laws, public
-discourse, culture, the quality of the environment or quality of life.
-
-The impact could occur locally, regionally, nationally or internationally, to individuals, communities or
-organisations and could be immediate or occur incrementally, in the context of a broader field of
-research, over many years, decades or longer.
-
-Impact could be brought about through disseminating outputs (either in scholarly journals or
-elsewhere such as specialist or mainstream media), education, public engagement, translational
-research, commercial and social enterprise activity, engaging with public policy makers and public
-service delivery practitioners, influencing ministers, collaborating with academics and non-academics
-etc.
-
-Further information including a searchable list of hundreds of examples of UCL impact outside of
-academia please see \url{https://www.ucl.ac.uk/impact/}. For thousands more examples, please see
-\url{http://results.ref.ac.uk/Results/SelectUoa}.
-\end{quote}
-\end{impactstatement}
-
-        
-\begin{acknowledgements}
-
-Acknowledge all the things!
-
-\end{acknowledgements}
 
 % % Abbreviations page should go here, immediatly before the Table of Contents
 

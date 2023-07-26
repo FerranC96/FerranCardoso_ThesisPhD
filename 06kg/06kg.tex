@@ -7,7 +7,7 @@
 \begin{figure}
     \centering
     \includegraphics{06kg/figs/6KG_com.png}
-    \caption{}
+    \caption{\textbf{The Directed Nature of Inter- and Intra-Cellular Communications}. Secreting cells interacting with receiving cells via intercellular ligand-receptor interactions, which can then trigger intracellular \acrshort{ptm} cascades and gene-regulatory networks. \acrshort{ptm}, \acrlong{ptm}. \acrshort{tf}, \acrlong{tf}.}
     \label{fig:6intro}
 \end{figure}
 
@@ -22,6 +22,8 @@ The field of directed cellular interaction databases already presents with some 
 
 In this chapter I propose a novel approach for assembling gene-gene graphs that capture cellular communication by leveraging \acrshort{kg} embedding approaches, which would allow for the encoding of the original directed \acrshort{kg} into a simpler non-directed format amenable to downstream analysis and data projection. I aim to project single-cell \emph{omic} profiles into the assembled \acrshort{kg}s, thus treating the cells as signals on a gene graph. The resulting signals can then be considered as another single-cell \emph{omic} view of the cells, and used to generate new embeddings or be compared against their gene expression profiles.
 
+This work was conducted in collaboration with Prof. Smita Krishnaswamy and Aarthi Venkat at Yale University, under the Yale-UCL Exchange Programme (\url{https://www.grad.ucl.ac.uk/yale-ucl/}).
+
         % Gene embedding methods are growing , so are graph signal processing approaches. 
         % Discuss the embedding methods of these graphs:
         % Complexity in terms of structure, directionality and type of interaction. All of this is very important, unlike in undirected knn grpahs ubiquitous to omic analyses.
@@ -31,31 +33,31 @@ In this chapter I propose a novel approach for assembling gene-gene graphs that 
 
 
 
-\section{A KG for Ligands, Receptors and TF Targets}
+\section{A Knowledge Graph for Ligands, Receptors and TF Targets}
 
 \begin{figure}
     \centering
     \includegraphics{06kg/figs/6KG_kg.png}
-    \caption{}
+    \caption{\textbf{Assembly of \acrshort{kg}s for Cell Communications.} \textbf{A)} Public databases are used to assemble a custom KG of ligands, receptors and \acrshort{tf} targets. \textbf{B)} Tabular OmniPath~\cite{turei_integrated_2021} repository can also be assembled as a comparable \acrshort{kg}. \acrshort{kg}, \acrlong{kg}. \acrshort{lrtkg}, \acrlong{lrtkg}.}
     \label{fig:6kg}
 \end{figure}
 
 Literature information on cell communication interactions is commonly found in the form of databases used for cell-cell communication analyses, and not in a directed graph format. Therefore I assembled a custom \emph{kg} from public databases and compared it with OmniPath~\cite{turei_integrated_2021}, an existing curated repository of directed inter- and intra- cellular signalling interactions. More details on this process can be found in Chapter \ref{02methods}.
 
-I gathered information from the CellChat~\cite{sqjin_sqjincellchat_2021} and NicheNet~\cite{browaeys_nichenet_2020} databases to assemble a directed \acrshort{kg} wherein nodes are genes for ligands, receptors or \acrfull{tf} targets (Figure \ref{fig:6kg}). This \acrshort{kg} aims to capture inter- and intra-cellular communication; with ligand and receptor nodes describing the relationship between interacting cells, and the \acrshort{tf} targets capturing cellular states and response to stimuli.
+I gathered information from the CellChat~\cite{jin_inference_2021} and NicheNet~\cite{browaeys_nichenet_2020} databases to assemble a directed \acrshort{kg} wherein nodes are genes for ligands, receptors or \acrfull{tf} targets (Figure \ref{fig:6kg}). This \acrshort{kg} aims to capture inter- and intra-cellular communication; with ligand and receptor nodes describing the relationship between interacting cells, and the \acrshort{tf} targets capturing cellular states and response to stimuli.
 
 Following the ubiquitous triplet format, I thus encoded the graph as a relational database where pathways from Reactome~\cite{gillespie_reactome_2022} were used to annotate and relate the different gene nodes (Figure \ref{fig:6kg}).
 
 The resulting ligand-receptor-target \acrshort{kg} (\acrshort{lrtkg}) has over 2,500 nodes linked by interactions belonging to 23 distinct pathways. To validate broad-scale graph characteristics this custom graph was compared against the OmniPath resource.
-The OmniPath database has multiple layers of relational information between genes (and other molecules such as \acrshort{ptm}s), including directionality, supporting evidence and functional information on the nature of the interaction (i.e. activation or inhibition of receiving interaction member). Assembled in the same manner as the LRT-KG object, the OmniPath graph presented with a higher number of gene nodes and pathways but comparatively less interactions  and a lower hierarchy score than the LRT-KG (Figure \ref{fig:6kg}B and Table \ref{tab:2kg}).
+The OmniPath database has multiple layers of relational information between genes (and other molecules such as \acrshort{ptm}s), including directionality, supporting evidence, and functional information on the nature of the interaction (i.e. activation or inhibition of receiving interaction member)~\cite{turei_integrated_2021}. Assembled in the same manner as the LRT-KG object, the OmniPath graph presented with a higher number of gene nodes and pathways but comparatively less interactions  and a lower hierarchy score than the LRT-KG (Figure \ref{fig:6kg}B and Table \ref{tab:2kg}).
 
 
 \section{KG Embeddings Preserve Graph and Biological Information}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics{06kg/figs/6KG_embed.png}
-    \caption{XXXXXXXXXXX}
+    \caption{\textbf{Information Preservation in Low-Dimensional \acrshort{kg} Embeddings.} \textbf{A)} PHATE of embedded \acrshort{kg} nodes coloured by node-intrinsic properties. \textbf{B)} PHATE of embedded \acrshort{kg} nodes coloured by relational signalling annotations. GPCR, G protein-coupled receptors.}
     \label{fig:6embed}
 \end{figure}
 
@@ -73,7 +75,7 @@ Functional biological information encoded by the edges seems to also be captured
 \begin{figure}
     \centering
     \includegraphics{06kg/figs/6KG_projection.png}
-    \caption{XXXXXXXXXXXXXX}
+    \caption{\textbf{Projection of \acrshort{gex} Profiles on the \acrshort{lrtkg}.} \textbf{A)} \acrshort{scrnaseq} datasets of \acrshort{wt} organoid and fibroblast co-cultures are used for the projection. \textbf{B)} Wavelet diffusion is applied to the \acrshort{lrtkg} to generate a \(node X wavelets\) matrix onto which the sequencing data is projected. Colours on PHATE plots represent cell clusters.}
     \label{fig:6project}
 \end{figure}
 
@@ -91,14 +93,16 @@ The resulting projection seems to non-quantitatively resemble the \acrshort{gex}
 
 To quantitatively asses the projection results I not only compared it with the \acrshort{gex} data but also with the interaction strength predictions between cluster pairs in the data (see Chapter \ref{02methods} for more details). 
 
-Average distances between cluster pairs in the LRT-KG projected space and the \acrshort{gex} space where computed based on their \emph{k}-NN representations (Figure \ref{fig:6bench}A) and found to be highly correlated (Figure \ref{fig:6bench}B). A weak positive correlation (\emph{R} = 0.42) between interacting cluster pairs and their distances is thus observed both in the \acrshort{gex} and highly similar projected spaces (Figure \ref{fig:6bench}C).
+Average distances between cluster pairs in the LRT-KG projected space and the \acrshort{gex} space were computed based on their \emph{k}-NN representations (Figure \ref{fig:6bench}A) and found to be highly correlated (Figure \ref{fig:6bench}B). A weak positive correlation (\emph{R} = 0.42) between interacting cluster pairs and their distances was observed both in the \acrshort{gex} and highly similar projected spaces (Figure \ref{fig:6bench}C).
 
-Finally, the inter-cluster distance matrices (Sup. Tables \ref{tab:kgdistge} and \ref{tab:kgdistlrt}) were scaled and subtracted to compare the differences between the \acrshort{gex} and projected profiles. Results revealed a lack distance shortening between after projection between the highly interacting fibroblast and \acrshort{revcsc} or \acrshort{ta} clusters, with instead the projection lowering relative distances around the secretory cells and magnifying distances between the \acrshort{ta} and ER stress states (Figure \ref{fig:6bench}D).
+Finally, the inter-cluster distance matrices (Sup. Tables \ref{tab:kgdistge} and \ref{tab:kgdistlrt}) were scaled and subtracted to compare the differences between the \acrshort{gex} and projected profiles. Results revealed no distance shortening after projection between the highly interacting fibroblast and \acrshort{revcsc} or \acrshort{ta} clusters. Instead, projection lowered relative distances around the secretory cells and magnifying distances between the \acrshort{ta} and ER stress states (Figure \ref{fig:6bench}D).
+
+In summary these results suggest an insufficient diffusion step prior to data projection, as shown by the similarities between the \acrshort{gex} and projected spaces, and a small degree of signal loss, eroding some the transcriptomic signal unique to secretory cells.
 
 \begin{figure}
     \centering
     \includegraphics{06kg/figs/6KG_bench.png}
-    \caption{XXXXXXXXXXXXX}
+    \caption{\textbf{Comparison of \acrshort{gex} and \acrshort{lrtkg} Projected Profiles.} \textbf{A)} Inter-cluster distances are computed on \acrshort{gex} and projected spaces. \textbf{B)} Correlation between the two distance spaces. \textbf{C)} Correlation between cell-cell communication interaction scores and the distance spaces. Colour annotations reflect highly interacting cluster pairs. \textbf{D)} Scaled differences between the two cluster spaces. Cells are coloured according to the distance difference between a pair of cluster. R, Pearson correlation score.}
     \label{fig:6bench}
 \end{figure}
 
@@ -113,13 +117,13 @@ Finally, the inter-cluster distance matrices (Sup. Tables \ref{tab:kgdistge} and
 % * Need to improve signal difussion step. Alternative gene embedding step can also be explored (GSP paper), so can the benchmarking be improved.
 
 
-In this chapter I have assembled a knowledge graph for cell communication that captures relational information between ligands, receptors and downstream targets of transcriptional factors. The assembled LRT-KG is comparable in size and graph characteristics to the curated OmniPath database, albeit with a lower number of nodes but enhanced hierarchical structure due to the reductionist approach of limiting signalling flow into a single direction from secreting to receiving cells and the latter's intra-cellular responses. 
+In this chapter I have assembled a \acrlong{kg} for cell communication that captures relational information between ligands, receptors and downstream targets of transcriptional factors. The assembled LRT-KG is comparable in size and graph characteristics to the curated OmniPath database, albeit with a lower number of nodes but enhanced hierarchical structure due to the reductionist approach of limiting signalling flow into a single direction from secreting to receiving cells and the latter's intra-cellular responses. 
 
 From this complex heterogeneous directed LRT-KG, methods like TransR can learn a lower-dimensional embedding that captures the original node characteristics of the graph and even biological information in the form of signalling pathways encoded in the relations between nodes. 
 The resulting LRT-KG embedding is a relatively simple tabular representation of the cellular communications LRT-KG onto which we can project the transcriptomic profile of cells via wavelet diffusion.
 
 Projection results revealed similar PHATE embeddings and high inter-cluster distance correlation between the gene expression and projection spaces, suggesting that the diffusion process within the graph is not of a sufficient degree and remains too reliant on the graph's nodes rather than on its structure. 
-While the similarities with the \acrshort{gex} profile do validate the projection approach, and some degree of correlation between both spaces was expected, the lacking diffusion step results in the projected space being unable to differentially capture inter-cellular communications between the interacting stroma and epithelial compartment of WT organoid and fibroblast co-cultures.
+While the similarities with the \acrshort{gex} profile do validate the projection approach, and some degree of correlation between both spaces was expected, the lacking diffusion step results in the projected space being unable to differentially capture inter-cellular communications between the interacting stromal and epithelial cells of WT organoid and fibroblast co-cultures.
 
 
 % Given what we know on fibs interacting with revCSC and TA 2, I would expectd thos differences to be decreased on projected space, and at a mor macro level one might expect that cluster pairs displaying higher aggregate interaction probabilities (as determined by CellChat) should have present with shorter distances in the projected space when compared to the GEx space.

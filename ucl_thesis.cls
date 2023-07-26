@@ -559,7 +559,7 @@
 %    \begin{macrocode}
 \newcommand \@abstract{Abstract}
 \newenvironment{abstract}{%
-    \chapter*{\@abstract}%
+    \section*{Abstract}
     \@mkboth{\@abstract}{\@abstract}%
 }{%
 }

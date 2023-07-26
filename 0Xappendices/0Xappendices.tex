@@ -8,55 +8,116 @@
 \chapter{pyKrack}
 \label{appendix:pykrack}
 
-CAHpter on pykrack as a package. Concept of hierachy in a graph. Krackhadt heirahrcy. 
-
-Implementaiotn in Python
-
-Compare against already existing R implemtnation.
-using nbdev for coding, vignettes, documentation, packaging and plublishing (to pypi).
-
-Some kind of figure here
-
 \section{Introduction}
 
-Biological signaling can be modeled as a directed network, where nodes represent genes/proteins and edges represent signaling interactions.
+Biological signalling can be modelled as a directed network, where nodes represent genes/proteins and edges represent signalling interactions.
 
 The hierarchy of such a network can be quantified using various metrics, including the Krackhardt hierarchy score. This score measures the degree to which the network exhibits a perfect hierarchy, with higher scores indicating greater hierarchy.
 
-In R the sna package presents methods to compute graph hierarchy including Krackhardt’s score (defined as
-where is the number of unordered pairs of points in Dr that are asymmetrically linked), and there are other hierarchy scores implemented in Python such as Flow Hierarchy Score Luo and Magee 2011. However, despite its utility, there is currently no native implementation of the Krackhardt hierarchy score in Python.
+In R the sna package presents methods to compute graph hierarchy including Krackhardt’s score, and there are other hierarchy scores implemented in Python such as Flow Hierarchy Score~\cite{luo_detecting_2011}. However, despite its utility, there is currently no native implementation of the Krackhardt hierarchy score in Python.
 
-\subsection{Krackhardt hierarchy score}
+\subsection{Krackhardt Hierarchy Score}
 
-As defined in Krackhardt, David. (1994). Graph Theoretical Dimensions of Informal Organization. Computational Organization Theory. 89.
+The Krackhard hierarchy score was introduced by David Krackhardt [Krackhardt, David. (1994). Graph Theoretical Dimensions of Informal Organization. Computational Organization Theory. 89], where he defined it in the following way:
 
-The graph hierarchy condition states that in a digraph D, for each pair of points where one (Pi) can reach another (Pj), the second (Pj) can't reach the first (Pi). 
-For example, in a formal organization chart a high lvl employee can reach through the chain of command her subordinate's subordinate. If the formal organization is working "properly", this lower lvl employee can't simultaneously reach the high lvl employee.
-To measure the degree of hierarchy of digraph D, a new digraph Dr must be created. Dr is defined as the reachability digraph of D. Each point in D exists in Dr; moreover, the line (Pi,Pj) exists in Dr if and only if Pi can reach Pj in D. If D is graph hierarchic, then Dr will have no symmetric lines in it (i.e. if the line (Pi,Pj) exists in Dr then the line (Pj,Pi) does not).
+\begin{quote}
+    \emph{The graph hierarchy condition states that in a digraph D, for each pair of points where one (Pi) can reach another (Pj), the second (Pj) can't reach the first (Pi). 
+    For example, in a formal organization chart a high level employee can reach through the chain of command her subordinate's subordinate. If the formal organization is working "properly", this lower level employee can't simultaneously reach the high level employee.
+    To measure the degree of hierarchy of digraph D, a new digraph Dr must be created. Dr is defined as the reachability digraph of D. Each point in D exists in Dr; moreover, the line (Pi,Pj) exists in Dr if and only if Pi can reach Pj in D. If D is graph hierarchic, then Dr will have no symmetric lines in it (i.e. if the line (Pi,Pj) exists in Dr then the line (Pj,Pi) does not)}.
+\end{quote}
 
-The degree of hierarchy then is defined as:
+The degree of hierarchy then is defined as \[Graph Hierarchy = 1 - [V/MaxV]\]
+where $V$ is the number of unordered pairs of points in Dr that are symmetrically linked and $MaxV$ the number of unordered pairs of points in $Dr$ where $Pi$ is linked to $Pj$ or viceversa.
 
-Where is the number of unordered pairs of points in Dr that are symmetrically linked , and the number of unordered pairs of points in Dr where Pi is linked to Pj or viceversa.
+\section{Hierarchy Computation}
 
-%%%%%%%%
+Based on the definition above, I wrote a small Python package to compute the Krackhardt hierarchy score. Built around a main function that computes the hierarchy score (Listing \ref{lst:pykrack}), the pykrack package (\url{ferranc96.github.io/pyKrack}) also includes a helper function to describe general properties of a directed graph and computes an alternative hierarchy score.
 
-The Krackhardt hierarchy score is given by the following equation:
+\label{lst:pykrack}
+\begin{lstlisting}[language=Python, caption=\textbf{Main pyKrack function}. The \emph{compute\_hierarchy} function takes in a directed graph and computes its hierarchy flow score or the Krackhardt hierarchy score using an existing R implementation or a novel one in Python.]
 
-\begin{equation}
-H_i = \frac{\sum_{j \in P_i} w_{ij} H_j}{k_i}
-\end{equation}
+def compute_hierarchy(G, metric="pykrack"):
+    """
+    Compute one of the possible hierarchy scores
+    
+    Parameters
+    ----------
+    G
+        Directed NetworkX graph
+    metric : str
+        Type of hierarchy metric to compute. Accepted types are:
+        'pykrack' for this module's implementation of the Krackhardt score.
+        'rsnakrack' for the sna implementation in R.
+        'hierarchy_flow' for the Luo and Magee 2011 as implemented in the NetworkX package.
 
-where $H_i$ is the hierarchy score for node $i$, $P_i$ is the set of direct reports of node $i$, $w_{ij}$ is the weight of the edge between nodes $i$ and $j$, and $k_i$ is the number of direct reports of node $i$.
+    Returns
+    -------
+    score : float
+        One of the possible hierarchy scores
+    """
 
-This equation calculates the hierarchy score for each node in a network based on the hierarchy scores of its direct reports and the weights of the edges between them. The hierarchy score represents the level of influence or power that a node has in the network, with higher scores indicating greater influence.
+    #Ensure Graph is DirectedGraph
+    if not G.is_directed():
+        raise Exception
+    #Ensure Graph is of DiGraph() format
+    G = nx.DiGraph(G)
+
+    if metric == "pykrack": #Python implementation
+        #Compute transitive closure of graph to get the reachability graph
+            #[contains an edge (i,j) if there is a path from i to j in the original graph]
+        acyclic = 0
+        try:
+            nx.find_cycle(G)
+        except:
+            print("Acyclic graph")
+            acyclic = 1
+        if acyclic == 1:
+            Gr = nx.transitive_closure_dag(G)
+        else:
+            Gr = nx.transitive_closure(G, reflexive=None)
+        symmetric_dyads = 0
+        non_null_dyads = 0
+        n = len(Gr.nodes())
+        #Count the number of non-null symmetric dyads
+        for pair in product(Gr.nodes(), Gr.nodes()):
+            if Gr.has_edge(pair[0],pair[1]) or Gr.has_edge(pair[1],pair[0]): #Non-null dyad
+                non_null_dyads+=1
+                if  Gr.has_edge(pair[0],pair[1]) == Gr.has_edge(pair[1],pair[0]): #Symmetric!
+                    symmetric_dyads+=1
+        #Raise exception if graph has no edges!
+        if non_null_dyads == 0:
+            raise Exception
+        score = 1 - (symmetric_dyads / non_null_dyads)
+    
+    elif metric == "rsnakrack": #R implementation from the sna package
+        try:
+            base = importr("base")
+            sna = importr("sna")
+            score = sna.hierarchy(nx.to_numpy_array(G), measure="krackhardt")[0]
+        except:
+            print("R package sna was not found. Please install manually!")
+            print("Computing hierarchy flow instead")
+            snafail_flag = 1
+            score = nx.flow_hierarchy(G)
+    
+    elif metric == "hierarchy_flow": #Networkx's hierarchy flow implementation
+        score = nx.flow_hierarchy(G)
+
+    # elif metric == "all": #This will eventually return a dict with all metrics
+
+    else: # metric argument broken
+        raise Exception
 
 
-\section{Implementation}
+    return score
 
-\subsection{compute hierarchy function}
+\end{lstlisting}
 
-\subsection{nbdev paltform}
+\section{Notebook-Centric Implementation}
 
+This package has been implemented using the nbdev framework (\url{nbdev.fast.ai}). This technology allows for a notebook-centric approach to software development and distribution, including automation of documentation sites to continuous integration actions that automate package releases.
+
+I have leveraged nbdev to publish this tool as a package in Pypi (\url{pypi.org/project/pykrack}), and as a technology demonstrator for an upcoming deployment of the \acrshort{vr} score landscapes.
 
 
 
@@ -68,22 +129,22 @@ This equation calculates the hierarchy score for each node in a network based on
 \begin{figure}[h!]
     \centering
     \includegraphics{0Xappendices/0XSup_DEfib.png}
-    \caption{}
-    \label{sfig:defib}
+    \caption{\textbf{Fibroblast DE Analysis.} Differential gene expression analysis of fibroblasts regulated by epithelial organoids and macrophages.}
+    \label{fig:defib}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
     \includegraphics{0Xappendices/0XSup_DEepibyfib.png}
-    \caption{}
-    \label{sfig:deepibyfib}
+    \caption{\textbf{Epithelial DE Analysis by Fibroblast-Subtype.} Differential gene expression analysis of \acrshort{wt} colonic organoids co-cultured with unsorted, CD34\textsuperscript{hi}, CD34\textsuperscript{lo}, and a 1:1 mix of CD34\textsuperscript{hi}:CD34\textsuperscript{hi} colonic fibroblasts.}
+    \label{fig:deepibyfib}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
     \includegraphics{0Xappendices/0XSup_DEmac.png}
-    \caption{}
-    \label{sfig:demac}
+    \caption{\textbf{Macrophages DE Analysis.} Differential gene expression analysis of macrophages regulated by epithelial organoids and fibroblasts}
+    \label{fig:demac}
 \end{figure}
 
 \chapter{Supplementary Tables}
@@ -94,7 +155,7 @@ This equation calculates the hierarchy score for each node in a network based on
 \newpage
 \begin{table}[H]
   \centering
-  \caption{\textbf{Colonic epithelia gene markers (1/2)}. MArkers of epithelia populatin and orgnaoid genotypes. Derived from literature and DE analysis of our data.}
+  \caption{\textbf{Colonic Epithelia Gene Markers (1/2)}. Markers of epithelial populations and organoid genotypes. Derived from literature and DE analysis of our data.}
   \label{tab:epimarkers}
   \csvreader[
     tabular=|c|c|,
@@ -110,7 +171,7 @@ This equation calculates the hierarchy score for each node in a network based on
 \newpage
 \begin{table}[H]
   \centering
-  \caption{\textbf{Colonic epithelia gene markers (2/2)}.}
+  \caption{\textbf{Colonic Epithelia Gene Markers (2/2)}.}
   \csvreader[
     tabular=|c|c|,
     head=true,
@@ -126,7 +187,7 @@ This equation calculates the hierarchy score for each node in a network based on
 \newpage
 \begin{table}[H]
   \centering
-  \caption{\textbf{Cell-cycle gene lists (1/6)}. Table of cell-cycle genes adapted from Tirosh et al. 2016 \cite{tirosh_dissecting_2016} and Macosko et al. 2015 \cite{macosko_highly_2015}, the former using a human melanoma cell line and the later both human and mouse models to link gene expression with cell cycle phases. The original tables provided in the publication were pooled together, duplicated genes were dropped, and human symbols were translated to mouse using BioMart. Finally, genes whose expression could not be detected in any of the mouse organoid experiments were dropped from the list. The resulting table contains 98 genes associated with S-phase, 248 with both G2 and M-phase, and 202 with G1.}
+  \caption{\textbf{Cell-Cycle Gene Lists (1/6)}. Table of cell-cycle genes adapted from Tirosh \emph{et al.}~\cite{tirosh_dissecting_2016} and Macosko \emph{et al.}~\cite{macosko_highly_2015}, the former using a human melanoma cell line and the later both human and mouse models to link gene expression with cell cycle phases. The original tables provided in the publication were pooled together, duplicated genes were dropped, and human symbols were translated to mouse using BioMart. Finally, genes whose expression could not be detected in any of the mouse organoid experiments were dropped from the list. The resulting table contains 98 genes associated with S-phase, 248 with both G2 and M-phase, and 202 with G1.}
   \csvreader[
     tabular=|c|c|c|,
     table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
@@ -141,7 +202,7 @@ This equation calculates the hierarchy score for each node in a network based on
 \newpage
 \begin{table}[H]
   \centering
-  \caption{\textbf{Cell-cycle gene lists (2/6)}.}
+  \caption{\textbf{Cell-Cycle gene lists (2/6)}.}
   \csvreader[
     tabular=|c|c|c|,
     table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
@@ -156,7 +217,7 @@ This equation calculates the hierarchy score for each node in a network based on
 \newpage
 \begin{table}[H]
   \centering
-  \caption{\textbf{Cell-cycle gene lists (3/6)}.}
+  \caption{\textbf{Cell-Cycle gene lists (3/6)}.}
   \csvreader[
     tabular=|c|c|c|,
     table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
@@ -171,7 +232,7 @@ This equation calculates the hierarchy score for each node in a network based on
 \newpage
 \begin{table}[H]
   \centering
-  \caption{\textbf{Cell-cycle gene lists (4/6)}.}
+  \caption{\textbf{Cell-Cycle gene lists (4/6)}.}
   \csvreader[
     tabular=|c|c|c|,
     table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
@@ -186,7 +247,7 @@ This equation calculates the hierarchy score for each node in a network based on
 \newpage
 \begin{table}[H]
   \centering
-  \caption{\textbf{Cell-cycle gene lists (5/6)}.}
+  \caption{\textbf{Cell-Cycle gene lists (5/6)}.}
   \csvreader[
     tabular=|c|c|c|,
     table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
@@ -201,7 +262,7 @@ This equation calculates the hierarchy score for each node in a network based on
 \newpage
 \begin{table}[H]
   \centering
-  \caption{\textbf{Cell-cycle gene lists (6/6)}.}
+  \caption{\textbf{Cell-Cycle gene lists (6/6)}.}
   \csvreader[
     tabular=|c|c|c|,
     table head=\hline \textbf{S-phase} & \textbf{G2 \& M-phase} & \textbf{G1} \\ \hline,
@@ -217,7 +278,7 @@ This equation calculates the hierarchy score for each node in a network based on
 \newpage
 \begin{table}[H]
   \centering
-  \caption{\textbf{Literature gene signatures (1/2)}. In the context of Stem states of the intestinal and colon epithelia.}
+  \caption{\textbf{Literature Gene Signatures (1/2)}. Metadata for the literature gene signatures characterising the various stem cell states in intestinal and colon epithelia, as well as certain key signalling pathways.}
   \label{tab:SignMD}
   \csvreader[
     tabular=|c|c|c|c|c|,
@@ -251,12 +312,12 @@ This equation calculates the hierarchy score for each node in a network based on
 \newpage
 \section{Knowledge Graph Data}
 
-\label{tab:wavpy}
-\lstinputlisting[language=Python, caption=\textbf{Wavelet module}. Script kindly provided by Aarthi Venkat from Prof. Smita Krishnaswamy's lab at Yale University., firstline=35, lastline=65]{0Xappendices/localization.py}
+\label{lst:wavpy}
+\lstinputlisting[language=Python, caption=\textbf{Wavelet module}. Function to compute the wavelet difussion transform. Part of a broader script kindly provided by Aarthi Venkat from Prof. Smita Krishnaswamy's lab at Yale University., firstline=35, lastline=65]{0Xappendices/localization.py}
 
 \begin{sidewaystable}
     \centering
-    \caption{GEx dist}
+    \caption{\textbf{\acrshort{gex} Space Distances.} \acrshort{gex} space inter-cluster distances in the \acrshort{wt} organoid and fibroblast co-culture. Cells are coloured according to their relative distance values.}
     \label{tab:kgdistge}
     \begin{tabular}{lrrrrrrrrrr}
         {} & {ER Stress} & {E. Entero.} & {L. Entero.} & {Secret.} & {proCSC} & {CSC} & {TA2} & {revCSC} & {TA1} & {Fibroblast} \\
@@ -275,7 +336,7 @@ This equation calculates the hierarchy score for each node in a network based on
 
 \begin{sidewaystable}
     \centering
-    \caption{LRT dist}
+    \caption{\textbf{\acrshort{lrtkg} Projection Space Distances.} Projected LRT-KG inter-cluster distances in the \acrshort{wt} organoid and fibroblast co-culture. Cells are coloured according to their relative distance values.}
     \label{tab:kgdistlrt}
     \begin{tabular}{lrrrrrrrrrr}
         {} & {ER Stress} & {E. Entero.} & {L. Entero.} & {Secret.} & {proCSC} & {CSC} & {TA2} & {revCSC} & {TA1} & {Fibroblast} \\
@@ -293,59 +354,21 @@ This equation calculates the hierarchy score for each node in a network based on
 
 \end{sidewaystable}
 
-% \chapter{Cell-state Random Forest Classifier}
-% \label{appendix:rfclass}
 
-% \section*{Rationale and Aims}
+\chapter{Qin \& Cardoso Rodriguez \emph{et al.}, 2023}
+\label{appendix:qincardoso}
 
-% The maturity of the platform is also reflected on the properties of the markers used in the mass cytometry panels, with the most robust markers achieving highly binary and specific staining. Given the importance of cell state changes to perturbations in the epithelial organoids, either in the form of intrinsic effects such as genotype or extrinsic in the form of the TME or drug treatments, an automated approach of labelling and assigning a cell state to each cell in an experiment would facilitate routine analysis of mass cytometry datasets. 
-% I thus hypothesise that we can use a machine learning approach to, using a series of canonical cell state markers, automatically predict and label the hundreds of thousands of cells captured in a mass cytometry experiment. To this end I aim to develop a random-forest classifier. This classifier will be able to ingest mass cytometry datasets and, using manually gated datasets with cell state labels as training data, label each of the cells with one of six possible cell states: Apoptosis, G0, G1, S-phase, G2, and M-phase. 
+\includepdf[pages=-, scale=1, offset=24mm -28mm]{0Xappendices/qincardoso.pdf}
 
-% \section*{Implementation}
-% The cell state classifier built uses the scikit-learn Python package35 to train and run a Random Forest classification algorithm. A Random Forest algorithm (referred to as RF hereafter) is based on a series of decision trees, simple non-parametric models that predict the class of an observation by learning decision rules inferred from the data during training. By using a randomised collection of these trees (i.e., a forest) the RF palliates the tendency of decision trees towards overfitness while at the same time reducing the variance of the results.
+\chapter{Sufi \& Qin \emph{et al.}, 2021}
+\label{appendix:sufiqin}
 
-% The current implementation in my personal GitHub repository (https://github.com/FerranC96/C\_StateML) consists of two scripts written in Python that are able to 1) train and save RF models from pre-labelled datasets, and generate classification reports and plots, 2) run the saved RF models through new mass cytometry datasets to label and assign a state to each cells. Default parameters are used for the Random Forest (except for an increase in the number of decision trees to 480) and the data is transformed as usual using an arcsinh function with a cofactor of 5. 
-
-% Some of the results presented in this document correspond to an initial implementation of the RF algorithm that used only 5 different cell state markers: pRB [S807/S811], cleaved Caspase 3 [D175], IdU, Cyclin B1, and pHH3 [S28]. This 5-marker implementation was trained using a balanced subset of cells from SI LGR5 time-course experiment in Qin et al. 202011 (downsampled so that all six cell states would have the same number of cells, 5306). The trained model was then tested against datasets from the same publication; a simpler single-timepoint SI LGR5 culture, and a complex coculture of colonic organoids (with varying degrees of CRC mutations and TME complexity).
-% In contrast, the latest results use data acquired from Patient Derived Organoids of CRC patients. With an updated panel, the markers used in the latest models are a set of ten antibodies (the five markers from above plus cPARP [D214], pAKT [T308], pP38 [T180/Y182], Geminin, and PLK1) with targets specific to each of the six cell state classes (Apoptosis, G0, G1, S-phase, G2, and M-phase). This 10-marker model was trained on an untreated control condition replicate and testing is performed against a second set of replicates comprising a total of 5 conditions (plus an untreated control) treated with increasing concentration of the chemotherapeutic topoisomerase inhibitor SN-38.
-% Details on the markers used in the RF models, and the cell state they are associated with, can be found in Sup. Table 1. To benchmark the model performance, we use F1-scores (calculated as the harmonic mean of the precision and recall for each class).
-
-% \section*{Results}
-
-% Testing the 5-marker RF model on a single time-point SI LGR5 organoid culture11 results in global accuracy for all classes of 0.93. However, looking at the classification report in Figure 3 a) we see how there is a significant drop of f1-scores when classifying the apoptotic class, scores which otherwise remain above 0.92. This fall in f1-scores seems to be driven by a low precision (0.5) when classifying cells as apoptotic.
-% Performance of the classifier drops when testing against the CRC TME colonic organoid cultures from Qin et al. 2020. In this case, when we subset just the organoid cells from the organoid cultures (i.e., by extracting all epithelial cells irrespective of the genotype or the other cell types they might have been analysed with), we observe a global accuracy of 0.91. Looking at the classification details (Figure 3 b.) we see a very similar pattern to the SI LGR5 results; with the apoptotic class presenting the lowest f1-scores (0.6) characterised by a low precision (0.43). Furthermore, the remaining f1-scores are also lower overall, with only the S-phase and M-phase classes reaching above the 0.9 mark.
-% When instead of subsetting just the organoid cells we test against all cells from the CRC TME dataset (i.e., including also fibroblasts and macrophages) global accuracy drops down to 0.87. The relatively high global accuracy does not reflect the failure of the classifier to, yet again, identify the apoptotic cells (see Figure 3 c.). In Figure 3 d) the classification matrix is used to build a dot plot in which the true labels (“Real state” from gating) are compared against the predicted labels (“Predicted state”), highlighting how a majority of the cells labelled as apoptotic are actually G0 cells, explaining the precision of 0.32 for the former class. There is also some confusion around the G2 cells, as a significant number of these cells are classified as either G0 or G1.
- 
-% Figure 3: Benchmarking 5-marker RF cell state classifier. Shown in a), b), and c) are the classification reports obtained from running the 5-marker RF classifier against data manually labelled for cell state (representing the “real state” or ground truth). In a) a single timepoint SI LGR5 dataset was used, very similar to the training data for the model. The dataset in both b) and c) is a coculture of CRC organoids and their TME, with the cells in b) being a subset of the whole dataset containing just epithelial cells. Decreasing levels of performance correlate with increasing differences between the train and test datasets, as can be seen by the low f1-scores for the apoptotic class in c). Using the same data as c), the dot plot derived from the classification matrix in d) depicts the number and proportion (as both size and colour of the circles) of mislabelled cells for each cell state, showing that a considerable number of falsely mislabelled apoptotic cells are actually in G0 phase and some cells. RF: Random Forest.
-% Preliminary benchmark results from the updated 10-marker implementation using PDO data show improved performance when compared to the 5-marker model. In this case we observe a global accuracy greater than 0.99, with the lowest f1-score being of 0.95 for the cells in M-phase (see Figure 4 a.). In the classification matrix in Figure 4 b) we observe how, given the lower total count of M-phase cells (true label = 5, one order of magnitude smaller than the other classes), small numbers of misclassified cells (mainly as G2 and S-phase predicted labels, represented by the numbers 4 and 3 respectively) drive down the recall for the M-phase class. 
-% In contrast with the 5-marker model results, there is an apparent lack of issues when classifying the apoptotic class, with only 0.35% of true apoptotic cells being mislabelled. A bar plot representing the importance of each feature during classification is shown in Sup. Figure 2.
- 
-% Figure 4: Benchmarking the new 10-marker RF cell state classifier. Building a RF classifier with an increased number of markers using data from PDOs renders better results than the original 5-marker model, as can be seen in a) with the classification report. b) Classification matrix generated automatically during model building, showing extremely low levels of misclassified cells. RF: Random Forest. PDO: Patient-Derived Organoids. Labels: 0=Apoptosis, 1=G0, 2=G1, 3=S-phase, 4=G2, 5=M-phase.
-
-
-% \section*{Discussion}
-% This classifier shows link PTM->cellSTate, later shown in pubs from our lab
-% Usefullness in determining antibodies not working properly?
-
-
-\chapter{CardosoRodriguez \& Qin et al. 2023}
-\label{appendix:preprint}
-
-\includepdf[pages=-, scale=1, offset=24mm -28mm]{0Xappendices/preprint.pdf}
-
+\includepdf[pages={1-22}, scale=1, offset=24mm -28mm]{0Xappendices/sufiqin.pdf}
 
 
 \chapter{Colophon}
-\label{appendix3label}
-\textit{This is a description of the tools you used to make your thesis. It helps people make future documents, reminds you, and looks good.}
+\label{appendix:colophon}
 
-Thesis made in latex. Figures assembled in the open source vecotr editing software Inkscape. Resources using for making figures include plots generated from code, de-novo graphics, and graphics altered from the open source Bioicons resource. 
+This Thesis has been written with \LaTeX and its figures assembled using the FOSS vector graphics editor Inkscape (\url{inkscape.org}). Resources used for making figures include plots generated from code (R and Python), \emph{de novo} drawn graphics, and graphics altered from the open source Bioicons resource (\url{bioicons.com}). 
 
-This Thesis is currently hosted in GitHub as a private repository, but as soon as the sections of work currently under revision at Cell are part of the public domain I will make the repository public. Code availability covers all Chapters and is distributed along multiple GitHub repositories.
-
-\textit{(example)} This document was set in the Times Roman typeface using \LaTeX\ and Bib\TeX , composed with a text editor. 
- % description of document, e.g. type faces, TeX used, TeXmaker, packages and things used for figures. Like a computational details section.
-% e.g. http://tex.stackexchange.com/questions/63468/what-is-best-way-to-mention-that-a-document-has-been-typeset-with-tex#63503
-
-% Side note:
-%http://tex.stackexchange.com/questions/1319/showcase-of-beautiful-typography-done-in-tex-friends
+The Thesis is currently hosted in GitHub as a private repository. However, once the sections of work currently under revision at Cell are part of the public domain, I will make the repository public. Code availability covers all chapters and is distributed along multiple GitHub repositories.
