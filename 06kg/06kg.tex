@@ -4,7 +4,7 @@
 \newpage
 \section{Introduction}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics{06kg/figs/6KG_com.png}
     \caption{\textbf{The Directed Nature of Inter- and Intra-Cellular Communications}. Secreting cells interacting with receiving cells via intercellular ligand-receptor interactions, which can then trigger intracellular \acrshort{ptm} cascades and gene-regulatory networks. \acrshort{ptm}, \acrlong{ptm}. \acrshort{tf}, \acrlong{tf}.}
@@ -32,10 +32,10 @@ This work was conducted in collaboration with Prof. Smita Krishnaswamy and Aarth
         % on the other hand, prelim results in collab porject suggest perhaps not as important for bio KG despite the hierarchical nature of signalling networks.
 
 
-
+\newpage
 \section{A Knowledge Graph for Ligands, Receptors and TF Targets}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics{06kg/figs/6KG_kg.png}
     \caption{\textbf{Assembly of \acrshort{kg}s for Cell Communications.} \textbf{A)} Public databases are used to assemble a custom KG of ligands, receptors and \acrshort{tf} targets. \textbf{B)} Tabular OmniPath~\cite{turei_integrated_2021} repository can also be assembled as a comparable \acrshort{kg}. \acrshort{kg}, \acrlong{kg}. \acrshort{lrtkg}, \acrlong{lrtkg}.}
@@ -51,7 +51,7 @@ Following the ubiquitous triplet format, I thus encoded the graph as a relationa
 The resulting ligand-receptor-target \acrshort{kg} (\acrshort{lrtkg}) has over 2,500 nodes linked by interactions belonging to 23 distinct pathways. To validate broad-scale graph characteristics this custom graph was compared against the OmniPath resource.
 The OmniPath database has multiple layers of relational information between genes (and other molecules such as \acrshort{ptm}s), including directionality, supporting evidence, and functional information on the nature of the interaction (i.e. activation or inhibition of receiving interaction member)~\cite{turei_integrated_2021}. Assembled in the same manner as the LRT-KG object, the OmniPath graph presented with a higher number of gene nodes and pathways but comparatively less interactions  and a lower hierarchy score than the LRT-KG (Figure \ref{fig:6kg}B and Table \ref{tab:2kg}).
 
-
+\newpage
 \section{KG Embeddings Preserve Graph and Biological Information}
 
 \begin{figure}[H]
@@ -70,9 +70,10 @@ Functional biological information encoded by the edges seems to also be captured
 % Finally, embedding representation of relations (edges) can be generated, which should capture relations between pathways. Recover high level groupins of pathways with similar biological function, due to their shared nodes on KG.
 %     WE can also check out the different pathawys they belong to and see if there is come kind of biologically driver distribution here re pathways. Edges can also be embedded and hopefully lowere level pthawys belonging to a shared bigger levl pathways might lie in closer together? Also deppening on the ratio of shared interactions members between disticnt pathways. 
 
+\newpage
 \section{Projecting Cells as Signals on the KG}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics{06kg/figs/6KG_projection.png}
     \caption{\textbf{Projection of \acrshort{gex} Profiles on the \acrshort{lrtkg}.} \textbf{A)} \acrshort{scrnaseq} datasets of \acrshort{wt} organoid and fibroblast co-cultures are used for the projection. \textbf{B)} Wavelet diffusion is applied to the \acrshort{lrtkg} to generate a \(node X wavelets\) matrix onto which the sequencing data is projected. Colours on PHATE plots represent cell clusters.}

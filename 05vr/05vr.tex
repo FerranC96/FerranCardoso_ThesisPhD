@@ -12,9 +12,10 @@ Here I propose a novel method to generate such data-driven Waddington-like lands
 
 This work has been published as part of Qin \& Cardoso Rodriguez \emph{et al.}~\cite{cardoso_rodriguez_single-cell_2023}, and the code to compute the VR score and generate the landscapes is publicly available as a Jupyter Notebook on \url{github.com/TAPE-Lab/Qin-CardosoRodriguez-et-al/blob/main/Figure7_S7/Landscape.ipynb}. 
 
+\newpage
 \section{The Valley-Ridge Score}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics{05vr/figs/5VR_score.png}
     \caption{\textbf{Workflow for Calculating VR Scores from scRNA-seq Data}. \textbf{A)} \acrshort{vr} scores leverage a low-dimensional embedding and are computed from pluripotency and RNA velocity metrics. \textbf{B)} Computation of \acrshort{vr} scores incorporates  global and local components as a weighted sum. \acrshort{vr}, \acrlong{vr}. Q\textsubscript{99}, 99\textsuperscript{th} quantile.}
@@ -30,6 +31,7 @@ At a cluster's centre, the VR score is solely determined by the median CCAT. How
 
 This method thus reconstructs a data-driven estimate of Waddington-like landscapes where the overall altitude captures the differentiation potential of a cell population, with the \acrlong{vr} topology delineating local plasticity and cell-state availability. 
 
+\newpage
 \section{Landscapes of Colonic Epithelia Cell-Fate Plasticity}
 
 Having been described in Chapter \ref{04seq} and in Qin \& Cardoso Rodriguez \emph{et al.}, the heterocellular murine colonic organoid system represents a suitable candidate to test the VR landscapes. 

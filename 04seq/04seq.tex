@@ -36,7 +36,7 @@ Following data acquisition and initial pre-processing steps (see Chapter \ref{02
 Cell-type-specific transcriptional changes were compared against relevant control monoculture conditions (WT organoids for the epithelial cells) using the EMD score (see \ref{02methods}), and then summarised using PCA (Figure \ref{fig:4exp}C). Epithelial transcriptomes are differentially regulated by both CRC mutations (PC1, 26\%) and microenvironmental cues (PC2, 22\%), with A, AK, and AKP mutations progressively dysregulating their transcriptomic profiles. However, we found fibroblasts can only regulate WT and A epithelial cells (Figure \ref{fig:4exp}C). Although WENR ligands are thought to mimic a healthy stromal niche \cite{mahe_establishment_2013}, WT organoids + WENR ligands transcriptionally align with AK mutant organoids (not WT+fibroblasts as might be expected), indicating this widely used colonic organoid culture media induces a partial CRC-like transcriptome in WT epithelia (Figure \ref{fig:4exp}C).
 Colonic fibroblast cells resolved into CD34\textsuperscript{hi} and CD34\textsuperscript{lo} subpopulations mimicking \textit{in vivo} stromal heterogeneity \cite{karpus_colonic_2019} (Figure \ref{fig:defib}). CD34\textsuperscript{hi} and CD34\textsuperscript{lo} fibroblasts did not differentially regulate colonic epithelia (Figure \ref{fig:deepibyfib}) and were subsequently treated as a heterogenous mesenchymal population. Bone marrow macrophages on the other hand presented as a continuum of cells aligned along and axis of inversely correlated expression of complement genes (like \emph{C1q}) and \emph{Hmox1}, see \ref{fig:4exp}B), possibly indicating inflammation-related roles to be a major driver of heterogeneity within the macrophage cells \cite{naito_heme_2014}. However, it was found that fibroblast and macrophage transcriptomes and compositional make-up were only regulated by co-culture with heterotypic cells but not altered by epithelial genotypes (Figures \ref{fig:defib}, \ref{fig:demac}). 
 
-
+\newpage
 \section{Organoids Recapitulate Colonic Epithelial States}
 
 \begin{figure}[H]
@@ -52,12 +52,12 @@ While this integrated space presents a continuum of cells, density plots of 4 ex
 
 The multiple epithelial compartments where identified and associated with the relevant clusters based on their expression of canonical markers of selected colon cell epithelia cell-types (see Sup. Table \ref{tab:epimarkers} for more epithelial marker genes). Expression of these genes on the WT monoculture control reveals how the system recapitulates the basal (stem and TA), secretory, and absorptive compartments (Figure \ref{fig:4intepi}C). The stem compartment appears distributed along several clusters (proCSC, CSC, revCSC) and extends towards the TA cells. A state characterised by a clear ER stress response gene expression signature lays adjacent to the stem and TA compartments (Figures \ref{fig:4intepi}A and C).
 
-
+\newpage
 \section{Oncogenic Mutations and Fibroblasts Polarise Epithelia towards Distinct Stem Cell Fates}
 
 Compositional analysis via \acrfull{da} testing~\cite{dann_differential_2022} is used to identify and quantify effects of perturbations on a system (see Chapter \ref{02methods} for more details). \acrshort{da} was thus used to determine the changes induced by stromal and oncogenic cues compared to the WT mono-culture organoid baseline, revealing that fibroblasts and CRC mutations have markedly different effects on epithelial cell-fate determination (Figure \ref{fig:4da}). 
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics{04seq/figs/4SEQ_DA.png}
     \caption{\textbf{\acrshort{da} Reveals Oncogenic and Stromal \acrshort{csc} Polarisation.} \textbf{A)} Epithelial \acrshort{da} neighbourhoods in \acrshort{wt} organoid and fibroblast co-cultures compared to \acrshort{wt} organoid mono-cultures. Colour indicates log fold-change, size indicates number of cells in the neighbourhood. \textbf{B)} Epithelial \acrshort{da} neighbourhoods in \acrshort{ak} and \acrshort{akp} organoid mono-cultures compared to \acrshort{wt} organoid mono-cultures. Colour indicates log fold-change, size indicates number of cells in the neighbourhood. \textbf{C)} Overview of per-cluster epithelial \acrshort{da} changes across organoid cultures. Colour indicates log fold-change, size indicates number of neighbourhoods. \acrshort{da}, \acrlong{da}. FC, fold-change.}
@@ -78,6 +78,7 @@ While the \acrshort{da} method employed essentially works at a pairwise level, I
 
 In summary, multivariate scRNA-seq revealed that fibroblasts, CRC mutations, and WENR ligands polarise epithelia towards a de-differentiated progenitor state – with fibroblasts and oncogenes inducing distinct revCSC and proCSC fates.
 
+\newpage
 \section{Epithelial Dynamics Suggest Transitional Regulation of revCSC}
 
 \begin{figure}
@@ -95,6 +96,7 @@ Contrary to proCSC, revCSC shows the lowest pluripotency score of all stem and T
 
 The RNA velocity information was then used to infer transitional processes and trajectories with CellRank \cite{lange_cellrank_2022}. Determination of initial and terminal macro-states in the 4 conditions from Figure \ref{fig:4intepi}B consistently identifies proCSC as the source of transitional processes within the system (Figure \ref{fig:4dyn}E). In the \acrshort{wt} mono-culture control the expected differentiation trajectories are recovered, whereas polarisation towards revCSC by fibroblasts and WENR appears to be a transitionally driven event from the nearby stem and \acrshort{ta} states. In \acrshort{ak} organoids the limited amount of transitions detected are towards the remnants of the secretory and absorptive populations, yet the proCSC still appear only as source and not a sink (Figure \ref{fig:4dyn}E), altogether suggesting that oncogenic mutations reduce epithelial plasticity. 
 
+\newpage
 \section{Oncogenic Mutations Disrupt Fibroblast to Epithelia Signalling}
 
 As epithelial differentiation cannot be regulated by fibroblasts in the context of \textit{shApc} and \textit{Kras\textsuperscript{G12D/+}} (Figures \ref{fig:4da}C, \ref{fig:4de}), I hypothesised oncogenic mutations might disrupt stromal-epithelial signalling. To test this, I performed cell-cell communication analysis with CellChat \cite{jin_inference_2021} of \acrshort{wt}, \acrshort{a}, \acrshort{ak}, and \acrshort{akp} organoid-fibroblast co-cultures. 
@@ -114,6 +116,7 @@ The observed breakdown in fibroblast to epithelia communications might partially
 
 % Ligand-receptor analysis is increasingly used to generate putative cell-cell communication models in heterocellular systems \cite{dimitrov_comparison_2022}, yet these computational hypotheses are rarely experimentally validated. To functionally test how oncogenic mutations regulate stromal-epithelial communication, we performed a systematic TOB\textit{is} MC study of epithelial differentiation, cell-state, and PTM signalling in WT, A, K, KP, AK, and AKP organoids treated with stromal ligands identified by ligand-receptor analysis as WT homeostatic regulators (WNT5A, SEMA3A, TGF-\textbeta1, TGF-\textbeta2, IGF, NRG1, EREG, and OPN (\textit{Spp1})) (Figure \ref{fig:fig4}B-C).
 
+\newpage
 \section{Characterisation and Relevance of proCSC and revCSC Identities}
 
 \begin{figure}
