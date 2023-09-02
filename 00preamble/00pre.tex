@@ -43,9 +43,9 @@
 
 Colonic epithelia is regulated by cell-intrinsic and cell-extrinsic cues, both in homeostatic tissues and \acrfull{crc}, where the tumour microenvironment closely interacts with mutated epithelia. Our understanding on how these cues polarise \acrfull{csc} states remains incomplete. Indeed, charting the interaction between intrinsic and stromal cues requires a systematic study yet to be found in the literature. 
 
-In this work I present my efforts towards computationally studying colonic stem cell polarisation at single-cell resolution; where my colleagues and I leverage the scalability of heterocellular \acrshort{crc} organoid models. The organoid system, presented in Qin \& Cardoso Rodriguez \emph{et al.}~\cite{cardoso_rodriguez_single-cell_2023}, was dissected using single-cell \emph{omic} analyses that resolved complex interaction and polarisation processes.
+In this work I present my efforts towards computationally studying colonic stem cell polarisation at single-cell resolution. Leveraging the scalability of organoid models, my colleagues and I dissected the heterocellular CRC organoid system presented in Qin \& Cardoso Rodriguez \emph{et al.}~\cite{cardoso_rodriguez_single-cell_2023} using single-cell \emph{omic} analyses, resolving complex interaction and polarisation processes.
 
-First, I identified bottlenecks in common \acrfull{mc} analysis workflows benefiting from either increased accessibility or automation; designing the CyGNAL pipeline and deveopling a cell-state classifier to tackle these points respectively. I then used \acrfull{scrnaseq} data to reveal a shared landscape of \acrshort{csc} polarisation; wherein stromal cues polarise the epithelia towards slow-cycling \acrfull{revcsc} and oncogenic mutations trap cells in a \acrfull{procsc} state. I then developed a method to visualise single-cell differentation using a novel \acrfull{vr} score, which can generate data-driven Waddington-like landscapes that recapitulate differentiation dynamics of the colonic epithelia. Finally, I explored an approach for holistic inter- and intra-cellular communication analysis by incorporating literature information as a directed \acrfull{kg}, showing that low-dimensional representations of the graph retain biological information and that projected cellular profiles recapitulate their transcriptomes.
+First, I identified bottlenecks in common \acrfull{mc} analysis workflows benefiting from either increased accessibility or automation; designing the CyGNAL pipeline and developing a cell-state classifier to tackle these points respectively. I then used \acrfull{scrnaseq} data to reveal a shared landscape of \acrshort{csc} polarisation; wherein stromal cues polarise the epithelia towards slow-cycling \acrfull{revcsc} and oncogenic mutations trap cells in a \acrfull{procsc} state. I then developed a method to visualise single-cell differentation using a novel \acrfull{vr} score, which can generate data-driven Waddington-like landscapes that recapitulate differentiation dynamics of the colonic epithelia. Finally, I explored an approach for holistic inter- and intra-cellular communication analysis by incorporating literature information as a directed \acrfull{kg}, showing that low-dimensional representations of the graph retain biological information and that projected cellular profiles recapitulate their transcriptomes.
 
 These results reveal a polarisation landscape where \acrshort{crc} epithelia is trapped in a \acrshort{procsc} state refractory to stromal cues, and broadly show the importance of joint collaborative wet- and dry-lab work; central towards targeting gaps in the method space and generating a comprehensive analysis of heterocellular signalling in cancer.
 
@@ -61,7 +61,7 @@ These results reveal a polarisation landscape where \acrshort{crc} epithelia is 
 
 By investigating the intricate interplay between intrinsic and extrinsic cues regulating \acrshort{csc} fates, the research and work presented in this thesis sheds new light on the landscape of colonic epithelia polarisation and offers insights into potential therapeutic strategies. 
 
-Furthering the spirit of shared scientific knowledge and collaborative research, data and code used to generate the analyses in Qin \& Cardoso Rodriguez \emph{et al.} have been made public in various repositories. Furthermore, tools and outputs developed during my project and presented in this thesis have also been made publicly available; either as part of peer-reviewed publications such as CyGNAL in Sufi \& Qin \emph{et al.}~\cite{sufi_multiplexed_2021}, as software packages like pykrack (Appendix \ref{appendix:pykrack}, \url{ferranc96.github.io/pyKrack}), or in the form of publicly accessible GitHub repositories. 
+Furthering the spirit of shared scientific knowledge and collaborative research, data and code used to generate the analyses in Qin \& Cardoso Rodriguez \emph{et al.} have been made public in various repositories. Furthermore, tools and outputs developed during my project and presented in this thesis have also been made publicly available; either as part of peer-reviewed publications such as CyGNAL in Sufi \& Qin \emph{et al.}~\cite{sufi_multiplexed_2021}, as software packages like pyKrack (Appendix \ref{appendix:pykrack}, \url{ferranc96.github.io/pyKrack}), or in the form of publicly accessible GitHub repositories. 
 
 Tools like CyGNAL and the \acrshort{vr} landscapes have already impacted research in my lab, facilitating routine \acrshort{mc} analyses and empowering Ramos Zapatero \& Tong \emph{et al.}~\cite{zapatero_trellis_2023} during the ongoing revision process. Furthermore, general knowledge acquired before and during my PhD has been shared with colleagues; either in the form of scientific discussions, empowering others to further their own technical skills, or as natural peer-peer diffusion of soft skills and life experiences.
 
@@ -104,9 +104,9 @@ I am immensely grateful to Xiao for her contributions to my PhD; from tiny detai
 
 I am also grateful to the UCL-Yale exchange programme, for without their bursary I would not have been able to collaborate with Smita and her team of exceptional individuals. Thank you Aarthi for your unwavering support despite the setbacks faced, and thank you too Jay for your help during our discussions of \acrshort{kg}s and hikes around Connecticut. 
 I would also like to thank Jasmin, Nicky and Javier for their guidance as my thesis committee panel; thank you Javier and other BLIC members for your support and insightful discussions too.
-I must thank CRUK and organisations like it that support scientific research; without your help none of this would be possible.
+I must thank CRUK and similar organisation supporting scientific research; without your help none of this would be possible.
 
-Thank you Mum and Dad, and you too Sara; I would not be where I am nor who I am without you. Moltes gràcies, this thesis goes to you. Last but not least, I must thank you too Ana; my soon-to-be wife and rock throughout this journey. Thank you for sharing of the highs and lows of academia, and for sharing a life with me. Also, I am sure this will not be the last thesis acknowledging you. T'estimo.
+Thank you Mum and Dad, and you too Sara; I would not be where I am nor who I am without you. \emph{Moltes gràcies}, this thesis goes to you. Last but not least, I must thank you too Ana; my soon-to-be wife and anchor throughout this journey. Thank you for sharing of the highs and lows of academia, and for sharing a life with me. Also, I am sure this will not be the last thesis acknowledging you. \emph{T'estimo}.
 
 \end{acknowledgements}
 
@@ -130,7 +130,7 @@ Thank you Mum and Dad, and you too Sara; I would not be where I am nor who I am 
             08 September 2021.
             \item \textbf{List the manuscript's authors in the order they appear on the publication:}
             Jahangir Sufi, Xiao Qin, Ferran Cardoso Rodriguez, Yong Jia Bu, Petra Vlckova, María Ramos Zapatero, Mark Nitz, and Christopher J. Tape.   
-            \item \textbf{Was the work peer reviewd?}
+            \item \textbf{Was the work peer reviewed?}
             Yes.
             \item \textbf{Have you retained the copyright?}
             Yes.
@@ -162,7 +162,7 @@ Thank you Mum and Dad, and you too Sara; I would not be where I am nor who I am 
         % \end{enumerate}
         
         \item \textbf{For multi-authored work, please give a statement of contribution covering all authors} (if single-author, please skip to section 4)\textbf{:}
-        J.S. developed \acrshort{tobis}, designed rare earth metal-conjugated antibody panels and performed MC analysis. X.Q. designed and performed organoid and MC experiments, analyzed the data and wrote the manuscript. F.C.R. developed CyGNAL and wrote the manuscript. P.V. and M.R.Z. performed organoid and MC experiments. Y.J.B. and M.N. developed TeMal reagents. C.J.T. designed the study, analyzed the data and wrote the manuscript.
+        J.S. developed \acrshort{tobis}, designed rare earth metal-conjugated antibody panels and performed MC analysis. X.Q. designed and performed organoid and MC experiments, analysed the data and wrote the manuscript. F.C.R. developed CyGNAL and wrote the manuscript. P.V. and M.R.Z. performed organoid and MC experiments. Y.J.B. and M.N. developed TeMal reagents. C.J.T. designed the study, analysed the data and wrote the manuscript.
         
         \item \textbf{In which chapter(s) of your thesis can this material be found?}
         Chapter 2 (Methods) and Chapter 3.
