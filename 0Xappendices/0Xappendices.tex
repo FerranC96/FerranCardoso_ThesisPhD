@@ -12,13 +12,13 @@
 
 Biological signalling can be modelled as a directed network, where nodes represent genes/proteins and edges represent signalling interactions.
 
-The hierarchy of such a network can be quantified using various metrics, including the Krackhardt hierarchy score. This score measures the degree to which the network exhibits a perfect hierarchy, with higher scores indicating greater hierarchy.
+The hierarchy of such a network can be quantified using various metrics, including the Krackhardt hierarchy score. This score measures the degree to which the network exhibits a perfect hierarchy, with higher scores indicating a greater hierarchy.
 
 In R the sna package presents methods to compute graph hierarchy including Krackhardt’s score, and there are other hierarchy scores implemented in Python such as Flow Hierarchy Score~\cite{luo_detecting_2011}. However, despite its utility, there is currently no native implementation of the Krackhardt hierarchy score in Python.
 
 \subsection{Krackhardt Hierarchy Score}
 
-The Krackhard hierarchy score was introduced by David Krackhardt [Krackhardt, David. (1994). Graph Theoretical Dimensions of Informal Organization. Computational Organization Theory. 89], where he defined it in the following way:
+The Krackhard hierarchy score was introduced by David Krackhardt [Krackhardt, David. (1994). Graph Theoretical Dimensions of Informal Organization. Computational Organization Theory. 89], where he defined it as:
 
 \begin{quote}
     \emph{The graph hierarchy condition states that in a digraph D, for each pair of points where one (Pi) can reach another (Pj), the second (Pj) can't reach the first (Pi). 
